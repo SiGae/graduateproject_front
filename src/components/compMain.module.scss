@@ -1,0 +1,38 @@
+@import "../lib/positionCSS.module.scss";
+
+.compMain {
+  margin: 0 auto;
+  width: 700px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border: 1px solid black;
+  @include verticalCSS();
+}
+
+.compMainHead {
+  @include horizontalCSS();
+  width: 80%;
+  margin-bottom: 20px;
+  border: 1px solid black;
+}
+
+.compMainSearchBar {
+  @include horizontalCSS();
+  margin-bottom: 20px;
+  width: 80%;
+  height: 30px;
+  border: 1px solid black;
+}
+
+.compMainSearchBar input {
+  padding: 1.7px;
+  flex: 1;
+}
+
+.compMainMenu {
+  @include horizontalCSS();
+  width: 80%;
+  height: 150px;
+}

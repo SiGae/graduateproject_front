@@ -1,0 +1,23 @@
+@import "../lib/positionCSS.module.scss";
+
+@mixin formTag() {
+  border: 1px solid black;
+  @include horizontalCSS();
+}
+
+.formMulti {
+  width: 100%;
+  @include formTag();
+}
+
+.formTag p {
+  width: 80px;
+  border: 1px solid black;
+}
+
+.formTag input {
+  -webkit-appearance: none;
+  -webkit-border-radius: 0;
+  height: 7%;
+  flex: 1;
+}

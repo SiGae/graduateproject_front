@@ -1,0 +1,26 @@
+@import "../../lib/positionCSS.module.scss";
+
+.LoginTemplate {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: #e9ecef;
+  @include verticalCSS();
+  justify-content: center;
+}
+
+.WhiteBox {
+  @include verticalCSS();
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.025);
+  width: 400px;
+  padding: 20px;
+  background: white;
+}
+
+.WhiteBox .logo-area {
+  display: block;
+  margin-bottom: 2rem;
+  text-align: center;
+}

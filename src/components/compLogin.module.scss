@@ -1,0 +1,60 @@
+@import "../lib/positionCSS.module.scss";
+
+// 전체 폼
+.Login {
+  margin: 0 auto;
+  width: 100%;
+  border: 1px solid black;
+  padding-top: 20px;
+  @include verticalCSS();
+}
+
+.Login .LoginButton {
+  @include horizontalCSS();
+  width: 80%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border: 1px solid black;
+}
+
+.LoginButton p {
+  cursor: pointer;
+}
+
+.Login .Information {
+  @include horizontalCSS();
+  justify-content: space-around;
+  border: 1px solid black;
+  width: 80%;
+  margin-bottom: 20px;
+}
+
+.Login .Information .Join {
+  border: 1px solid black;
+  cursor: pointer;
+}
+
+.Login .Information .Find {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+  border-radius: 1rem;
+  background: linear-gradient(to bottom, #58acfa, #0080ff);
+  width: 100px;
+  height: 30px;
+}
+
+.Login .Find p {
+  cursor: pointer;
+  color: white;
+}
+
+.Login p:nth-child(2) {
+  cursor: default;
+}
+
+// 외부 CSS
+.Login .form {
+  width: 80%;
+}

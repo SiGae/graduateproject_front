@@ -1,0 +1,31 @@
+@import "../lib/positionCSS.module.scss";
+
+.CompJoin {
+  margin: 0 auto;
+  width: 100%;
+  border: 1px solid black;
+  @include verticalCSS();
+}
+
+// 회원가입
+.CompHead {
+  border: 1px solid black;
+  width: 80%;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.CompRequest {
+  @include horizontalCSS();
+  cursor: pointer;
+  width: 80%;
+  margin-bottom: 20px;
+  border: 1px solid black;
+}
+
+// 외부 CSS
+.form {
+  border: 1px solid black;
+  width: 80%;
+  margin-bottom: 20px;
+}

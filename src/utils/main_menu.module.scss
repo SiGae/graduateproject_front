@@ -1,0 +1,26 @@
+@import "../lib/positionCSS.module.scss";
+
+.utilsMultiMenu {
+  @include horizontalCSS();
+  width: 100%;
+  height: 100%;
+}
+
+.utilsMenuBox {
+  @include horizontalCSS();
+  border-radius: 0.2rem;
+  box-shadow: 0 1px 1px #999 inset;
+  width: 20%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.utilsMenuText {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  text-shadow: 1px 1px 11px #8c8c8c;
+}
+
+.utilsMultiMenu :hover {
+  color: white;
+}
