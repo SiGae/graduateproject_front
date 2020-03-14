@@ -1,23 +1,28 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { formID, formPW } from "../utils/form_tag";
+import Button from "./common/Button";
 import classNames from "classnames/bind";
 import styles from "./compLogin.module.scss";
 
 const cn = classNames.bind(styles);
-const CompLogin = ({ form, onChange, sendToServer }) => {
+const CompLogin = ({ form, onChange, onSubmit }) => {
   return (
     <div className={cn("Login")}>
-      <div className={cn("form")}>
-        {formID(onChange, form)}
-        {formPW(onChange, form)}
-      </div>
-      <div className={cn("LoginButton")}>
-        <p onClick={() => sendToServer("login")}> 로그인 </p>
-      </div>
+      <form onSubmit={onSubmit}>
+        <div className={cn("form")}>
+          {formID(onChange, form)}
+          {formPW(onChange, form)}
+        </div>
+        <div className={cn("LoginButton")}>
+          <Button>로그인</Button>
+        </div>
+      </form>
       <div className={cn("Information")}>
         <div className={cn("Join")}>
-          <Link to="/RegisterPage">회원가입</Link>
+          <Link to="/RegisterPage" className={cn("babo")}>
+            회원가입
+          </Link>
         </div>
         <div className={cn("Find")}>
           <p>ID</p>

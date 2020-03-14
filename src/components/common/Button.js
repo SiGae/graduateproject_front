@@ -1,6 +1,5 @@
 import React from "react";
-import styled from "styled-components";
-import palette from "../../lib/styles/palette";
+import styled, { css } from "styled-components";
 
 const StyledButton = styled.button`
   border: none;
@@ -12,9 +11,9 @@ const StyledButton = styled.button`
   outline: none;
   cursor: pointer;
 
-  background: ${palette.gray[8]};
+  background: #3bc9db;
   &:hover {
-    background: ${palette.gray[6]};
+    background: #22b8cf;
   }
 `;
 

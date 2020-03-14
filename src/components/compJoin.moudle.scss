@@ -1,4 +1,4 @@
-@import "../lib/positionCSS.module.scss";
+@import "../lib/styles/positionCSS.module.scss";
 
 .CompJoin {
   margin: 0 auto;
@@ -24,8 +24,20 @@
 }
 
 // 외부 CSS
-.form {
+.CompJoin form {
+  @include verticalCSS();
   border: 1px solid black;
   width: 80%;
   margin-bottom: 20px;
+}
+
+.CompJoin .formButton {
+  @include horizontalCSS();
+  border: 1px solid black;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.CompJoin form button {
+  flex: 1;
 }

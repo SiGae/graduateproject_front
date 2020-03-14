@@ -1,0 +1,16 @@
+@import "../lib/styles/positionCSS.module.scss";
+
+.CompAttendacne {
+  @include verticalCSS();
+  width: 800px;
+  border: 1px solid black;
+  padding: 20px;
+}
+
+.SubjectHead {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+  border: 1px solid black;
+  padding-left: 20px;
+}

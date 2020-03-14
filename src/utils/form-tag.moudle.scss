@@ -1,8 +1,11 @@
-@import "../lib/positionCSS.module.scss";
+@import "../lib/styles/positionCSS.module.scss";
 
 @mixin formTag() {
-  border: 1px solid black;
   @include horizontalCSS();
+  border: 1px solid black;
+}
+.Form {
+  width: 100%;
 }
 
 .formMulti {
@@ -11,6 +14,8 @@
 }
 
 .formTag p {
+  display: flex;
+  align-items: center;
   width: 80px;
   border: 1px solid black;
 }

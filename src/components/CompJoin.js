@@ -2,22 +2,20 @@ import React from "react";
 import classNames from "classnames/bind";
 import styles from "./compJoin.moudle.scss";
 import FormTag from "../utils/form_tag";
+import Button from "./common/Button";
 
 const cn = classNames.bind(styles);
 
-const CompJoin = ({ form, onChange, sendToServer }) => {
+const CompJoin = ({ form, onChange, onSubmit }) => {
   return (
     <div className={cn("CompJoin")}>
       <h2 className={cn("CompHead")}>회원가입</h2>
-      <div className={cn("form")}>
+      <form onSubmit={onSubmit}>
         <FormTag onChange={onChange} form={form} />
-      </div>
-      <div
-        className={cn("CompRequest")}
-        onClick={() => sendToServer("register")}
-      >
-        회원가입 요청
-      </div>
+        <div className={cn("formButton")}>
+          <Button>회원가입 요청</Button>
+        </div>
+      </form>
     </div>
   );
 };

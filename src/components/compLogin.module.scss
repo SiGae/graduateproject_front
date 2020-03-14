@@ -1,4 +1,4 @@
-@import "../lib/positionCSS.module.scss";
+@import "../lib/styles/positionCSS.module.scss";
 
 // 전체 폼
 .Login {
@@ -30,8 +30,16 @@
 }
 
 .Login .Information .Join {
+  @include horizontalCSS();
   border: 1px solid black;
+  height: 50px;
   cursor: pointer;
+}
+
+.Login .Information .Join .babo {
+  @include horizontalCSS();
+  border: 1px solid black;
+  height: 100%;
 }
 
 .Login .Information .Find {
@@ -57,4 +65,13 @@
 // 외부 CSS
 .Login .form {
   width: 80%;
+}
+
+.Login form {
+  @include verticalCSS();
+  width: 100%;
+}
+
+.LoginButton button {
+  flex: 1;
 }

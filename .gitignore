@@ -1,6 +1,5 @@
 README.md
 node_modules/
 public/
-yarn.lock
 .DS_store
 build/
