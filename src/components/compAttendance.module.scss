@@ -1,16 +1,36 @@
 @import "../lib/styles/positionCSS.module.scss";
 
-.CompAttendacne {
-  @include verticalCSS();
-  width: 800px;
-  border: 1px solid black;
-  padding: 20px;
+.CompAttendance {
+  margin: 0 auto;
+  width: 95%;
+  border: 1px solid #000000;
 }
 
 .SubjectHead {
   display: flex;
-  justify-content: flex-start;
-  width: 100%;
+  align-items: center;
+  justify-content: space-between;
   border: 1px solid black;
-  padding-left: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.CompAttendance .Date {
+  @include horizontalCSS();
+  font-weight: bold;
+}
+
+.CompAttendance .StudentList {
+  border: 1px solid black;
+  height: 100px;
+  cursor: pointer;
+  &.skyblue {
+    background: skyblue;
+  }
+  &.gray {
+    background: #e9e9e9;
+  }
+  &.yellow {
+    background: yellow;
+  }
 }

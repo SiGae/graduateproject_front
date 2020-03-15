@@ -4,6 +4,7 @@ import { onChangeInput, initialization, register } from "../modules/login";
 import CompJoin from "../components/CompJoin";
 import { email_check, phoneNum_check } from "../lib/utils/util";
 import { check } from "../modules/user";
+import { withRouter } from "react-router-dom";
 
 const Join = ({
   // State
@@ -11,6 +12,8 @@ const Join = ({
   auth,
   authError,
   user,
+  // Browser History
+  history,
   // Action
   onChangeInput,
   initialization,
@@ -68,8 +71,9 @@ const Join = ({
     if (user) {
       console.log("CHECK API 성공");
       console.log(user);
+      history.push("/");
     }
-  }, [user]);
+  }, [user, history]);
   return <CompJoin form={form} onChange={onChange} onSubmit={onSubmit} />;
 };
 
@@ -86,4 +90,4 @@ export default connect(
     register,
     check
   }
-)(Join);
+)(withRouter(Join));

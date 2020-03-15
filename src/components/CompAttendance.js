@@ -1,6 +1,17 @@
 import React from "react";
-import "./compAttendance.module.scss";
-import StudentsList from "./common/StudentsList";
+import classnames from "classnames/bind";
+import styles from "./compAttendance.module.scss";
+
+const cn = classnames.bind(styles);
+
+const StudentsList = ({ student, color }) => {
+  return (
+    <div className={cn("StudentList", color)}>
+      <p>{student.name}</p>
+      <p>{student.schoolId}</p>
+    </div>
+  );
+};
 
 const CompAttendance = ({
   // data
@@ -18,26 +29,26 @@ const CompAttendance = ({
    * 2 : orange
    * */
 
-  //const checkColor = ["check", "#unChecked", "tardy"];
+  const checkColor = ["skyblue", "gray", "yellow"];
   return (
-    <div className="CompAttendance">
-      <div className="SubjectHead">
+    <div className={cn("CompAttendance")}>
+      <div className={cn("SubjectHead")}>
         <h3>{subName}</h3>
+        <text>전체선택</text>
       </div>
-      <div className="Date">
-        <p></p>
-        <p>월</p>
-        <p></p>
-        <p>일</p>
+      <div className={cn("Date")}>
+        <p>
+          {date.month}월 {date.day}일
+        </p>
       </div>
       {students.map(student => {
-        //const color = checkColor[student.check];
-        const color = "check"; // Test 용
         return (
-          <StudentsList color={color}>
-            <p>이름</p>
-            <p>학번</p>
-          </StudentsList>
+          <StudentsList
+            key={student.schoolId}
+            student={student}
+            color={checkColor[student.check]}
+            onToggle={onToggle}
+          ></StudentsList>
         );
       })}
     </div>
