@@ -6,13 +6,15 @@ import Main from "./containers/Main";
 //import ViewTest from "./lib/api/ViewTest";
 import FileUploader from "./utils/FileUploader";
 import StudentTestPage from "./pages/StudentTestPage";
+import TestComponent from "./components/TestComponent";
 
 function App() {
   return (
     <>
       <Route component={Main} path="/fdsa" />
+      <Route component={TestComponent} path="/" />
       <Route component={StudentTestPage} path="/dfsa" />
-      <Route component={FileUploader} path="/" />
+      <Route component={FileUploader} path="/dsa" />
     </>
   );
 }

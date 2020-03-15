@@ -31,7 +31,7 @@ const FileUpload = ({ url }) => {
   };
   return (
     <TitleBar>
-      <form action="/register" method="POST" encType="multipart/form-data">
+      <form action={url} method="POST" encType="multipart/form-data">
         <input type="file" name="file" onChange={onChange}></input>
         <button onClick={() => onClick(url)}>제출</button>
       </form>
