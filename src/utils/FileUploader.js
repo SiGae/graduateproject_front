@@ -2,7 +2,7 @@ import React from "react";
 import FileUpload from "./FileUpload";
 
 const FileUploader = () => {
-  return <FileUpload url="/fileupload"></FileUpload>;
+  return <FileUpload url="/register"></FileUpload>;
 };
 
 export default FileUploader;
