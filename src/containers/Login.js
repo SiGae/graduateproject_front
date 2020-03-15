@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { onChangeInput, initialization, login } from "../modules/login";
 import CompLogin from "../components/CompLogin";
-import { check } from "../modules/user";
+import { check, tempSetUser } from "../modules/user";
 import { withRouter } from "react-router-dom";
 
 const Login = ({
@@ -16,7 +16,8 @@ const Login = ({
   onChangeInput,
   initialization,
   login,
-  check
+  check,
+  tempSetUser
 }) => {
   const onChange = e => {
     const { name, value } = e.target;
@@ -42,6 +43,7 @@ const Login = ({
 
   // 로그인 시 성공, 실패 처리
   useEffect(() => {
+    const { username, auth } = form;
     if (authError) {
       console.log("오류발생");
       console.log(authError);
@@ -50,16 +52,21 @@ const Login = ({
 
     if (auth) {
       console.log("로그인 성공");
-      check();
+      tempSetUser(username, auth);
+      check({ username, auth });
     }
-  }, [auth, authError, check]);
+  }, [auth, authError, check, tempSetUser, form]);
 
   // 로그인 상태 유지 처리
   useEffect(() => {
+    const userInfo = {
+      id: form.username,
+      userOnline: user
+    };
     if (user) {
       history.push("/main");
       try {
-        localStorage.setItem("user", JSON.stringify(user));
+        localStorage.setItem("user", JSON.stringify(userInfo));
       } catch (e) {
         console.log("local Storage is not working");
       }
@@ -73,12 +80,13 @@ export default connect(
     form: clientInfos["login"],
     auth: clientInfos["auth"],
     authError: clientInfos["authError"],
-    user: user["user"]
+    userOnline: user["userOnline"]
   }),
   {
     onChangeInput,
     initialization,
     login,
-    check
+    check,
+    tempSetUser
   }
 )(withRouter(Login));

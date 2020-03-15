@@ -63,17 +63,10 @@ const Join = ({
     if (auth) {
       console.log("회원가입 성공");
       console.log(auth);
-      check();
-    }
-  }, [auth, authError, check]);
-
-  useEffect(() => {
-    if (user) {
-      console.log("CHECK API 성공");
-      console.log(user);
       history.push("/");
     }
-  }, [user, history]);
+  }, [auth, authError, check, history]);
+
   return <CompJoin form={form} onChange={onChange} onSubmit={onSubmit} />;
 };
 

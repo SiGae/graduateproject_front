@@ -20,7 +20,10 @@ const [CHECK, CHECK_SUCCESS, CHECK_FAILURE] = createRequestActionTypes(
 );
 
 // ACTION function
-export const tempSetUser = createAction(TEMP_SET_USER, user => user);
+export const tempSetUser = createAction(TEMP_SET_USER, (id, userOnline) => ({
+  id,
+  userOnline
+}));
 export const check = createAction(CHECK);
 
 function checkFailureSaga() {
@@ -38,19 +41,21 @@ export function* userSaga() {
 }
 
 const initialState = {
-  user: null,
+  id: "",
+  userOnline: null,
   checkError: null
 };
 
 const user = handleActions(
   {
-    [TEMP_SET_USER]: (state, { payload: user }) => ({
+    [TEMP_SET_USER]: (state, { payload: { id, userOnline } }) => ({
       ...state,
-      user
+      id,
+      userOnline
     }),
-    [CHECK_SUCCESS]: (state, { payload: user }) => ({
+    [CHECK_SUCCESS]: (state, { payload: userOnline }) => ({
       ...state,
-      user,
+      userOnline,
       checkError: null
     }),
     [CHECK_FAILURE]: (state, { payload: error }) => ({
