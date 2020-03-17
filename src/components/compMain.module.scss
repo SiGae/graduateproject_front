@@ -11,13 +11,6 @@
   @include verticalCSS();
 }
 
-.compMainHead {
-  @include horizontalCSS();
-  width: 80%;
-  margin-bottom: 20px;
-  border: 1px solid black;
-}
-
 .compMainSearchBar {
   @include horizontalCSS();
   margin-bottom: 20px;

@@ -10,7 +10,7 @@ const Login = ({
   form,
   auth,
   authError,
-  user,
+  userOnline,
   history,
   // action
   onChangeInput,
@@ -49,11 +49,11 @@ const Login = ({
       console.log(authError);
       return;
     }
-
     if (auth) {
+      const userOnline = auth;
       console.log("로그인 성공");
       tempSetUser(username, auth);
-      check({ username, auth });
+      check({ username, userOnline });
     }
   }, [auth, authError, check, tempSetUser, form]);
 
@@ -61,9 +61,9 @@ const Login = ({
   useEffect(() => {
     const userInfo = {
       id: form.username,
-      userOnline: user
+      userOnline: userOnline
     };
-    if (user) {
+    if (userInfo.id !== "" && userOnline) {
       history.push("/main");
       try {
         localStorage.setItem("user", JSON.stringify(userInfo));

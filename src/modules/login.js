@@ -29,8 +29,6 @@ export const onChangeInput = createAction(
 
 // 초기 렌더링
 export const initialization = createAction(INITIALIZATION, form => form);
-// 로그인 버튼 클릭시 서버로 보내는 액션이 발생 하게 하는 함수.
-export const sendToServer = createAction(LOGIN, form => form);
 
 export const register = createAction(
   REGISTER,

@@ -22,9 +22,7 @@ function loadUser() {
   try {
     const user = localStorage.getItem("user");
     if (!user) return;
-
     store.dispatch(tempSetUser(user));
-    store.dispatch(check());
   } catch (e) {
     console.log("localStorage is Empty or working error!");
   }

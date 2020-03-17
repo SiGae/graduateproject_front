@@ -34,7 +34,7 @@ const CompAttendance = ({
     <div className={cn("CompAttendance")}>
       <div className={cn("SubjectHead")}>
         <h3>{subName}</h3>
-        <text>전체선택</text>
+        <p>전체선택</p>
       </div>
       <div className={cn("Date")}>
         <p>

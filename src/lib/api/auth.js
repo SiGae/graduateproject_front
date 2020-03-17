@@ -14,7 +14,8 @@ export const register = ({ username, password, e_mail, phone }) =>
   });
 
 // 로그인 상태 체크
-export const check = () => client.get("/check");
+export const check = ({ id, userOnline }) =>
+  client.get("/check", { id, userOnline });
 
 // 로그아웃
 export const logout = () => client.post("/api/logout");
