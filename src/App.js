@@ -10,7 +10,7 @@ import TestComponent from "./components/TestComponent";
 function App() {
   return (
     <>
-      <Route component={LoginPage} path="/dsafsa" />
+      <Route component={LoginPage} path="/login" />
       <Route component={RegisterPage} path="/RegisterPage" />
       <Route component={Main} path="/" />
       <Route component={TestComponent} path="/sda" />

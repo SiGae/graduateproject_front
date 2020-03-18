@@ -9,7 +9,7 @@ import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import rootReducer, { rootSaga } from "./modules";
 import createSagaMiddleware from "redux-saga";
-import { tempSetUser, check } from "./modules/user";
+import { tempSetUser } from "./modules/user";
 
 // Saga
 const sagaMiddleware = createSagaMiddleware();
