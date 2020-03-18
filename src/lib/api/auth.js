@@ -18,6 +18,6 @@ export const check = ({ id, userOnline }) =>
   client.get("/check", { id, userOnline });
 
 // 로그아웃
-export const logout = () => client.post("/api/logout");
+export const logout = () => client.post("/logout");
 
 //http://27.96.131.6/api/auth

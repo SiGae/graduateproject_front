@@ -13,10 +13,7 @@ const [
 ] = createRequestActionTypes("professor/GET_PROFESSOR");
 
 // ACTION FUNCTION 정의 객체 던지기
-export const get_professor = createAction(GET_PROFESSOR, (id, userOnline) => ({
-  id,
-  userOnline
-}));
+export const get_professor = createAction(GET_PROFESSOR);
 // GENERATOR FUNCTION
 const getProfessorSaga = createRequestSaga(GET_PROFESSOR, profAPI.professor);
 // SAGA
@@ -25,7 +22,7 @@ export function* professorSaga() {
 }
 // INITIAL STATE
 const initialState = {
-  profNo: 0,
+  profNo: null,
   profName: "",
   subjectList: [],
   success: null,

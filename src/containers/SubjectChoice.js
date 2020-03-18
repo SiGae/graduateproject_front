@@ -2,12 +2,13 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { get_professor } from "../modules/professor";
+import { check } from "../lib/api/auth";
 
 const SubjectChoice = ({ history }) => {
   const dispatch = useDispatch();
   const state = useSelector(({ user }) => ({
-    profId: user.id,
-    profOnline: user.userOnline
+    id: user.id,
+    useOnline: user.userOnline
   }));
 
   // 로그인 여부
@@ -21,7 +22,7 @@ const SubjectChoice = ({ history }) => {
   // 로그인 시 교수정보와 강의 데이터를 받아옴.
   useEffect(() => {
     if (state.profOnline) {
-      get_professor(state.profId, state.profOnline);
+      get_professor();
     }
   });
 

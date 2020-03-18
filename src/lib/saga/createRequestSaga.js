@@ -14,7 +14,6 @@ export default function createRequestSaga(type, request) {
 
   return function*(apiParam) {
     yield put(startLoading(type));
-    console.log("파라매터", apiParam);
     try {
       const response = yield call(request, apiParam.payload);
       yield put({
