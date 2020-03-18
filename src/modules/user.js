@@ -87,7 +87,8 @@ const user = handleActions(
     [LOGOUT]: state => ({
       ...state,
       id: null,
-      userOnline: null
+      userOnline: null,
+      call: null
     })
   },
   initialState
