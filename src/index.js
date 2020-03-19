@@ -20,6 +20,7 @@ const store = createStore(
 
 function loadUser() {
   try {
+    console.log("쿠키 데이터 확인");
     const user = localStorage.getItem("user");
     if (!user) return;
     store.dispatch(tempSetUser(user));

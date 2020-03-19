@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Route, withRouter } from "react-router-dom";
-import { connect, useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Header from "../components/common/Header";
 import CompMain from "../components/CompMain";
 import SubjectChoice from "./SubjectChoice";
@@ -8,12 +8,13 @@ import { logout } from "../modules/user";
 
 const Main = ({ history }) => {
   const dispatch = useDispatch();
-  const user = useSelector(({ user }) => ({
+  const { user } = useSelector(({ user }) => ({
     user: user
   }));
 
+  console.log("USER: ", user);
   const onLogout = () => {
-    dispatch(logout());
+    dispatch(logout(user.id));
     history.push("/");
   };
 

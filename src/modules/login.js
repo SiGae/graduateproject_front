@@ -15,6 +15,8 @@ const [REGISTER, REGISTER_SUCCESS, REGISTER_FAILURE] = createRequestActionTypes(
 const [LOGIN, LOGIN_SUCCESS, LOGIN_FAILURE] = createRequestActionTypes(
   "login/LOGIN"
 );
+// LOGOUT
+const LOGOUT = "user/LOGOUT";
 
 // 액션 함수
 // 모든 인풋 tag에 대응해서 값이 바뀌게하는 함수.
@@ -43,6 +45,17 @@ export const login = createAction(LOGIN, ({ username, password }) => ({
   username,
   password
 }));
+export const logout = createAction(LOGOUT);
+
+function logInFailureSaga() {
+  try {
+    console.log("삭제중...");
+    localStorage.removeItem("user");
+    console.log("삭제완료");
+  } catch (e) {
+    console.log("로컬 데이터 저장소 에러");
+  }
+}
 
 // Generator 작성
 const registerSaga = createRequestSaga(REGISTER, authAPI.register);
@@ -50,6 +63,7 @@ const loginSaga = createRequestSaga(LOGIN, authAPI.login);
 export function* authSaga() {
   yield takeLatest(REGISTER, registerSaga);
   yield takeLatest(LOGIN, loginSaga);
+  yield takeLatest(LOGIN_FAILURE, logInFailureSaga);
 }
 
 const initialState = {
@@ -81,29 +95,30 @@ const clientInfos = handleActions(
     }),
 
     // 회원가입
-    [REGISTER_SUCCESS]: (state, { payload: auth }) => ({
+    [REGISTER_SUCCESS]: (state, { payload: { auth } }) => ({
       ...state,
       authError: null,
       auth
     }),
-    [REGISTER_FAILURE]: (state, { payload: error }) => ({
+    [REGISTER_FAILURE]: (state, { payload: { error } }) => ({
       ...state,
       authError: error
     }),
     // 로그인
-    [LOGIN_SUCCESS]: (state, { payload: auth }) => {
-      console.log("LOGINSUCCESS", auth);
+    [LOGIN_SUCCESS]: (state, { payload: { auth } }) => {
+      console.log("LOGIN_SUCCESS", auth);
       return {
         ...state,
         authError: null,
         auth
       };
     },
-    [LOGIN_FAILURE]: (state, { payload: error }) => ({
+    [LOGIN_FAILURE]: (state, { payload: { error } }) => ({
       ...state,
       authError: error
     })
   },
+
   initialState
 );
 

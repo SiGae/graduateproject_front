@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { get_professor } from "../modules/professor";
-import { check } from "../lib/api/auth";
 
 const SubjectChoice = ({ history }) => {
   const dispatch = useDispatch();
