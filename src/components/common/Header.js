@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Button from "./Button";
 import Responsive from "./Responsive";
+import { Link } from "react-router-dom";
 
 const HeaderBlock = styled.div`
   position: fixed; /** 스크롤 해도 상단에 고정 */
@@ -25,7 +26,6 @@ const Wrapper = styled(Responsive)`
   }
 
   .right {
-    border: 1px solid black;
     display: flex;
     align-items: center;
     margin-right: 10px;
@@ -47,10 +47,14 @@ const Header = ({ user, onLogout }) => {
     <>
       <HeaderBlock>
         <Wrapper>
-          <div className="logo">창원대학교</div>
+          <Link to="/main/menu" className="logo">
+            창원대학교
+          </Link>
           <div className="right">
-            <UserInfo>{user.username}</UserInfo>
-            <Button onClick={onLogout}>로그아웃</Button>
+            <UserInfo>{user.id}</UserInfo>
+            <Button onClick={onLogout} gray={true}>
+              로그아웃
+            </Button>
           </div>
         </Wrapper>
       </HeaderBlock>

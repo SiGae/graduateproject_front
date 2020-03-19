@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 
 const ResponsiveBlock = styled.div`
-  border: 1px solid black;
   padding-left: 1rem;
   padding-right: 1rem;
   width: 1024px;

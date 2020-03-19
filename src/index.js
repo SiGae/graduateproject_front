@@ -22,8 +22,9 @@ function loadUser() {
   try {
     console.log("쿠키 데이터 확인");
     const user = localStorage.getItem("user");
+
     if (!user) return;
-    store.dispatch(tempSetUser(user));
+    store.dispatch(tempSetUser(JSON.parse(user)));
   } catch (e) {
     console.log("localStorage is Empty or working error!");
   }

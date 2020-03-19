@@ -1,5 +1,5 @@
 import { createAction, handleActions } from "redux-actions";
-import { takeLatest, call, put } from "redux-saga/effects";
+import { takeLatest, call } from "redux-saga/effects";
 import * as authAPI from "../lib/api/auth";
 
 // I'm in sign
@@ -41,11 +41,13 @@ const initialState = {
 
 const user = handleActions(
   {
-    [TEMP_SET_USER]: (state, { payload: { id, userOnline } }) => ({
-      ...state,
-      id,
-      userOnline
-    }),
+    [TEMP_SET_USER]: (state, { payload: { id, userOnline } }) => {
+      return {
+        ...state,
+        id,
+        userOnline
+      };
+    },
     [LOGOUT]: state => {
       console.log("LOGOUT");
       return initialState;

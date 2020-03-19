@@ -5,25 +5,28 @@ import { get_professor } from "../modules/professor";
 
 const SubjectChoice = ({ history }) => {
   const dispatch = useDispatch();
-  const state = useSelector(({ user }) => ({
-    id: user.id,
-    useOnline: user.userOnline
+  const { user } = useSelector(({ user }) => ({
+    user: user
   }));
 
+  console.log("SubjectChoice", user);
   // 로그인 여부
+  /*
   useEffect(() => {
-    if (!state.profOnline) {
+    if (!user.userOnline !== "TRUE") {
       alert("로그아웃 상태입니다.");
       history.push("/");
     }
   });
-
+*/
   // 로그인 시 교수정보와 강의 데이터를 받아옴.
+  /*
   useEffect(() => {
-    if (state.profOnline) {
+    if (user.userOnline) {
       get_professor();
     }
   });
+  */
 
   return <div>일단보자</div>;
 };

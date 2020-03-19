@@ -11,6 +11,7 @@ const Login = ({
   auth,
   authError,
   history,
+  userOnline,
   // action
   onChangeInput,
   initialization,
@@ -56,23 +57,25 @@ const Login = ({
       tempSetUser({ id, userOnline });
       try {
         localStorage.setItem("user", JSON.stringify({ id, userOnline }));
-        history.push("/main");
       } catch (e) {
         console.log("local Storage is not working");
       }
-
-      //check({ id, userOnline });
     }
   }, [auth, authError, form, history, tempSetUser, initialization]);
-
+  useEffect(() => {
+    if (userOnline === "TRUE") {
+      history.push("/main/menu");
+    }
+  });
   return <CompLogin form={form} onChange={onChange} onSubmit={onSubmit} />;
 };
 
 export default connect(
-  ({ clientInfos }) => ({
+  ({ clientInfos, user }) => ({
     form: clientInfos["login"],
     auth: clientInfos["auth"],
-    authError: clientInfos["authError"]
+    authError: clientInfos["authError"],
+    userOnline: user.userOnline
   }),
   {
     onChangeInput,
@@ -92,3 +95,5 @@ export default connect(
     }
   }, [userOnline, history, id, call]);
  */
+
+//check({ id, userOnline });

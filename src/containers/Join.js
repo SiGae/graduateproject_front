@@ -33,7 +33,7 @@ const Join = ({
     e.preventDefault();
     const { username, password, passwordConfirm, e_mail, phone } = form;
 
-    if (password !== "" && password !== passwordConfirm) {
+    if (password.length <= 2 || password !== passwordConfirm) {
       console.log("비밀번호를 확인해주시기 바랍니다.");
       return;
     }
@@ -66,6 +66,10 @@ const Join = ({
       console.log("회원가입 성공");
       console.log(auth);
       history.push("/");
+    }
+
+    if (auth === "false") {
+      alert("아이디가 중복");
     }
   }, [auth, authError, history, initialization]);
 

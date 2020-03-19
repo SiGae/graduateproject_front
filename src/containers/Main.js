@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Route, withRouter } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../modules/user";
 import Header from "../components/common/Header";
 import CompMain from "../components/CompMain";
 import SubjectChoice from "./SubjectChoice";
-import { logout } from "../modules/user";
 
 const Main = ({ history }) => {
   const dispatch = useDispatch();
@@ -12,7 +12,6 @@ const Main = ({ history }) => {
     user: user
   }));
 
-  console.log("USER: ", user);
   const onLogout = () => {
     dispatch(logout(user.id));
     history.push("/");
@@ -22,8 +21,8 @@ const Main = ({ history }) => {
     <>
       <Header user={user} onLogout={onLogout} />
       <div className="CompMainRoute">
-        <Route path="/main" component={CompMain} exact></Route>
-        <Route path="/subjectChoice" component={SubjectChoice}></Route>
+        <Route path="/main/menu" component={CompMain}></Route>
+        <Route path="/main/subjectChoice" component={SubjectChoice}></Route>
       </div>
     </>
   );
