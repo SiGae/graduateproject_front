@@ -60,11 +60,12 @@ const Join = ({
       return;
     }
     if (auth === "TRUE") {
+      initialization("auth");
       console.log("회원가입 성공");
       console.log(auth);
       history.push("/");
     }
-  }, [auth, authError, history]);
+  }, [auth, authError, history, initialization]);
 
   return <CompJoin form={form} onChange={onChange} onSubmit={onSubmit} />;
 };

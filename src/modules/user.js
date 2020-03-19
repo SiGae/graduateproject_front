@@ -1,16 +1,11 @@
 import { createAction, handleActions } from "redux-actions";
 import { takeLatest, call, put } from "redux-saga/effects";
 import * as authAPI from "../lib/api/auth";
-import createRequestSaga, {
-  createRequestActionTypes
-} from "../lib/saga/createRequestSaga";
 
 // I'm in sign
 const TEMP_SET_USER = "user/TEMP_SET_USER";
 // LOGOUT
-const [LOGOUT, LOGOUT_SUCCESS, LOGOUT_FAILURE] = createRequestActionTypes(
-  "user/LOGOUT"
-);
+const [LOGOUT] = "user/LOGOUT";
 
 // ACTION function
 export const tempSetUser = createAction(TEMP_SET_USER, ({ id, userOnline }) => {
@@ -21,7 +16,10 @@ export const tempSetUser = createAction(TEMP_SET_USER, ({ id, userOnline }) => {
 });
 export const logout = createAction(LOGOUT, id => id);
 // GENERATOR
-const logoutSaga = createRequestSaga(LOGOUT, authAPI.logout);
+function* logoutSaga(id) {
+  cleanLocalStorage();
+  yield call(authAPI.logout, id);
+}
 
 function cleanLocalStorage() {
   try {
@@ -48,14 +46,10 @@ const user = handleActions(
       id,
       userOnline
     }),
-    [LOGOUT_SUCCESS]: state => {
-      cleanLocalStorage();
+    [LOGOUT]: state => {
+      console.log("LOGOUT");
       return initialState;
-    },
-    [LOGOUT_FAILURE]: (state, { payload: { error } }) => ({
-      ...state,
-      error: error
-    })
+    }
   },
   initialState
 );
@@ -70,7 +64,9 @@ export default user;
  *    - 로그인 상태이다. -> true
  *    - 아니다 -> false
  *
-  
+  import createRequestSaga, {
+    createRequestActionTypes
+  } from "../lib/saga/createRequestSaga";
 
   // ACTION
   // 회원 정보 확인
@@ -115,6 +111,15 @@ function checkFailureSaga() {
       ...state,
       user: null,
       checkError: error
-    }),
+    })
+    ,
+    [LOGOUT_SUCCESS]: state => {
+      cleanLocalStorage();
+      return initialState;
+    },
+    [LOGOUT_FAILURE]: (state, { payload: { error } }) => ({
+      ...state,
+      error: error
+    })
     
  */
