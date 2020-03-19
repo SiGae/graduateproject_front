@@ -33,17 +33,19 @@ const Join = ({
     e.preventDefault();
     const { username, password, passwordConfirm, e_mail, phone } = form;
 
-    if (password !== passwordConfirm) {
+    if (password !== "" && password !== passwordConfirm) {
       console.log("비밀번호를 확인해주시기 바랍니다.");
       return;
     }
 
     if (!email_check(e_mail)) {
       console.log("정상적인 이메일이 아닙니다.");
+      return;
     }
 
     if (!phoneNum_check(phone)) {
       console.log("정상적인 번호를 입력하세요");
+      return;
     }
 
     register({ username, password, e_mail, phone });
@@ -59,7 +61,7 @@ const Join = ({
       console.log(authError);
       return;
     }
-    if (auth === "TRUE") {
+    if (auth === "true") {
       initialization("auth");
       console.log("회원가입 성공");
       console.log(auth);
