@@ -22,23 +22,27 @@ export function* professorSaga() {
 }
 // INITIAL STATE
 const initialState = {
-  profNo: null,
-  profName: "",
-  subjectList: [],
+  subjectList: null,
+  department: null,
   success: null,
   error: null
 };
 
 const professor = handleActions(
   {
-    [GET_PROFESSOR_SUCCESS]: (state, payload) => ({
-      ...payload,
+    [GET_PROFESSOR_SUCCESS]: (
+      state,
+      { payload: { subjectList, department } }
+    ) => ({
+      subjectList,
+      department,
       success: true,
       error: null
     }),
-    [GET_PROFESSOR_FAILURE]: (state, { payload: error }) => ({
+    [GET_PROFESSOR_FAILURE]: (state, { payload: { error } }) => ({
       ...initialState,
-      error: error
+      error: error,
+      success: null
     })
   },
   initialState

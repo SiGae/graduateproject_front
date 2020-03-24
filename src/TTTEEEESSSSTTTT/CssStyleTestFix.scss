@@ -1,0 +1,13 @@
+@import "../lib/styles/positionCSS.module.scss";
+
+.Total {
+  @include verticalCSS();
+  width: 300px;
+  height: 300px;
+  border: 1px solid black;
+}
+
+.greeting {
+  border: 3px solid blue;
+  color: black;
+}

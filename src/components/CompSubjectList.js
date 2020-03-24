@@ -1,28 +1,19 @@
 import React from "react";
-import classNames from "classnames/bind";
-import styles from "./ItemList.module.scss";
+//import classNames from "classnames/bind";
+import MenuTemplate from "./templateBackground/MenuTemplate";
+import SubjectList from "./list/SubjectList";
 
-const cn = classNames.bind(styles);
-const SubjectList = ({ subjectName, id }) => {
+const CompSubjectList = ({ department, subjectList }) => {
   return (
-    <div className={cn("itemList")}>
-      <p>{subjectName}</p>
-      <button>이동</button>
-    </div>
-  );
-};
-const CompSubjectList = ({ title, subList }) => {
-  return (
-    <div className={cn("CompSubjectList")}>
-      <div className={cn("head")}>
-        <h3>{title}</h3>
+    <MenuTemplate department={department} menuName="출석체크">
+      <div className="SubListBox">
+        <SubjectList></SubjectList>
+        <SubjectList></SubjectList>
+        <SubjectList></SubjectList>
+        <SubjectList></SubjectList>
+        <SubjectList></SubjectList>
       </div>
-      <div className={cn("body")}>
-        {subList.map(list => {
-          return <div></div>;
-        })}
-      </div>
-    </div>
+    </MenuTemplate>
   );
 };
 

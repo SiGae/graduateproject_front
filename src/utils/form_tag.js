@@ -19,6 +19,7 @@ function formTag(
 }
 
 export function formID(onChange, { username }) {
+  // type, action, value, name, string
   return formTag("text", onChange, username, "username", "ID");
 }
 
