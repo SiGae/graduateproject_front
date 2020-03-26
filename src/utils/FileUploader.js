@@ -2,7 +2,7 @@ import React from "react";
 import FileUpload from "./FileUpload";
 
 const FileUploader = () => {
-  return <FileUpload url="/api/file"></FileUpload>;
+  return <FileUpload url="/makeclass"></FileUpload>;
 };
 
 export default FileUploader;

@@ -18,7 +18,7 @@ const FileUpload = ({ url }) => {
   const onClick = url => {
     const formData = new FormData();
     formData.append("file", files);
-
+    console.log("내용좀", files);
     return client
       .post(url, files)
       .then(res => {

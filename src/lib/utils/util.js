@@ -19,8 +19,7 @@ export function type_check(type) {
 
 export function roomNumberCheck(roomNumber) {
   const regex = /([0-9]{3,5})/;
-  console.log(roomNumber);
-  console.log("ROOMNUMBER", regex.exec(roomNumber));
+
   return (
     roomNumber !== "" && roomNumber !== "undefined" && regex.test(roomNumber)
   );

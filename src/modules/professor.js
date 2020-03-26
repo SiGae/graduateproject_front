@@ -22,7 +22,11 @@ export function* professorSaga() {
 }
 // INITIAL STATE
 const initialState = {
-  subjectList: null,
+  subjectList: {
+    name: null,
+    subId: null
+  },
+  studentList: [],
   department: null,
   success: null,
   error: null
@@ -34,6 +38,7 @@ const professor = handleActions(
       state,
       { payload: { subjectList, department } }
     ) => ({
+      ...state,
       subjectList,
       department,
       success: true,

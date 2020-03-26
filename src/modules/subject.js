@@ -33,7 +33,13 @@ export const change_evaluation = createAction(
 );
 export const get_file = createAction(GET_FILE, ({ file }) => ({ file }));
 // SAGA ACTION FUNCTION
-export const submit = createAction(SUBMIT, subjectInfo => subjectInfo);
+export const submit = createAction(SUBMIT, (subjectInfo, text) => {
+  console.log("SUBMIT", text);
+  return {
+    subjectInfo,
+    text
+  };
+});
 // SAGA
 const submitSaga = createRequestSaga(SUBMIT, subjectAPI.submitSubject);
 export function* subjectSaga() {
@@ -73,11 +79,12 @@ const subjectInfo = handleActions(
       produce(state, draft => {
         draft["subject"]["file"] = file;
       }),
-    [SUBMIT_SUCCESS]: (state, { payload: { success } }) =>
-      produce(state, draft => {
+    [SUBMIT_SUCCESS]: (state, { payload: { success } }) => {
+      return produce(state, draft => {
         draft["success"] = success;
         draft["error"] = null;
-      }),
+      });
+    },
     [SUBMIT_FAILURE]: (state, { payload: { error } }) =>
       produce(state, draft => {
         draft["success"] = null;

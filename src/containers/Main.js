@@ -31,3 +31,5 @@ const Main = ({ history }) => {
 };
 
 export default React.memo(withRouter(Main));
+
+//<Route path="/main/attendance" component={}

@@ -18,7 +18,9 @@ const CreateSubject = ({ history }) => {
   }));
   const { subject } = useSelector(({ subjectInfo }) => subjectInfo);
 
-  //console.log("CreateSubject", subject);
+  console.log("CreateSubject", subject);
+  console.log("FILE", subject.file);
+
   useEffect(() => {
     if (user.userOnline !== "TRUE") {
       alert("로그인 상태가 아닙니다.");
@@ -71,6 +73,7 @@ const CreateSubject = ({ history }) => {
     // 상태가 1이면 0으로 바꾼다.
   };
   // input text타입 태그에 쓰임.
+
   const onChange = e => {
     // 인풋 내용대로 상태 변화
     const data = {
@@ -86,6 +89,7 @@ const CreateSubject = ({ history }) => {
       dispatch(change_input(data));
     }
   };
+
   // file 선택
   const onChangeFile = e => {
     dispatch(
@@ -96,7 +100,9 @@ const CreateSubject = ({ history }) => {
   };
   // 제출
   const onSubmit = () => {
-    const { subName, type, roomNumber, subWeek, file } = subject;
+    //const { subName, type, roomNumber, subWeek, file } = subject;
+
+    /*
     if (subName.length < 2) {
       alert("강의명은 2자 이상으로 입력해주세요.");
       return;
@@ -124,11 +130,24 @@ const CreateSubject = ({ history }) => {
       alert("파일 선택해주세요");
       return;
     }
+    */
+    const formData = new FormData();
+    formData.append("file", subject.file);
 
-    dispatch(submit(subject));
+    formData.append("subName", subject.subName);
+    formData.append("type", subject.type);
+    formData.append("memo", subject.memo);
+    formData.append("roomNumber", subject.roomNumber);
+    formData.append("subWeek", subject.subWeek);
+    formData.append("evaluation", subject.evaluation);
+
+    dispatch(submit(formData, "text"));
+
+    //dispatch(submit(subject.file, "file"));
   };
   return (
     <CompCreateSubject
+      id={user.id}
       subject={subject}
       onClickSubWeek={onClickSubWeek}
       onClickAbsolute={onClickAbsolute}
@@ -141,3 +160,14 @@ const CreateSubject = ({ history }) => {
 };
 
 export default withRouter(CreateSubject);
+
+/**
+ * const test = {
+      subName: subject.subName,
+      type: subject.type,
+      memo: subject.memo,
+      roomNumber: subject.roomNumber,
+      subWeek: subject.subWeek,
+      evaluation: subject.evaluation
+    };
+ */
