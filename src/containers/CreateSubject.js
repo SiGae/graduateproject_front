@@ -100,9 +100,8 @@ const CreateSubject = ({ history }) => {
   };
   // 제출
   const onSubmit = () => {
-    //const { subName, type, roomNumber, subWeek, file } = subject;
+    const { subName, type, roomNumber, subWeek, file } = subject;
 
-    /*
     if (subName.length < 2) {
       alert("강의명은 2자 이상으로 입력해주세요.");
       return;
@@ -130,10 +129,9 @@ const CreateSubject = ({ history }) => {
       alert("파일 선택해주세요");
       return;
     }
-    */
+
     const formData = new FormData();
     formData.append("file", subject.file);
-
     formData.append("subName", subject.subName);
     formData.append("type", subject.type);
     formData.append("memo", subject.memo);

@@ -178,74 +178,37 @@ const CompCreateSubject = ({
     <DivTemplate>
       <h2>강의 개설</h2>
       <Body>
-        <form
-          onSubmit={onSubmit}
-          action="/makeclass_text"
-          method="post"
-          enctype="multipart/form-data"
-        >
-          <input type="file" onChange={onChangeFile} />
-          <button type="button" onClick={onSubmit}>
-            전송
-          </button>
-        </form>
-      </Body>
-    </DivTemplate>
-  );
-};
-
-export default CompCreateSubject;
-/**
- * <input
-            type="text"
-            name="subName"
-            value={subject.subName}
-            onChange={onChange}
-          />
-          <input
-            type="text"
-            name="type"
-            value={subject.type}
-            onChange={onChange}
-          />
- */
-/**<Box
-            type={"text"}
-            value={subject.subName}
-            name={"subName"}
-            string={"강의명"}
-            onChange={onChange}
-          ></Box>
-          <Box
-            type={"text"}
-            value={subject.type}
-            name={"type"}
-            string={"분반"}
-            onChange={onChange}
-          ></Box>
-          <Box
-            type={"text"}
-            value={subject.memo}
-            name={"memo"}
-            string={"메모"}
-            onChange={onChange}
-          ></Box>
-          <Box
-            type={"text"}
-            value={subject.roomNumber}
-            name={"roomNumber"}
-            string={"강의실"}
-            onChange={onChange}
-          ></Box>
-          <BoxForm>
-            <p>강의요일</p>
-          </BoxForm>
-          <SendLayout>
-            <Button gray onClick={onSubmit}>
-              개설
-            </Button>
-          </SendLayout>
- * <Week>
+        <Box
+          type={"text"}
+          value={subject.subName}
+          name={"subName"}
+          string={"강의명"}
+          onChange={onChange}
+        ></Box>
+        <Box
+          type={"text"}
+          value={subject.type}
+          name={"type"}
+          string={"분반"}
+          onChange={onChange}
+        ></Box>
+        <Box
+          type={"text"}
+          value={subject.memo}
+          name={"memo"}
+          string={"메모"}
+          onChange={onChange}
+        ></Box>
+        <Box
+          type={"text"}
+          value={subject.roomNumber}
+          name={"roomNumber"}
+          string={"강의실"}
+          onChange={onChange}
+        ></Box>
+        <BoxForm>
+          <p>강의요일</p>
+          <Week>
             <p
               type="checkbox"
               onClick={() => onClickSubWeek(0)}
@@ -278,13 +241,48 @@ export default CompCreateSubject;
               금
             </p>
           </Week>
-
-          <Evaluation
+        </BoxForm>
+        <Evaluation
           onClickAbsolute={onClickAbsolute}
           onClickRelative={onClickRelative}
           evaluation={subject.evaluation}
           onChangeFile={onChangeFile}
         />
+        <SendLayout>
+          <Button gray onClick={onSubmit}>
+            개설
+          </Button>
+        </SendLayout>
+      </Body>
+    </DivTemplate>
+  );
+};
+
+export default CompCreateSubject;
+/**
+ * 
+ * <form
+          action="/makeclass_text"
+          method="post"
+          enctype="multipart/form-data"
+        >
+ * <input
+            type="text"
+            name="subName"
+            value={subject.subName}
+            onChange={onChange}
+          />
+          <input
+            type="text"
+            name="type"
+            value={subject.type}
+            onChange={onChange}
+          />
+ */
+/**
+ * 
+
+          
  form action = "upload2.jsp" "
 
  
