@@ -19,7 +19,7 @@ const CreateSubject = ({ history }) => {
   const { subject } = useSelector(({ subjectInfo }) => subjectInfo);
 
   console.log("CreateSubject", subject);
-  console.log("FILE", subject.file);
+  console.log("login", user);
 
   useEffect(() => {
     if (user.userOnline !== "TRUE") {
@@ -131,6 +131,7 @@ const CreateSubject = ({ history }) => {
     }
 
     const formData = new FormData();
+    formData.append("userId", user.id);
     formData.append("file", subject.file);
     formData.append("subName", subject.subName);
     formData.append("type", subject.type);

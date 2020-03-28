@@ -12,8 +12,8 @@ const Attendance = ({ history }) => {
     attend: attend
   }));
 
-  console.log("로그인체크", user);
-  console.log("날짜 체크", attend.month, attend.day);
+  //console.log("로그인체크", user);
+  //console.log("날짜 체크", attend.month, attend.day);
   let lectureData = null;
   useEffect(() => {
     // Login 체크
