@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { get_attendance_data } from "../modules/attend";
+import { get_attendance_data, add_data } from "../modules/attend";
 
 const Attendance = ({ history }) => {
   const dispatch = useDispatch();
@@ -23,11 +23,27 @@ const Attendance = ({ history }) => {
       // 교수와 강의 아이디를 불러온다.
       const data = localStorage.getItem("lecture");
       lectureData = JSON.parse(data);
-      console.log(lectureData);
+
+      // 날짜 데이터 생성
+      const date = new Date();
+      dispatch(
+        add_data({
+          month: date.getMonth() + 1,
+          day: date.getDate(),
+          subName: lectureData.subName
+        })
+      );
       // 출석 정보를 가져와야 함.
-      dispatch(get_attendance_data(lectureData));
+      dispatch(
+        get_attendance_data({
+          id: lectureData.id,
+          subId: lectureData.subId,
+          month: date.getMonth() + 1,
+          day: date.getDate()
+        })
+      );
     }
-  }, [dispatch, history, user]);
+  }, []);
 
   return (
     <div>

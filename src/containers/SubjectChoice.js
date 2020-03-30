@@ -26,11 +26,12 @@ const SubjectChoice = ({ history }) => {
   }, [user, dispatch, history]);
 
   // 출석체크 버튼 클릭
-  const goToAttend = subId => {
+  const goToAttend = (subId, subName) => {
     const { id } = user;
+    console.log("강의선택", subName);
     // 로컬 데이터에 값 저장
     try {
-      localStorage.setItem("lecture", JSON.stringify({ id, subId }));
+      localStorage.setItem("lecture", JSON.stringify({ id, subId, subName }));
     } catch (e) {
       console.log("local Storage is not working");
     }

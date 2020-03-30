@@ -11,7 +11,7 @@ const CompSubjectList = ({ department, subjectList, onClick }) => {
           <SubjectList
             key={subject.id}
             subName={subject.name}
-            onClick={() => onClick(subject.id)}
+            onClick={() => onClick(subject.id, subject.name)}
           />
         ))}
       </div>

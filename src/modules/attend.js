@@ -12,14 +12,24 @@ const [
   GET_ATTENDANCE_SUCCESS,
   GET_ATTENDANCE_FAILURE
 ] = createRequestActionTypes("attend/GET_ATTENDANCE_DATA");
+// Add about date
+const ADD_DATA = "attend/ADD_DATA";
 // ACTION FUNCTION
 export const get_attendance_data = createAction(
   GET_ATTENDANCE,
-  ({ id, subId }) => ({
+
+  ({ id, subId, month, day }) => ({
     id,
-    subId
+    subId,
+    month,
+    day
   })
 );
+export const add_data = createAction(ADD_DATA, ({ month, day, subName }) => ({
+  month,
+  day,
+  subName
+}));
 // SAGA Generate function
 const getAttendSaga = createRequestSaga(GET_ATTENDANCE, attendAPI.getDate);
 export function* attendSaga() {
@@ -27,18 +37,31 @@ export function* attendSaga() {
 }
 
 const initialState = {
-  date: [],
+  month: "",
+  day: "",
+  subName: "",
+  pastDate: [],
   studentList: [],
-  curIndexDate: null,
+  curIndex: 0,
   success: null,
   error: null
 };
 
 const attend = handleActions(
   {
-    [GET_ATTENDANCE_SUCCESS]: (state, { payload: { date, success } }) =>
+    [ADD_DATA]: (state, { payload: { month, day, subName } }) =>
       produce(state, draft => {
-        draft["date"] = date;
+        draft["month"] = month;
+        draft["day"] = day;
+        draft["subName"] = subName;
+      }),
+    [GET_ATTENDANCE_SUCCESS]: (
+      state,
+      { payload: { pastDate, studentList, success } }
+    ) =>
+      produce(state, draft => {
+        draft["pastDate"] = pastDate;
+        draft["studentList"] = studentList;
         draft["success"] = success;
         draft["error"] = null;
       }),
