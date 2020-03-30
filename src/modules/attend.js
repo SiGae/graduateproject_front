@@ -4,6 +4,7 @@ import createRequestSaga, {
   createRequestActionTypes
 } from "../lib/saga/createRequestSaga";
 import * as attendAPI from "../lib/api/subject";
+import produce from "immer";
 
 // ACTION TYPE DEFINITION
 const [
@@ -20,18 +21,14 @@ export const get_attendance_data = createAction(
   })
 );
 // SAGA Generate function
-const getAttendSaga = createRequestSaga(GET_ATTENDANCE, attendAPI.getSubject);
+const getAttendSaga = createRequestSaga(GET_ATTENDANCE, attendAPI.getDate);
 export function* attendSaga() {
   yield takeLatest(GET_ATTENDANCE, getAttendSaga);
 }
 
-// initialState
-const todayDate = new Date();
 const initialState = {
-  month: todayDate.getUTCMonth() + 1,
-  day: todayDate.getDay(),
-  students: [],
-  pastDate: [],
+  date: [],
+  studentList: [],
   curIndexDate: null,
   success: null,
   error: null
@@ -39,11 +36,12 @@ const initialState = {
 
 const attend = handleActions(
   {
-    [GET_ATTENDANCE_SUCCESS]: (state, { payload: { attendData } }) => ({
-      attendData,
-      success: true,
-      error: null
-    }),
+    [GET_ATTENDANCE_SUCCESS]: (state, { payload: { date, success } }) =>
+      produce(state, draft => {
+        draft["date"] = date;
+        draft["success"] = success;
+        draft["error"] = null;
+      }),
     [GET_ATTENDANCE_FAILURE]: (state, { payload: { error } }) => ({
       ...state,
       success: null,

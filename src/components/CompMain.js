@@ -16,6 +16,7 @@ const CompMain = () => {
         </button>
       </div>
       <div className={cn("compMainMenu")}>
+        {/* eslint-disable-next-line react/jsx-pascal-case */}
         <Main_menu />
       </div>
     </div>

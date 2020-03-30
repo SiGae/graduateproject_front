@@ -3,18 +3,24 @@ import React from "react";
 import MenuTemplate from "./templateBackground/MenuTemplate";
 import SubjectList from "./list/SubjectList";
 
-const CompSubjectList = ({ department, subjectList }) => {
+const CompSubjectList = ({ department, subjectList, onClick }) => {
   return (
     <MenuTemplate department={department} menuName="출석체크">
       <div className="SubListBox">
-        <SubjectList></SubjectList>
-        <SubjectList></SubjectList>
-        <SubjectList></SubjectList>
-        <SubjectList></SubjectList>
-        <SubjectList></SubjectList>
+        {subjectList.map(subject => (
+          <SubjectList
+            key={subject.id}
+            subName={subject.name}
+            onClick={() => onClick(subject.id)}
+          />
+        ))}
       </div>
     </MenuTemplate>
   );
 };
 
 export default CompSubjectList;
+
+/**
+ *
+ */

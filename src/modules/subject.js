@@ -7,6 +7,7 @@ import { takeLatest } from "redux-saga/effects";
 import * as subjectAPI from "../lib/api/subject";
 
 // ACTION TYPE 정의
+const INITIALIZATION = "subject/INITIALSTATE";
 const CHANGE_INPUT = "subject/CHANGE_INPUT";
 const CHOOSE_WEEK = "subject/CHOOSE_WEEK";
 const CHANGE_EVALUATION = "subject/CHANGE_EVALUATION";
@@ -17,6 +18,7 @@ const [SUBMIT, SUBMIT_SUCCESS, SUBMIT_FAILURE] = createRequestActionTypes(
 );
 
 // ACTION 함수 정의
+export const initialization = createAction(INITIALIZATION);
 export const change_input = createAction(CHANGE_INPUT, ({ key, value }) => ({
   key,
   value
@@ -33,13 +35,7 @@ export const change_evaluation = createAction(
 );
 export const get_file = createAction(GET_FILE, ({ file }) => ({ file }));
 // SAGA ACTION FUNCTION
-export const submit = createAction(SUBMIT, (subjectInfo, text) => {
-  console.log("SUBMIT", text);
-  return {
-    subjectInfo,
-    text
-  };
-});
+export const submit = createAction(SUBMIT, subjectInfo => subjectInfo);
 // SAGA
 const submitSaga = createRequestSaga(SUBMIT, subjectAPI.submitSubject);
 export function* subjectSaga() {
@@ -63,6 +59,7 @@ const initialState = {
 // REDUCER
 const subjectInfo = handleActions(
   {
+    [INITIALIZATION]: state => initialState,
     [CHANGE_INPUT]: (state, { payload: { key, value } }) =>
       produce(state, draft => {
         draft["subject"][key] = value;

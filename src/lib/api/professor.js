@@ -1,3 +1,3 @@
 import client from "./client";
 
-export const professor = ({ id }) => client.get("/professor", { id });
+export const professor = ({ id }) => client.post("/professor", { id });

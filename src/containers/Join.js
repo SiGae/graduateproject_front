@@ -34,17 +34,17 @@ const Join = ({
     const { username, password, passwordConfirm, e_mail, phone } = form;
 
     if (password.length <= 2 || password !== passwordConfirm) {
-      console.log("비밀번호를 확인해주시기 바랍니다.");
+      alert("비밀번호를 확인해주시기 바랍니다.");
       return;
     }
 
     if (!email_check(e_mail)) {
-      console.log("정상적인 이메일이 아닙니다.");
+      alert("정상적인 이메일이 아닙니다.");
       return;
     }
 
     if (!phoneNum_check(phone)) {
-      console.log("정상적인 번호를 입력하세요");
+      alert("정상적인 번호를 입력하세요");
       return;
     }
 

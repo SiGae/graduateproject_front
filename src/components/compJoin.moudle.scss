@@ -3,16 +3,14 @@
 .CompJoin {
   margin: 0 auto;
   width: 100%;
-  border: 1px solid black;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   @include verticalCSS();
 }
 
 // 회원가입
 .CompHead {
-  border: 1px solid black;
   width: 80%;
   align-items: flex-start;
-  margin-bottom: 20px;
 }
 
 .CompRequest {
@@ -26,14 +24,12 @@
 // 외부 CSS
 .CompJoin form {
   @include verticalCSS();
-  border: 1px solid black;
   width: 80%;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
 
 .CompJoin .formButton {
   @include horizontalCSS();
-  border: 1px solid black;
   width: 100%;
   margin-top: 20px;
 }

@@ -10,9 +10,10 @@ const SubjectChoice = ({ history }) => {
   const { user } = useSelector(({ user }) => ({
     user: user
   }));
-  const { professor } = useSelector(({ professor }) => professor);
+  const { professor } = useSelector(({ professor }) => ({
+    professor: professor
+  }));
 
-  console.log("로그인 체크", user);
   useEffect(() => {
     // 로그인 여부
     if (user.userOnline !== "TRUE") {
@@ -22,8 +23,7 @@ const SubjectChoice = ({ history }) => {
       // 로그인 시 교수정보와 강의 데이터를 받아옴.
       dispatch(get_professor(user));
     }
-  }, [user]);
-  console.log("교수 상태 업데이트 체크", professor);
+  }, [user, dispatch, history]);
 
   // 출석체크 버튼 클릭
   const goToAttend = subId => {
@@ -36,9 +36,16 @@ const SubjectChoice = ({ history }) => {
     }
 
     // 해당 페이지로 이동.
+    history.push("/main/attend");
   };
 
-  return <CompSubjectList department="컴퓨터공학과"></CompSubjectList>;
+  return (
+    <CompSubjectList
+      department="컴퓨터공학과"
+      subjectList={professor.subjectList}
+      onClick={goToAttend}
+    ></CompSubjectList>
+  );
 };
 
 export default withRouter(SubjectChoice);

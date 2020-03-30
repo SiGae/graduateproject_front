@@ -6,6 +6,7 @@ import Header from "../components/common/Header";
 import CompMain from "../components/CompMain";
 import SubjectChoice from "./SubjectChoice";
 import CreateSubject from "./CreateSubject";
+import Attendance from "./Attendance";
 
 const Main = ({ history }) => {
   const dispatch = useDispatch();
@@ -25,6 +26,7 @@ const Main = ({ history }) => {
         <Route path="/main/menu" component={CompMain}></Route>
         <Route path="/main/subjectChoice" component={SubjectChoice}></Route>
         <Route path="/main/createSubject" component={CreateSubject}></Route>
+        <Route path="/main/attend" component={Attendance}></Route>
       </div>
     </>
   );

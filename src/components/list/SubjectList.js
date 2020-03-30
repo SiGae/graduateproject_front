@@ -14,7 +14,7 @@ const SubjectBlock = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid black;
+
     flex: 1;
   }
 `;
@@ -23,7 +23,7 @@ const StyledButton = styled(Button)``;
 const SubjectList = ({ subName, onClick }) => {
   return (
     <SubjectBlock>
-      <h3 className="subjectName">과목명</h3>
+      <h3 className="subjectName">{subName}</h3>
       <StyledButton gray={true} onClick={onClick}>
         출석체크
       </StyledButton>

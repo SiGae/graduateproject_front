@@ -4,6 +4,7 @@ import createRequestSaga, {
 } from "../lib/saga/createRequestSaga";
 import { takeLatest } from "redux-saga/effects";
 import * as profAPI from "../lib/api/professor";
+import produce from "immer";
 
 // ACTION TYPE 정의
 const [
@@ -22,32 +23,35 @@ export function* professorSaga() {
 }
 // INITIAL STATE
 const initialState = {
-  subjectList: {
-    name: null,
-    subId: null
-  },
+  subjectList: [],
   studentList: [],
   department: null,
   success: null,
   error: null
 };
 
+function objectToArray(subjectList) {
+  let arrSubjectList = [];
+  for (let idx in subjectList) {
+    const temp = arrSubjectList.concat(subjectList[idx]);
+    arrSubjectList = temp;
+  }
+  return arrSubjectList;
+}
 const professor = handleActions(
   {
     [GET_PROFESSOR_SUCCESS]: (
       state,
-      { payload: { subjectList, department } }
-    ) => ({
-      ...state,
-      subjectList,
-      department,
-      success: true,
-      error: null
-    }),
+      { payload: { subjectList, department, success } }
+    ) =>
+      produce(state, draft => {
+        draft["subjectList"] = objectToArray(subjectList);
+        draft["department"] = department;
+        draft["success"] = success;
+      }),
     [GET_PROFESSOR_FAILURE]: (state, { payload: { error } }) => ({
       ...initialState,
-      error: error,
-      success: null
+      error: error
     })
   },
   initialState

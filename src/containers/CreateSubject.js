@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { type_check, roomNumberCheck } from "../lib/utils/util";
 import {
+  initialization,
   change_input,
   choose_week,
   change_evaluation,
@@ -21,6 +22,9 @@ const CreateSubject = ({ history }) => {
   console.log("CreateSubject", subject);
   console.log("login", user);
 
+  useEffect(() => {
+    dispatch(initialization());
+  }, [dispatch]);
   useEffect(() => {
     if (user.userOnline !== "TRUE") {
       alert("로그인 상태가 아닙니다.");
@@ -140,9 +144,7 @@ const CreateSubject = ({ history }) => {
     formData.append("subWeek", subject.subWeek);
     formData.append("evaluation", subject.evaluation);
 
-    dispatch(submit(formData, "text"));
-
-    //dispatch(submit(subject.file, "file"));
+    dispatch(submit(formData));
   };
   return (
     <CompCreateSubject
