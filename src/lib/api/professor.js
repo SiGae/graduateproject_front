@@ -1,3 +1,4 @@
-import client from "./client";
+import client, { serverPath } from "./client";
 
-export const professor = ({ id }) => client.post("/professor", { id });
+export const professor = ({ id }) =>
+  client.post(serverPath + "/professor", { id });
