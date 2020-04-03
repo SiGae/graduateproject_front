@@ -1,14 +1,25 @@
 import React from "react";
 import classnames from "classnames/bind";
 import styles from "./compAttendance.module.scss";
+import styled from "styled-components";
+import Responsive from "./common/Responsive";
+import Button from "./common/Button";
+import { GoTriangleLeft, GoTriangleRight } from "react-icons/go";
 
+const CustomResponsive = styled(Responsive)`
+  margin-top: 20px;
+  padding: 0px;
+`;
 const cn = classnames.bind(styles);
 
-const StudentsList = ({ student, color }) => {
+const StudentsList = ({ student, color, onToggle }) => {
   return (
-    <div className={cn("StudentList", color)}>
+    <div
+      className={cn("StudentList", color)}
+      onClick={() => onToggle(student.id)}
+    >
       <p>{student.name}</p>
-      <p>{student.schoolId}</p>
+      <p>{student.id}</p>
     </div>
   );
 };
@@ -16,11 +27,14 @@ const StudentsList = ({ student, color }) => {
 const CompAttendance = ({
   // data
   subName,
-  date,
-  students,
+  month,
+  day,
+  studentList,
+  curIndex,
   // action
-  onCheckedAll,
-  onToggle
+  onToggle,
+  onMoveIndex,
+  onSave
 }) => {
   /**
    * CSS check 여부에 따라 색깔이 바뀌어야 함.
@@ -31,28 +45,42 @@ const CompAttendance = ({
 
   const checkColor = ["skyblue", "gray", "yellow"];
   return (
-    <div className={cn("CompAttendance")}>
+    <CustomResponsive>
       <div className={cn("SubjectHead")}>
-        <h3>{subName}</h3>
-        <p>전체선택</p>
+        <h2>{subName}</h2>
       </div>
       <div className={cn("Date")}>
+        <GoTriangleLeft
+          className={cn("left")}
+          onClick={() => onMoveIndex(curIndex - 1)}
+        />
         <p>
-          {date.month}월 {date.day}일
+          {month}월 {day}일
         </p>
+        <GoTriangleRight
+          className={cn("right")}
+          onClick={() => onMoveIndex(curIndex + 1)}
+        />
       </div>
-      {students.map(student => {
-        return (
-          <StudentsList
-            key={student.schoolId}
-            student={student}
-            color={checkColor[student.check]}
-            onToggle={onToggle}
-          ></StudentsList>
-        );
-      })}
-    </div>
+      <div className={cn("body")}>
+        {studentList.map((student, index) => {
+          return (
+            <StudentsList
+              key={student.id}
+              student={student}
+              color={checkColor[student.status]}
+              onToggle={onToggle}
+            ></StudentsList>
+          );
+        })}
+      </div>
+      <div className={cn("save")}>
+        <Button gray={true} onClick={onSave}>
+          저장
+        </Button>
+      </div>
+    </CustomResponsive>
   );
 };
 
-export default CompAttendance;
+export default React.memo(CompAttendance);

@@ -7,11 +7,13 @@ export const submitSubject = subjectInfo =>
 
 // 출석에서 사용
 // 강의 데이터를 서버 쪽에서 받아 옴
-export const getDate = ({ id, subId, month, day }) =>
-  client.post("/getCheckMode", { id, subId, month, day });
+export const getCheckDate = subId => client.post("/getCheckDate", { subId });
 
-export const getClass = ({ month, day }) =>
-  client.get("/professor/getClass", { month, day });
+export const getStudentList = ({ subId, month, day }) =>
+  client.post("/getStudentList", { subId, month, day });
+
+export const submitAttend = ({ month, day, subId, studentList }) =>
+  client.post("/attendData", { month, day, subId, studentList });
 /**
  *
  */

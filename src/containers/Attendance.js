@@ -1,55 +1,101 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { get_attendance_data, add_data } from "../modules/attend";
+import {
+  initialization,
+  get_date,
+  get_students,
+  set_subName,
+  toggle,
+  moveIndex,
+  submit_attend
+} from "../modules/attend";
+import CompAttendance from "../components/CompAttendance";
 
 const Attendance = ({ history }) => {
   const dispatch = useDispatch();
-  const { user } = useSelector(({ user }) => ({
-    user: user
-  }));
-  const { attend } = useSelector(({ attend }) => ({
-    attend: attend
-  }));
+  const { user } = useSelector(({ user }) => ({ user: user }));
+  const { attend } = useSelector(({ attend }) => ({ attend: attend }));
+  const [lecture, setLecture] = useState("");
 
-  //console.log("날짜 체크", attend.month, attend.day);
   useEffect(() => {
-    let lectureData = null;
+    dispatch(initialization());
+  }, [dispatch]);
+
+  // Mount시
+  useEffect(() => {
     // Login 체크
     if (user.userOnline !== "TRUE") {
       alert("로그아웃 상태입니다.");
       history.push("/");
     } else {
       // 교수와 강의 아이디를 불러온다.
-      const data = localStorage.getItem("lecture");
-      lectureData = JSON.parse(data);
-
-      // 날짜 데이터 생성
-      const date = new Date();
-      dispatch(
-        add_data({
-          month: date.getMonth() + 1,
-          day: date.getDate(),
-          subName: lectureData.subName
-        })
-      );
-      // 출석 정보를 가져와야 함.
-      dispatch(
-        get_attendance_data({
-          id: lectureData.id,
-          subId: lectureData.subId,
-          month: date.getMonth() + 1,
-          day: date.getDate()
-        })
-      );
+      const localLecture = JSON.parse(localStorage.getItem("lecture"));
+      setLecture(localLecture);
+      // 날짜 받아오기
+      dispatch(get_date(localLecture));
+      // 강의 정보 셋팅
+      dispatch(set_subName({ subName: localLecture.subName }));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // 마운트 뒤 부턴 이 함수 작동.
+  useEffect(() => {
+    if (attend.error !== null) return;
+    if (attend.stdStatus === true) {
+      const { subId } = lecture;
+      const { month, day } = attend.date[attend.curIndex];
+      // 출석 정보를 가져와야 함.
+      dispatch(get_students({ subId, month: month, day: day }));
+    }
+  }, [attend, dispatch, lecture]);
+
+  // onToggle
+  function onToggle(id) {
+    dispatch(toggle({ id }));
+  }
+  // onMoveIndex
+  function onMoveIndex(idx) {
+    if (attend.date.length <= idx || idx < 0) {
+      alert("요청 날짜가 더 이상 존재 하지 않습니다.");
+      return 0;
+    }
+
+    // 현재 가리키는 인덱스 조정
+    dispatch(moveIndex(idx));
+  }
+  // onSave
+  function onSave() {
+    const { month, day } = attend.date[attend.curIndex];
+    dispatch(
+      submit_attend({
+        month: month,
+        day: day,
+        subId: lecture.subId,
+        studentList: attend.studentList
+      })
+    );
+
+    history.push("/main/menu");
+  }
+
   return (
-    <div>
-      <div>일단 실험중</div>
-    </div>
+    <CompAttendance
+      month={attend.date[attend.curIndex].month}
+      day={attend.date[attend.curIndex].day}
+      subName={attend.subName}
+      studentList={attend.studentList}
+      curIndex={attend.curIndex}
+      onToggle={onToggle}
+      onMoveIndex={onMoveIndex}
+      onSave={onSave}
+    ></CompAttendance>
   );
 };
 
 export default React.memo(withRouter(Attendance));
+
+/**
+ *
+ */
