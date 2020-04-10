@@ -143,7 +143,7 @@ function Evaluation({
   onClickAbsolute,
   onClickRelative,
   evaluation,
-  onChangeFile
+  onChangeFile,
 }) {
   const relativeStyle = evaluation === 1 ? true : false;
   const absoluteStyle = evaluation === 0 ? true : false;
@@ -158,7 +158,7 @@ function Evaluation({
           절대평가
         </button>
       </div>
-      <input type="file" onChange={onChangeFile}></input>
+      <input type="file" accept=".xlsx" onChange={onChangeFile}></input>
     </BoxForm2>
   );
 }
@@ -171,7 +171,7 @@ const CompCreateSubject = ({
   onClickRelative,
   onChange,
   onChangeFile,
-  onSubmit
+  onSubmit,
 }) => {
   const { subWeek } = subject;
   return (

@@ -20,12 +20,12 @@ const SubjectBlock = styled.div`
 `;
 
 const StyledButton = styled(Button)``;
-const SubjectList = ({ subName, onClick }) => {
+const SubjectList = ({ subName, onClick, btnName }) => {
   return (
     <SubjectBlock>
       <h3 className="subjectName">{subName}</h3>
       <StyledButton gray={true} onClick={onClick}>
-        출석체크
+        {btnName}
       </StyledButton>
     </SubjectBlock>
   );
