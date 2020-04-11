@@ -8,12 +8,12 @@ import AttendPage from "../pages/AttendPage";
 import CreateSubject from "./CreateSubject";
 import ManageStudent from "../pages/ManageStudent";
 import Attendance from "./Attendance";
-import ManageList from "./ManageList";
+import Ratio from "./Ratio";
 
 const Main = ({ history }) => {
   const dispatch = useDispatch();
   const { user } = useSelector(({ user }) => ({
-    user: user,
+    user: user
   }));
 
   const onLogout = () => {
@@ -25,12 +25,14 @@ const Main = ({ history }) => {
     <>
       <Header user={user} onLogout={onLogout} />
       <div className="CompMainRoute">
+        {/* 메인메뉴 */}
         <Route path="/main/menu" component={CompMain}></Route>
         <Route path="/main/subjectChoice" component={AttendPage}></Route>
         <Route path="/main/createSubject" component={CreateSubject}></Route>
         <Route path="/main/manageStudent" component={ManageStudent}></Route>
+        {/* 2 layer */}
         <Route path="/main/attend" component={Attendance}></Route>
-        <Route path="/main/mngStudent" component={ManageList}></Route>
+        <Route path="/main/ratio" component={Ratio}></Route>
       </div>
     </>
   );
@@ -39,4 +41,4 @@ const Main = ({ history }) => {
 export default React.memo(withRouter(Main));
 
 //<Route path="/main/attendance" componen=}{}></Route>
-//
+//<Route path="/main/mngStudent" component={ManageList}></Route>

@@ -1,6 +1,6 @@
 import { createAction, handleActions } from "redux-actions";
 import createRequestSaga, {
-  createRequestActionTypes,
+  createRequestActionTypes
 } from "../lib/saga/createRequestSaga";
 import { takeLatest } from "redux-saga/effects";
 import * as profAPI from "../lib/api/professor";
@@ -10,7 +10,7 @@ import produce from "immer";
 const [
   GET_PROFESSOR,
   GET_PROFESSOR_SUCCESS,
-  GET_PROFESSOR_FAILURE,
+  GET_PROFESSOR_FAILURE
 ] = createRequestActionTypes("professor/GET_PROFESSOR");
 
 // ACTION FUNCTION 정의 객체 던지기
@@ -27,7 +27,7 @@ const initialState = {
   studentList: [],
   department: "",
   success: null,
-  error: null,
+  error: null
 };
 
 function objectToArray(subjectList) {
@@ -44,17 +44,24 @@ const professor = handleActions(
       state,
       { payload: { subjectList, department, success } }
     ) =>
-      produce(state, (draft) => {
+      produce(state, draft => {
         draft["subjectList"] = objectToArray(subjectList);
         draft["department"] = department;
         draft["success"] = success;
       }),
     [GET_PROFESSOR_FAILURE]: (state, { payload: { error } }) => ({
       ...initialState,
-      error: error,
-    }),
+      error: error
+    })
   },
   initialState
 );
 
 export default professor;
+
+/**
+ * subjectList : {
+ *  id
+ *  name
+ * }
+ */

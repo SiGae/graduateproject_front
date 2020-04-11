@@ -6,6 +6,7 @@ import user, { userSaga } from "./user";
 import professor, { professorSaga } from "./professor";
 import subjectInfo, { subjectSaga } from "./subject";
 import attend, { attendSaga } from "./attend";
+import ratio, { ratioSaga } from "./ratio";
 
 const rootReducer = combineReducers({
   clientInfos,
@@ -13,7 +14,8 @@ const rootReducer = combineReducers({
   user,
   professor,
   subjectInfo,
-  attend
+  attend,
+  ratio
 });
 
 export function* rootSaga() {
@@ -22,7 +24,8 @@ export function* rootSaga() {
     userSaga(),
     professorSaga(),
     subjectSaga(),
-    attendSaga()
+    attendSaga(),
+    ratioSaga()
   ]);
 }
 export default rootReducer;

@@ -20,13 +20,17 @@ const SubjectBlock = styled.div`
 `;
 
 const StyledButton = styled(Button)``;
-const SubjectList = ({ subName, onClick, btnName }) => {
+const SubjectList = ({ subName, onClick, functionChild }) => {
   return (
     <SubjectBlock>
       <h3 className="subjectName">{subName}</h3>
-      <StyledButton gray={true} onClick={onClick}>
-        {btnName}
-      </StyledButton>
+      {functionChild !== true ? (
+        <StyledButton gray={true} onClick={onClick}>
+          {subName}
+        </StyledButton>
+      ) : (
+        onClick()
+      )}
     </SubjectBlock>
   );
 };

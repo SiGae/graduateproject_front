@@ -19,6 +19,12 @@ export const getStudentList = ({ subId, month, day }) =>
 
 export const submitAttend = ({ month, day, subId, studentList }) =>
   client.post(serverPath + "/attendData", { month, day, subId, studentList });
-/**
- *
- */
+
+// 비율 설정에서 사용
+// 교수의 강의 채점 비율을 서버에 보냄
+export const submitRatio = ({ subId, ratioArr }) =>
+  client.post(serverPath + "/createRatio", { subId, ratioArr });
+
+// 채점 비율을 서버에서 받아 옴.
+export const getRatio = ({ subId }) =>
+  client.post(serverPath + "/getRatio", { subId });
