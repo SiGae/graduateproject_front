@@ -14,12 +14,16 @@ const SubjectBlock = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-
     flex: 1;
   }
 `;
 
-const StyledButton = styled(Button)``;
+const StyledButton = styled(Button)`
+  width: 150px;
+  @media (max-width: 550px) {
+    width: 140px;
+  }
+`;
 const SubjectList = ({ subName, onClick, functionChild }) => {
   return (
     <SubjectBlock>

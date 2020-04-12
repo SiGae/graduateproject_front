@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { sendRatio, getRatio } from "../modules/ratio";
+import { sendRatio, getRatio, input_change } from "../modules/ratio";
+import CompRatio from "../components/manage/CompRatio";
 
 const Ratio = ({ history }) => {
   const dispatch = useDispatch();
-  const { user } = useSelector(({ user }) => ({
-    user: user
+  const { user } = useSelector(({ user }) => ({ user: user }));
+  const { ratioArr } = useSelector(({ ratio }) => ({
+    ratioArr: ratio.ratioArr,
   }));
   const [lecture, setLecture] = useState("");
 
@@ -31,13 +33,27 @@ const Ratio = ({ history }) => {
       return;
     }
 
+    console.log("Lecture", lecture);
+    console.log("RatioArr", ratioArr);
     // 비율 들고오기 (과목 ID)
-    //getRatio(lecture.subId);
+    // dispatch(getRatio(lecture.subId));
   });
+
   // + 버튼 누를 시
+  // text field 입력 시
+  function onChange(e, index) {
+    const { name, value } = e.target;
+    dispatch(
+      input_change({
+        idx: index,
+        label: name,
+        contents: value,
+      })
+    );
+  }
   return (
     <div>
-      <div>실험 중..</div>
+      <CompRatio listArr={ratioArr}></CompRatio>
     </div>
   );
 };
