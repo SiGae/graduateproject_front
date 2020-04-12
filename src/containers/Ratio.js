@@ -43,11 +43,15 @@ const Ratio = ({ history }) => {
       return;
     }
 
+    if (ratio.success[0] === true) {
+      history.push("/main/manageStudent");
+    }
+
     // 비율 들고오기 (과목 ID)
-    if (ratio.success[1] && ratio.success[1] != null) {
+    if (ratio.success[1] == null) {
       dispatch(get_ratio({ subId: lecture.subId }));
     }
-  });
+  }, [dispatch, ratio, lecture, history]);
 
   // + 버튼 누를 시
   const onAddData = () => {

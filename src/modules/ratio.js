@@ -67,9 +67,9 @@ const ratio = handleActions(
       produce(state, draft => {
         draft.ratioArr.push({ name: "", ratio: "" });
       }),
-    [SEND_RATIO_SUCCESS]: (state, payload) =>
+    [SEND_RATIO_SUCCESS]: (state, { payload: { success } }) =>
       produce(state, draft => {
-        draft.success[0] = true;
+        draft.success[0] = success;
         draft.error = null;
       }),
     [SEND_RATIO_FAILURE]: (state, { payload: { error } }) =>
@@ -81,10 +81,10 @@ const ratio = handleActions(
       produce(state, draft => {
         draft.success[1] = false;
       }),
-    [GET_RATIO_SUCCESS]: (state, { payload: { ratioArr, ratio } }) =>
+    [GET_RATIO_SUCCESS]: (state, { payload: { parts, ratio } }) =>
       produce(state, draft => {
-        if (ratioArr instanceof Array) {
-          draft.ratioArr = ratioArr;
+        if (parts instanceof Array) {
+          draft.ratioArr = parts;
         }
         draft.ratioCheck = ratio;
         draft.success[1] = true;
