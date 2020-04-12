@@ -12,6 +12,7 @@ const DivTemplate = styled(Responsive)`
 
 const commonStyle = css`
   width: 140px;
+  margin-right: 20px;
 `;
 const FirstInput = styled.input`
   ${commonStyle}
