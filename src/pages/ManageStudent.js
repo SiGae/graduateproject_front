@@ -10,7 +10,6 @@ const ManageStudent = ({ history }) => {
   }));
 
   function setLecture(subId, subName) {
-    console.log("SetLecture > ", subId, subName);
     const { id } = user;
     // 로컬 데이터에 값 저장
     try {
@@ -37,7 +36,6 @@ const ManageStudent = ({ history }) => {
   };
 
   const ChildrenComponent = (subId, subName) => {
-    console.log("생성완료", subId, subName);
     return (
       <>
         <Button

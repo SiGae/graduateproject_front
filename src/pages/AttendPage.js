@@ -1,11 +1,11 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { withRouter } from "react-router-dom";
 import SubjectChoice from "../containers/SubjectChoice";
 
 const AttendPage = ({ history }) => {
   const user = useSelector(({ user }) => ({
-    user: user,
+    user: user
   }));
 
   // 출석체크 버튼 클릭

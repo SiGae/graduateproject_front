@@ -8,6 +8,7 @@ export function phoneNum_check(phone) {
   return phone !== "" && phone !== "undefined" && regex.test(phone);
 }
 
+// 분반
 export function type_check(type) {
   if (type === "" || type === "undefined" || type.length > 1) {
     return false;
@@ -17,10 +18,18 @@ export function type_check(type) {
   return regex.test(type);
 }
 
+// 강의실
 export function roomNumberCheck(roomNumber) {
   const regex = /([0-9]{3,5})/;
 
   return (
     roomNumber !== "" && roomNumber !== "undefined" && regex.test(roomNumber)
   );
+}
+
+// 숫자만
+export function onlyForNumber(data) {
+  const regex = /[^0-9]{1,3}/g;
+
+  return data !== "" && data !== "undefined" && regex.test(data);
 }

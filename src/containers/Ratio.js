@@ -1,17 +1,29 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { sendRatio, getRatio, input_change } from "../modules/ratio";
+import {
+  send_ratio,
+  get_ratio,
+  input_change,
+  add_data,
+  initialization
+} from "../modules/ratio";
 import CompRatio from "../components/manage/CompRatio";
+import { onlyForNumber } from "../lib/utils/util";
 
 const Ratio = ({ history }) => {
   const dispatch = useDispatch();
   const { user } = useSelector(({ user }) => ({ user: user }));
-  const { ratioArr } = useSelector(({ ratio }) => ({
-    ratioArr: ratio.ratioArr,
+  const { ratio } = useSelector(({ ratio }) => ({
+    ratio: ratio
   }));
   const [lecture, setLecture] = useState("");
 
+  useEffect(() => {
+    dispatch(initialization());
+  }, [dispatch]);
+
+  console.log("Render");
   // Login 검증
   useEffect(() => {
     // 로그인 여부
@@ -22,10 +34,8 @@ const Ratio = ({ history }) => {
       // 로그인 시 id, subId를 불러온다.
       const localLecture = JSON.parse(localStorage.getItem("lecture"));
       setLecture(localLecture);
-
-      console.log("Ratio");
     }
-  }, [user, dispatch, history]);
+  }, []);
 
   // 비율 들고오기
   useEffect(() => {
@@ -33,29 +43,62 @@ const Ratio = ({ history }) => {
       return;
     }
 
-    console.log("Lecture", lecture);
-    console.log("RatioArr", ratioArr);
     // 비율 들고오기 (과목 ID)
-    // dispatch(getRatio(lecture.subId));
+    if (ratio.success[1] && ratio.success[1] != null) {
+      dispatch(get_ratio({ subId: lecture.subId }));
+    }
   });
 
   // + 버튼 누를 시
+  const onAddData = () => {
+    dispatch(add_data());
+  };
+
   // text field 입력 시
-  function onChange(e, index) {
+  const onChange = (e, index) => {
     const { name, value } = e.target;
+
+    if (name == "ratio") {
+      if (value.length > 3 || onlyForNumber(value)) {
+        return;
+      }
+    }
+
+    dispatch(input_change({ idx: index, label: name, contents: value }));
+  };
+
+  // 설정 버튼 클릭 시
+  const onSendData = () => {
+    let sum = 0;
+    for (let dataIdx in ratio.ratioArr) {
+      const ratioVal = ratio.ratioArr[dataIdx].ratio;
+      sum += Number(ratioVal);
+    }
+
+    console.log("합계 : ", sum);
+    if (sum != 100 || sum > 100) {
+      alert("비율을 100%으로 맞춰주십시오.");
+      return;
+    }
+
     dispatch(
-      input_change({
-        idx: index,
-        label: name,
-        contents: value,
+      send_ratio({
+        subId: lecture.subId,
+        ratioArr: ratio.ratioArr
       })
     );
-  }
+  };
   return (
     <div>
-      <CompRatio listArr={ratioArr}></CompRatio>
+      <CompRatio
+        ratioArr={ratio.ratioArr}
+        ratioCheck={ratio.ratioCheck}
+        onChange={onChange}
+        onAddData={onAddData}
+        onSendData={onSendData}
+      ></CompRatio>
     </div>
   );
 };
 
-export default withRouter(Ratio);
+export default React.memo(withRouter(Ratio));

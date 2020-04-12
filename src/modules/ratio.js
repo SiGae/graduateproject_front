@@ -1,36 +1,42 @@
 import { createAction, handleActions } from "redux-actions";
 import produce from "immer";
 import createRequestSaga, {
-  createRequestActionTypes,
+  createRequestActionTypes
 } from "../lib/saga/createRequestSaga";
 import { takeLatest } from "redux-saga/effects";
 import * as subjectAPI from "../lib/api/subject";
 
+const INITIALIZATION = "ratio/INITIALIZATION";
 const INPUT_CHANGE = "ratio/INPUT_CHANGE";
+const ADD_DATA = "ratio/ADD_DATA";
 const [
   GET_RATIO,
   GET_RATIO_SUCCESS,
-  GET_RATIO_FAILURE,
+  GET_RATIO_FAILURE
 ] = createRequestActionTypes("ratio/GET_RATIO");
 const [
   SEND_RATIO,
   SEND_RATIO_SUCCESS,
-  SEND_RATIO_FAILURE,
+  SEND_RATIO_FAILURE
 ] = createRequestActionTypes("ratio/SEND_RATIO");
 
+// 초기화
+export const initialization = createAction(INITIALIZATION);
+// 데이터 추가
+export const add_data = createAction(ADD_DATA);
 // 평가 주체의 이름과 비율 변경 ratioArr[idx][label]
 export const input_change = createAction(
   INPUT_CHANGE,
   ({ idx, label, contents }) => ({
     idx,
     label,
-    contents,
+    contents
   })
 );
 
 export const send_ratio = createAction(SEND_RATIO, ({ subId, ratioArr }) => ({
   subId,
-  ratioArr,
+  ratioArr
 }));
 
 export const get_ratio = createAction(GET_RATIO, ({ subId }) => ({ subId }));
@@ -43,50 +49,58 @@ export function* ratioSaga() {
 }
 
 const initialState = {
-  ratioArr: [
-    {
-      name: "출석",
-      ratio: "10%",
-    },
-    {
-      name: "테스트",
-      ratio: "20%",
-    },
-  ],
+  ratioArr: [],
+  ratioCheck: false,
   // SEND, GET
   success: [null, null],
-  error: null,
+  error: null
 };
 
 const ratio = handleActions(
   {
+    [INITIALIZATION]: () => initialState,
     [INPUT_CHANGE]: (state, { payload: { idx, label, contents } }) =>
-      produce(state, (draft) => {
+      produce(state, draft => {
         draft.ratioArr[idx][label] = contents;
       }),
+    [ADD_DATA]: state =>
+      produce(state, draft => {
+        draft.ratioArr.push({ name: "", ratio: "" });
+      }),
     [SEND_RATIO_SUCCESS]: (state, payload) =>
-      produce(state, (draft) => {
+      produce(state, draft => {
         draft.success[0] = true;
         draft.error = null;
       }),
     [SEND_RATIO_FAILURE]: (state, { payload: { error } }) =>
-      produce(state, (draft) => {
+      produce(state, draft => {
         draft.error = error;
         draft.success[0] = false;
       }),
-    [GET_RATIO_SUCCESS]: (state, { payload: { ratioArr } }) =>
-      produce(state, (draft) => {
-        draft.ratioArr = ratioArr;
+    [GET_RATIO]: state =>
+      produce(state, draft => {
+        draft.success[1] = false;
+      }),
+    [GET_RATIO_SUCCESS]: (state, { payload: { ratioArr, ratio } }) =>
+      produce(state, draft => {
+        if (ratioArr instanceof Array) {
+          draft.ratioArr = ratioArr;
+        }
+        draft.ratioCheck = ratio;
         draft.success[1] = true;
         draft.error = null;
       }),
     [GET_RATIO_FAILURE]: (state, { payload: { error } }) =>
-      produce(state, (draft) => {
+      produce(state, draft => {
         draft.error = error;
         draft.success[1] = false;
-      }),
+      })
   },
   initialState
 );
 
 export default ratio;
+
+/**
+ *
+ */

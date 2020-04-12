@@ -3,6 +3,7 @@ import styled, { css } from "styled-components";
 import classNames from "classnames/bind";
 import styles from "./CompRatio.module.scss";
 import Responsive from "../common/Responsive";
+import Button from "../common/Button";
 import { AiFillPlusCircle } from "react-icons/ai";
 
 const DivTemplate = styled(Responsive)`
@@ -12,7 +13,6 @@ const DivTemplate = styled(Responsive)`
 
 const commonStyle = css`
   width: 140px;
-  margin-right: 20px;
 `;
 const FirstInput = styled.input`
   ${commonStyle}
@@ -23,28 +23,51 @@ const SecondInput = styled.input`
   ${commonStyle}
   height: 50px;
 `;
-const DataList = ({ onChange }) => {
+const DataList = ({ onChange, ratio }) => {
   return (
     <div className={cn("listBody")}>
-      <FirstInput placeholder={"첫 번째"}></FirstInput>
-      <SecondInput></SecondInput>
+      <FirstInput
+        placeholder="평가이름"
+        name="name"
+        value={ratio.name}
+        onChange={onChange}
+      ></FirstInput>
+      <SecondInput
+        placeholder="%"
+        name="ratio"
+        value={ratio.ratio}
+        onChange={onChange}
+      ></SecondInput>
     </div>
   );
 };
 
 const cn = classNames.bind(styles);
-const CompRatio = ({ listArr, onChange }) => {
+const CompRatio = ({ ratioArr, onChange, onAddData, onSendData }) => {
   return (
     <DivTemplate>
       <div className={cn("body")}>
-        {listArr.length !== 0 &&
-          listArr.map((ratio, index) => (
-            <DataList key={index} onChange={(e) => onChange(e, index)} />
+        {ratioArr &&
+          ratioArr.map((ratio, index) => (
+            <DataList
+              key={index}
+              ratio={ratio}
+              onChange={e => onChange(e, index)}
+            />
           ))}
-        <AiFillPlusCircle className={cn("plus")} />
+        <AiFillPlusCircle className={cn("plus")} onClick={onAddData} />
+      </div>
+      <div className={cn("footer")}>
+        <Button gray="true" onClick={onSendData}>
+          설정
+        </Button>
       </div>
     </DivTemplate>
   );
 };
 
-export default CompRatio;
+export default React.memo(CompRatio);
+
+/**
+ *
+ */
