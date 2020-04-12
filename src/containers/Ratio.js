@@ -73,15 +73,24 @@ const Ratio = ({ history }) => {
 
   // 설정 버튼 클릭 시
   const onSendData = () => {
+    let checkName = true;
     let sum = 0;
     for (let dataIdx in ratio.ratioArr) {
       const ratioVal = ratio.ratioArr[dataIdx].ratio;
+      if (ratio.ratioArr[dataIdx].name == "") {
+        checkName = false;
+      }
       sum += Number(ratioVal);
     }
 
     console.log("합계 : ", sum);
     if (sum != 100 || sum > 100) {
       alert("비율을 100%으로 맞춰주십시오.");
+      return;
+    }
+
+    if (checkName == false) {
+      alert("설정되지 않은 이름이 있습니다.");
       return;
     }
 
