@@ -9,6 +9,7 @@ import CreateSubject from "./CreateSubject";
 import ManageStudent from "../pages/ManageStudent";
 import Attendance from "./Attendance";
 import Ratio from "./Ratio";
+import Transcript from "./Transcript";
 
 const Main = ({ history }) => {
   const dispatch = useDispatch();
@@ -33,6 +34,7 @@ const Main = ({ history }) => {
         {/* 2 layer */}
         <Route path="/main/attend" component={Attendance}></Route>
         <Route path="/main/ratio" component={Ratio}></Route>
+        <Route path="/main/transcript" component={Transcript}></Route>
       </div>
     </>
   );

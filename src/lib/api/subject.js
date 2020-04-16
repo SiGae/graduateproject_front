@@ -2,7 +2,7 @@ import client, { serverPath } from "./client";
 
 // 강의 생성에서 사용
 // 강의 데이터를 서버쪽으로 넘김
-export const submitSubject = subjectInfo =>
+export const submitSubject = (subjectInfo) =>
   client.post(
     serverPath + "/makeclass_text",
     subjectInfo,
@@ -11,7 +11,7 @@ export const submitSubject = subjectInfo =>
 
 // 출석에서 사용
 // 강의 데이터를 서버 쪽에서 받아 옴
-export const getCheckDate = subId =>
+export const getCheckDate = (subId) =>
   client.post(serverPath + "/getCheckDate", { subId });
 
 export const getStudentList = ({ subId, month, day }) =>
@@ -28,3 +28,11 @@ export const submitRatio = ({ subId, ratioArr }) =>
 // 채점 비율을 서버에서 받아 옴.
 export const getRatio = ({ subId }) =>
   client.post(serverPath + "/getRatio", { subId });
+
+// 점수 평가 페이지에서 입력되어진 학생 별 점수 정보들을 받아옴
+export const getScore = ({ subId }) =>
+  client.post(serverPath + "/getScore", { subId });
+
+// 점수 평가 페이지에서 입력된 정보들을 서버로 보냄
+export const SendScore = ({ subId, studentList, perfectScore }) =>
+  client.post(serverPath + "/sendScore", { subId, studentList, perfectScore });

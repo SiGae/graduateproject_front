@@ -6,6 +6,7 @@ import {
   get_ratio,
   input_change,
   add_data,
+  remove_ratio,
   initialization
 } from "../modules/ratio";
 import CompRatio from "../components/manage/CompRatio";
@@ -35,6 +36,7 @@ const Ratio = ({ history }) => {
       const localLecture = JSON.parse(localStorage.getItem("lecture"));
       setLecture(localLecture);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // 비율 들고오기
@@ -62,7 +64,7 @@ const Ratio = ({ history }) => {
   const onChange = (e, index) => {
     const { name, value } = e.target;
 
-    if (name == "ratio") {
+    if (name === "ratio") {
       if (value.length > 3 || onlyForNumber(value)) {
         return;
       }
@@ -71,25 +73,30 @@ const Ratio = ({ history }) => {
     dispatch(input_change({ idx: index, label: name, contents: value }));
   };
 
+  // 리스트 더블 클릭 시
+  const onDoubleClick = idx => {
+    dispatch(remove_ratio({ idx }));
+  };
+
   // 설정 버튼 클릭 시
   const onSendData = () => {
     let checkName = true;
     let sum = 0;
     for (let dataIdx in ratio.ratioArr) {
       const ratioVal = ratio.ratioArr[dataIdx].ratio;
-      if (ratio.ratioArr[dataIdx].name == "") {
+      if (ratio.ratioArr[dataIdx].name === "") {
         checkName = false;
       }
       sum += Number(ratioVal);
     }
 
     console.log("합계 : ", sum);
-    if (sum != 100 || sum > 100) {
+    if (sum !== 100 || sum > 100) {
       alert("비율을 100%으로 맞춰주십시오.");
       return;
     }
 
-    if (checkName == false) {
+    if (checkName === false) {
       alert("설정되지 않은 이름이 있습니다.");
       return;
     }
@@ -101,14 +108,15 @@ const Ratio = ({ history }) => {
       })
     );
   };
+
   return (
     <div>
       <CompRatio
         ratioArr={ratio.ratioArr}
-        ratioCheck={ratio.ratioCheck}
         onChange={onChange}
         onAddData={onAddData}
         onSendData={onSendData}
+        onDoubleClick={onDoubleClick}
       ></CompRatio>
     </div>
   );

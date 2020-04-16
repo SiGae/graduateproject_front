@@ -9,6 +9,7 @@ import * as subjectAPI from "../lib/api/subject";
 const INITIALIZATION = "ratio/INITIALIZATION";
 const INPUT_CHANGE = "ratio/INPUT_CHANGE";
 const ADD_DATA = "ratio/ADD_DATA";
+const REMOVE_RATIO = "ratio/REMOVE_RATIO";
 const [
   GET_RATIO,
   GET_RATIO_SUCCESS,
@@ -24,6 +25,10 @@ const [
 export const initialization = createAction(INITIALIZATION);
 // 데이터 추가
 export const add_data = createAction(ADD_DATA);
+// 데이터 삭제
+export const remove_ratio = createAction(REMOVE_RATIO, ({ idx }) => ({
+  idx
+}));
 // 평가 주체의 이름과 비율 변경 ratioArr[idx][label]
 export const input_change = createAction(
   INPUT_CHANGE,
@@ -67,6 +72,11 @@ const ratio = handleActions(
       produce(state, draft => {
         draft.ratioArr.push({ name: "", ratio: "" });
       }),
+    [REMOVE_RATIO]: (state, { payload: { idx } }) =>
+      produce(state, draft => {
+        console.log("REMOVE_RATIO", idx);
+        draft.ratioArr.splice(idx, 1);
+      }),
     [SEND_RATIO_SUCCESS]: (state, { payload: { success } }) =>
       produce(state, draft => {
         draft.success[0] = success;
@@ -86,8 +96,7 @@ const ratio = handleActions(
         if (parts instanceof Array) {
           draft.ratioArr = parts;
         }
-        draft.ratioCheck = ratio;
-        draft.success[1] = true;
+        draft.success[1] = ratio;
         draft.error = null;
       }),
     [GET_RATIO_FAILURE]: (state, { payload: { error } }) =>

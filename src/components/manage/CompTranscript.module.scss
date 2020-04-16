@@ -1,0 +1,262 @@
+@import "../../lib/styles/positionCSS.module.scss";
+
+// top with studentBox
+@mixin ContainerSize() {
+  @include horizontalCSS();
+  justify-content: space-around;
+  height: 100px;
+}
+
+// ratioList with label
+@mixin ItemListSize() {
+  @include horizontalCSS();
+  flex: 3;
+
+  min-width: 10px;
+  height: 100%;
+
+  input {
+    min-width: 40px;
+  }
+}
+
+// stdInfo with whisper
+@mixin BoxSize() {
+  flex: 1;
+  min-width: 250px;
+  height: 100%;
+}
+
+// topBox with label.input
+@mixin ItemCss() {
+  width: 100%;
+  height: 100%;
+  margin-left: 10px;
+}
+
+// Top with Contents
+@mixin MainContainerCSS() {
+  padding: 10px;
+
+  @media (max-width: 800px) {
+    padding: 0px;
+  }
+}
+// Top
+.top {
+  @include ContainerSize();
+  @include MainContainerCSS();
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.ratioList {
+  @include ItemListSize();
+}
+
+.whisper {
+  @include BoxSize();
+
+  @media (max-width: 800px) {
+    min-width: 0px;
+    max-width: 0px;
+  }
+}
+
+.topBox {
+  @include verticalCSS();
+  @include ItemCss();
+
+  p {
+    display: flex;
+    align-items: center;
+    margin: 0px;
+    flex: 1;
+  }
+
+  input {
+    flex: 2;
+    text-align: center;
+    min-width: 40px;
+    width: 100%;
+  }
+}
+
+// Contents
+.contents {
+  margin-top: 40px;
+  margin-bottom: 150px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  @include MainContainerCSS();
+}
+
+.studentBox {
+  @include ContainerSize();
+  margin-top: 15px;
+  height: 70px;
+
+  &:nth-child(1) {
+    margin-top: 0px;
+  }
+  & {
+    align-content: space-around;
+  }
+
+  input {
+    text-align: center;
+  }
+
+  @media (max-width: 800px) {
+    @include verticalCSS();
+    height: 300px;
+    margin-top: 40px;
+  }
+}
+
+.label {
+  @include ItemListSize();
+
+  input {
+    @include ItemCss();
+    border: 0;
+    border-radius: 0.5rem;
+    background: rgba(236, 236, 236, 0.931);
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  @media (max-width: 800px) {
+    @include verticalCSS();
+    width: 100%;
+  }
+}
+
+.stdInfo {
+  @include BoxSize();
+  display: flex;
+
+  p {
+    // position
+    @include horizontalCSS();
+    margin: 0px;
+    // size
+    width: 100%;
+    height: 100%;
+    // status
+    border-radius: 0.5rem;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    color: white;
+
+    &:nth-child(1) {
+      background: rgba(117, 180, 74, 100);
+    }
+    &:nth-child(2) {
+      margin-left: 5px;
+      background: rgba(156, 201, 125, 100);
+    }
+  }
+
+  @media (max-width: 800px) {
+    @include verticalCSS();
+    width: 100%;
+
+    p {
+      &:nth-child(2) {
+        margin: 0px;
+      }
+    }
+  }
+}
+
+.submit {
+  // position
+  position: fixed;
+  bottom: 10px;
+  right: 40px;
+
+  button {
+    width: 100px;
+    height: 120px;
+    border-radius: 5rem;
+    background: rgba(243, 113, 113, 0.938);
+    &:hover {
+      background: rgba(253, 157, 157, 0.938);
+    }
+  }
+
+  @media (max-width: 1024px) {
+    right: 20px;
+  }
+  @media (max-width: 800px) {
+    right: 10px;
+  }
+}
+
+/////////////////////////////////////////////////////////////////
+
+/**
+ p {
+    border-radius: 0.5rem;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    flex-grow: 3;
+
+    &:nth-child(1) {
+      background: rgba(117, 180, 74, 100);
+    }
+    &:nth-child(2) {
+      margin-left: 5px;
+      background: rgba(156, 201, 125, 100);
+    }
+    min-width: 120px;
+    height: 100%;
+  }
+
+  input {
+    //  status
+    border: 0;
+    border-radius: 0.5rem;
+    background: rgba(236, 236, 236, 0.931);
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    //  size
+    min-width: 30px;
+    flex-grow: 1;
+    height: 100%;
+    //  position
+    margin-left: 5px;
+    text-align: center;
+  }
+*/
+
+/** Student Box
+ @include horizontalCSS();
+  justify-content: space-between;
+  padding: 5px;
+  height: 50px;
+  margin-top: 2px;
+
+  @media (max-width: 768px) {
+    @include verticalCSS();
+    height: 100%;
+    margin-top: 30px;
+
+    p {
+      margin: 0 auto;
+
+      width: 100%;
+      height: 30px;
+
+      &:nth-child(2) {
+        margin: 0;
+        margin-bottom: 10px;
+      }
+    }
+
+    input {
+      width: 100%;
+      height: 20px;
+      margin: 0;
+    }
+  }
+*/

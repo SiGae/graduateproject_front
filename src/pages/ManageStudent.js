@@ -32,7 +32,7 @@ const ManageStudent = ({ history }) => {
     // Lecture에 (과목 ID, 과목 Name) 저장.
     setLecture(subId, subName);
     // 학생 성적 입력 페이지로 이동
-    console.log("학생 성적 입력 페이지로 이동");
+    history.push("/main/transcript");
   };
 
   const ChildrenComponent = (subId, subName) => {

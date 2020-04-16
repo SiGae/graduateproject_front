@@ -23,9 +23,9 @@ const SecondInput = styled.input`
   ${commonStyle}
   height: 50px;
 `;
-const DataList = ({ onChange, ratio }) => {
+const DataList = ({ onChange, ratio, index, onDoubleClick }) => {
   return (
-    <div className={cn("listBody")}>
+    <div className={cn("listBody")} onDoubleClick={onDoubleClick}>
       <FirstInput
         placeholder="평가이름"
         name="name"
@@ -43,7 +43,13 @@ const DataList = ({ onChange, ratio }) => {
 };
 
 const cn = classNames.bind(styles);
-const CompRatio = ({ ratioArr, onChange, onAddData, onSendData }) => {
+const CompRatio = ({
+  ratioArr,
+  onChange,
+  onAddData,
+  onSendData,
+  onDoubleClick
+}) => {
   return (
     <DivTemplate>
       <div className={cn("body")}>
@@ -53,6 +59,7 @@ const CompRatio = ({ ratioArr, onChange, onAddData, onSendData }) => {
               key={index}
               ratio={ratio}
               onChange={e => onChange(e, index)}
+              onDoubleClick={() => onDoubleClick(index)}
             />
           ))}
         <AiFillPlusCircle className={cn("plus")} onClick={onAddData} />
