@@ -12,6 +12,7 @@ import {
   send_transcript,
 } from "../modules/transcript";
 import CompTranscript from "../components/manage/CompTranscript";
+import { setScoreCheck } from "../lib/utils/util";
 
 const Transcript = ({ history }) => {
   const dispatch = useDispatch();
@@ -24,7 +25,6 @@ const Transcript = ({ history }) => {
     transcript: transcript,
   }));
   const [lecture, setLecture] = useState("");
-
   // Phase 1
   // 초기화
   useEffect(() => {
@@ -88,6 +88,9 @@ const Transcript = ({ history }) => {
   const perfScoreChange = useCallback(
     (e) => {
       const { name, value } = e.target;
+      if (setScoreCheck(value)) {
+        return;
+      }
       dispatch(perfect_score_input({ name, value }));
     },
     [dispatch]
@@ -96,11 +99,22 @@ const Transcript = ({ history }) => {
   const stdScoreChange = useCallback(
     ({ e, stdIdx }) => {
       const { name, value } = e.target;
+      if (setScoreCheck(value) || transcript.perfectScore[name] === "") {
+        return;
+      }
+      const maxNum = Number(transcript.perfectScore[name]);
+      const minNum = Number(value);
+
+      if (maxNum < minNum) {
+        alert("만점 점수보다 작게 입력해주십시오.");
+        return;
+      }
+
       console.log("stdScoreChange : ", stdIdx);
       console.log("NAME : ", name, "VALUE : ", value);
       dispatch(student_score_input({ stdIdx, name, value }));
     },
-    [dispatch]
+    [dispatch, transcript.perfectScore]
   );
 
   // Sever 저장
@@ -121,3 +135,7 @@ const Transcript = ({ history }) => {
 };
 
 export default React.memo(withRouter(Transcript));
+
+/**
+ *
+ */

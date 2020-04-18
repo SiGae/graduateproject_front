@@ -108,13 +108,13 @@ const transcript = handleActions(
       produce(state, (draft) => {
         draft.perfectScore[name] = value;
       }),
-    [GET_TRANSCRIPT]: (state) =>
+
+    [GET_TRANSCRIPT_SUCCESS]: (state, { payload: { data, score } }) =>
       produce(state, (draft) => {
-        draft.success[0] = false;
-      }),
-    [GET_TRANSCRIPT_SUCCESS]: (state, { payload: { studentList } }) =>
-      produce(state, (draft) => {
-        draft.studentList = studentList;
+        console.log("GET_TRANSCRIPT : ", data);
+        draft.studentList = data.studentList;
+        draft.perfectScore = data.perfectScore;
+        draft.success[0] = score;
       }),
     [GET_TRANSCRIPT_FAILURE]: (state, { payload: { error } }) =>
       produce(state, (draft) => {
@@ -140,3 +140,10 @@ const transcript = handleActions(
 );
 
 export default transcript;
+
+/**
+ *    [GET_TRANSCRIPT]: (state) =>
+      produce(state, (draft) => {
+        draft.success[0] = false;
+      }),
+ */

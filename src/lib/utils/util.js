@@ -33,3 +33,9 @@ export function onlyForNumber(data) {
 
   return data !== "" && data !== "undefined" && regex.test(data);
 }
+
+// 스코어 입력할 때 검사
+export function setScoreCheck(data) {
+  const regex = /[^0-9]/g;
+  return data !== "" && data !== "undefined" && regex.test(data);
+}
