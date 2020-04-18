@@ -11,6 +11,7 @@ const INITIALIZATION = "transcript/SCORE_INITIALIZATION";
 const STUDENT_SCORE_INPUT = "transcript/STUDENT_SCORE_INPUT";
 const SET_STUDENTLIST = "transcript/SET_STUDENTLIST";
 const PERFECT_SCORE_INPUT = "transcript/PERFECT_SCORE_CHANGE";
+const SET_PERFECT_SCORE = "transcript/SET_PERFECT_SCORE";
 
 const [
   GET_TRANSCRIPT,
@@ -49,6 +50,10 @@ export const send_transcript = createAction(
     perfectScore: transcript.perfectScore,
   })
 );
+export const set_perfectScore = createAction(
+  SET_PERFECT_SCORE,
+  ({ length }) => ({ length })
+);
 
 /************************** SAGA *********************/
 const getTranscriptSaga = createRequestSaga(
@@ -77,6 +82,7 @@ function inputArr(maxLabelLength) {
   for (let i = 0; i < maxLabelLength; i++) {
     stringArr.push("");
   }
+
   return stringArr;
 }
 
@@ -101,7 +107,6 @@ const transcript = handleActions(
     [INITIALIZATION]: () => initialState,
     [STUDENT_SCORE_INPUT]: (state, { payload: { stdIdx, name, value } }) =>
       produce(state, (draft) => {
-        console.log("STUDENT_SCORE_INPUT", stdIdx, name, value);
         draft.studentList[stdIdx].label[name] = value;
       }),
     [PERFECT_SCORE_INPUT]: (state, { payload: { name, value } }) =>
@@ -111,7 +116,6 @@ const transcript = handleActions(
 
     [GET_TRANSCRIPT_SUCCESS]: (state, { payload: { data, score } }) =>
       produce(state, (draft) => {
-        console.log("GET_TRANSCRIPT : ", data);
         draft.studentList = data.studentList;
         draft.perfectScore = data.perfectScore;
         draft.success[0] = score;
@@ -133,7 +137,11 @@ const transcript = handleActions(
       produce(state, (draft) => {
         const newArr = inputArr(maxLabelLength);
         draft.studentList = newLabel(studentList, newArr);
-        draft.perfectScore = newArr;
+        // draft.perfectScore = newArr;
+      }),
+    [SET_PERFECT_SCORE]: (state, { payload: { length } }) =>
+      produce(state, (draft) => {
+        draft.perfectScore = inputArr(length);
       }),
   },
   initialState

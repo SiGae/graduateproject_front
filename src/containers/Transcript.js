@@ -10,6 +10,7 @@ import {
   student_score_input,
   perfect_score_input,
   send_transcript,
+  set_perfectScore,
 } from "../modules/transcript";
 import CompTranscript from "../components/manage/CompTranscript";
 import { setScoreCheck } from "../lib/utils/util";
@@ -61,12 +62,21 @@ const Transcript = ({ history }) => {
       alert("비율을 먼저 입력해주세요.");
       history.push("/main/menu");
     }
-    if (ratio.success[1] === true && transcript.success[0] === false) {
+    if (ratio.success[1] === true && transcript.success[0] === null) {
       console.log("서버에 데이터 존재x");
+      // 만점 점수를 만든다.
+      dispatch(set_perfectScore({ length: ratio.ratioArr.length }));
       // studentList 불러온다
       dispatch(get_students({ subId: lecture.subId, month: "", day: "" }));
     }
-  }, [dispatch, lecture, ratio.success, transcript.success, history]);
+  }, [
+    dispatch,
+    lecture,
+    ratio.success,
+    transcript.success,
+    history,
+    ratio.ratioArr.length,
+  ]);
   // Phase 3
   useEffect(() => {
     if (
