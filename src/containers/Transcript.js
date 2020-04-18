@@ -57,12 +57,16 @@ const Transcript = ({ history }) => {
       return;
     }
 
+    if (ratio.success[1] === false) {
+      alert("비율을 먼저 입력해주세요.");
+      history.push("/main/menu");
+    }
     if (ratio.success[1] === true && transcript.success[0] === false) {
       console.log("서버에 데이터 존재x");
       // studentList 불러온다
       dispatch(get_students({ subId: lecture.subId, month: "", day: "" }));
     }
-  }, [dispatch, lecture, ratio.success, transcript.success]);
+  }, [dispatch, lecture, ratio.success, transcript.success, history]);
   // Phase 3
   useEffect(() => {
     if (
@@ -119,8 +123,26 @@ const Transcript = ({ history }) => {
 
   // Sever 저장
   const submitToServer = useCallback(() => {
+    const { studentList, perfectScore } = transcript;
+    const { ratioArr } = ratio;
+
+    for (let pIdx in perfectScore) {
+      for (let sIdx in studentList) {
+        if (perfectScore[pIdx] < studentList[sIdx].label[pIdx]) {
+          alert(
+            studentList[sIdx].name +
+              "의 " +
+              ratioArr[pIdx].name +
+              "를 바꿔주세요"
+          );
+          return;
+        }
+      }
+    }
+
     dispatch(send_transcript({ subId: lecture.subId, transcript }));
-  }, [dispatch, lecture.subId, transcript]);
+    history.push("/main/menu");
+  }, [dispatch, lecture.subId, transcript, ratio, history]);
 
   return (
     <CompTranscript
