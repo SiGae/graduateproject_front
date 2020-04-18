@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { type_check, roomNumberCheck } from "../lib/utils/util";
@@ -8,19 +8,16 @@ import {
   choose_week,
   change_evaluation,
   get_file,
-  submit
+  submit,
 } from "../modules/subject";
 import CompCreateSubject from "../components/CompCreateSubject";
 
 const CreateSubject = ({ history }) => {
   const dispatch = useDispatch();
   const { user } = useSelector(({ user }) => ({
-    user: user
+    user: user,
   }));
-  const { subject } = useSelector(({ subjectInfo }) => subjectInfo);
-
-  console.log("CreateSubject", subject);
-  console.log("login", user);
+  const { subject, success } = useSelector(({ subjectInfo }) => subjectInfo);
 
   useEffect(() => {
     dispatch(initialization());
@@ -32,78 +29,94 @@ const CreateSubject = ({ history }) => {
     }
   }, [history, user]);
 
-  // 월화수목금 선택
-  const onClickSubWeek = index => {
-    const { subWeek } = subject;
+  useEffect(() => {
+    if (success === true) {
+      history.push("/main/menu");
+    }
+  }, [dispatch, history, success]);
 
-    // true => false, false => true
-    subWeek[index] === true
-      ? dispatch(
-          choose_week({
-            index: index,
-            value: false
-          })
-        )
-      : dispatch(
-          choose_week({
-            index: index,
-            value: true
-          })
-        );
-  };
+  // 월화수목금 선택
+  const onClickSubWeek = useCallback(
+    (index) => {
+      const subWeek = subject.subWeek;
+
+      // true => false, false => true
+      subWeek[index] === true
+        ? dispatch(
+            choose_week({
+              index: index,
+              value: false,
+            })
+          )
+        : dispatch(
+            choose_week({
+              index: index,
+              value: true,
+            })
+          );
+    },
+    [dispatch, subject.subWeek]
+  );
   // 상대평가, 절대평가 선택
-  const onClickAbsolute = () => {
-    const { evaluation } = subject;
+  const onClickAbsolute = useCallback(() => {
+    const evaluation = subject.evaluation;
     // 상태가 1이면 0으로 바꾼다.
     if (evaluation === 1) {
       dispatch(
         change_evaluation({
-          value: 0
+          value: 0,
         })
       );
     }
     // 상태가 0이면 아무 행동 안함.
-  };
-  const onClickRelative = () => {
-    const { evaluation } = subject;
+  }, [dispatch, subject.evaluation]);
+
+  const onClickRelative = useCallback(() => {
+    const evaluation = subject.evaluation;
     // 상태가 0이면 1으로 바꾼다.
     if (evaluation === 0) {
       dispatch(
         change_evaluation({
-          value: 1
+          value: 1,
         })
       );
     }
     // 상태가 1이면 0으로 바꾼다.
-  };
+  }, [dispatch, subject.evaluation]);
   // input text타입 태그에 쓰임.
 
-  const onChange = e => {
-    // 인풋 내용대로 상태 변화
-    const data = {
-      key: e.target.name,
-      value: e.target.value
-    };
-    if (data.key !== "type" || data.value === "") {
-      dispatch(change_input(data));
-      return;
-    }
+  const onChange = useCallback(
+    (e) => {
+      // 인풋 내용대로 상태 변화
+      const data = {
+        key: e.target.name,
+        value: e.target.value,
+      };
+      if (data.key !== "type" || data.value === "") {
+        dispatch(change_input(data));
+        return;
+      }
 
-    if (type_check(data.value)) {
-      dispatch(change_input(data));
-    }
-  };
+      if (type_check(data.value)) {
+        dispatch(change_input(data));
+      }
+    },
+    [dispatch]
+  );
 
   // file 선택
-  const onChangeFile = e => {
-    dispatch(
-      get_file({
-        file: e.target.files[0]
-      })
-    );
-  };
+  const onChangeFile = useCallback(
+    (e) => {
+      dispatch(
+        get_file({
+          file: e.target.files[0],
+        })
+      );
+    },
+    [dispatch]
+  );
   // 제출
-  const onSubmit = () => {
+  const onSubmit = useCallback(() => {
     const { subName, type, roomNumber, subWeek, file } = subject;
 
     if (subName.length < 2) {
@@ -145,7 +158,8 @@ const CreateSubject = ({ history }) => {
     formData.append("evaluation", subject.evaluation);
 
     dispatch(submit(formData));
-  };
+  }, [dispatch, subject, user.id]);
+
   return (
     <CompCreateSubject
       id={user.id}
