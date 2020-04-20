@@ -24,13 +24,13 @@ const StyledButton = styled(Button)`
     width: 140px;
   }
 `;
-const SubjectList = ({ subName, onClick, functionChild }) => {
+const SubjectList = ({ subName, onClick, functionChild, btnName }) => {
   return (
     <SubjectBlock>
       <h3 className="subjectName">{subName}</h3>
       {functionChild !== true ? (
         <StyledButton gray={true} onClick={onClick}>
-          {subName}
+          {btnName}
         </StyledButton>
       ) : (
         onClick()
