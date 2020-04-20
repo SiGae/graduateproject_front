@@ -10,8 +10,10 @@ import {
   student_score_input,
   perfect_score_input,
   send_transcript,
+  set_perfectScore,
 } from "../modules/transcript";
 import CompTranscript from "../components/manage/CompTranscript";
+import { setScoreCheck } from "../lib/utils/util";
 
 const Transcript = ({ history }) => {
   const dispatch = useDispatch();
@@ -24,7 +26,6 @@ const Transcript = ({ history }) => {
     transcript: transcript,
   }));
   const [lecture, setLecture] = useState("");
-
   // Phase 1
   // 초기화
   useEffect(() => {
@@ -57,12 +58,25 @@ const Transcript = ({ history }) => {
       return;
     }
 
-    if (ratio.success[1] === true && transcript.success[0] === false) {
+    if (ratio.success[1] === false) {
+      alert("비율을 먼저 입력해주세요.");
+      history.push("/main/menu");
+    }
+    if (ratio.success[1] === true && transcript.success[0] === null) {
       console.log("서버에 데이터 존재x");
+      // 만점 점수를 만든다.
+      dispatch(set_perfectScore({ length: ratio.ratioArr.length }));
       // studentList 불러온다
       dispatch(get_students({ subId: lecture.subId, month: "", day: "" }));
     }
-  }, [dispatch, lecture, ratio.success, transcript.success]);
+  }, [
+    dispatch,
+    lecture,
+    ratio.success,
+    transcript.success,
+    history,
+    ratio.ratioArr.length,
+  ]);
   // Phase 3
   useEffect(() => {
     if (
@@ -88,6 +102,9 @@ const Transcript = ({ history }) => {
   const perfScoreChange = useCallback(
     (e) => {
       const { name, value } = e.target;
+      if (setScoreCheck(value)) {
+        return;
+      }
       dispatch(perfect_score_input({ name, value }));
     },
     [dispatch]
@@ -96,17 +113,46 @@ const Transcript = ({ history }) => {
   const stdScoreChange = useCallback(
     ({ e, stdIdx }) => {
       const { name, value } = e.target;
+      if (setScoreCheck(value) || transcript.perfectScore[name] === "") {
+        return;
+      }
+      const maxNum = Number(transcript.perfectScore[name]);
+      const minNum = Number(value);
+
+      if (maxNum < minNum) {
+        alert("만점 점수보다 작게 입력해주십시오.");
+        return;
+      }
+
       console.log("stdScoreChange : ", stdIdx);
       console.log("NAME : ", name, "VALUE : ", value);
       dispatch(student_score_input({ stdIdx, name, value }));
     },
-    [dispatch]
+    [dispatch, transcript.perfectScore]
   );
 
   // Sever 저장
   const submitToServer = useCallback(() => {
+    const { studentList, perfectScore } = transcript;
+    const { ratioArr } = ratio;
+
+    for (let pIdx in perfectScore) {
+      for (let sIdx in studentList) {
+        if (perfectScore[pIdx] < studentList[sIdx].label[pIdx]) {
+          alert(
+            studentList[sIdx].name +
+              "의 " +
+              ratioArr[pIdx].name +
+              "를 바꿔주세요"
+          );
+          return;
+        }
+      }
+    }
+
     dispatch(send_transcript({ subId: lecture.subId, transcript }));
-  }, [dispatch, lecture.subId, transcript]);
+    history.push("/main/menu");
+  }, [dispatch, lecture.subId, transcript, ratio, history]);
 
   return (
     <CompTranscript
@@ -121,3 +167,7 @@ const Transcript = ({ history }) => {
 };
 
 export default React.memo(withRouter(Transcript));
+
+/**
+ *
+ */

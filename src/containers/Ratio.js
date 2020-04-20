@@ -7,7 +7,7 @@ import {
   input_change,
   add_data,
   remove_ratio,
-  initialization
+  initialization,
 } from "../modules/ratio";
 import CompRatio from "../components/manage/CompRatio";
 import { onlyForNumber } from "../lib/utils/util";
@@ -16,7 +16,7 @@ const Ratio = ({ history }) => {
   const dispatch = useDispatch();
   const { user } = useSelector(({ user }) => ({ user: user }));
   const { ratio } = useSelector(({ ratio }) => ({
-    ratio: ratio
+    ratio: ratio,
   }));
   const [lecture, setLecture] = useState("");
 
@@ -24,7 +24,6 @@ const Ratio = ({ history }) => {
     dispatch(initialization());
   }, [dispatch]);
 
-  console.log("Render");
   // Login 검증
   useEffect(() => {
     // 로그인 여부
@@ -74,7 +73,7 @@ const Ratio = ({ history }) => {
   };
 
   // 리스트 더블 클릭 시
-  const onDoubleClick = idx => {
+  const onDoubleClick = (idx) => {
     dispatch(remove_ratio({ idx }));
   };
 
@@ -104,7 +103,7 @@ const Ratio = ({ history }) => {
     dispatch(
       send_ratio({
         subId: lecture.subId,
-        ratioArr: ratio.ratioArr
+        ratioArr: ratio.ratioArr,
       })
     );
   };

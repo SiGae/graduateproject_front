@@ -16,7 +16,7 @@ const buttonStyle = css`
     background: #22b8cf;
   }
 
-  ${props =>
+  ${(props) =>
     props.gray &&
     css`
       background: black;
@@ -34,7 +34,7 @@ const StyledLink = styled(Link)`
   ${buttonStyle}
 `;
 
-const Button = props => {
+const Button = (props) => {
   return props.to ? (
     <StyledLink {...props} gray={props.gray ? 1 : 0} />
   ) : (

@@ -31,7 +31,7 @@ export const getRatio = ({ subId }) =>
 
 // 점수 평가 페이지에서 입력되어진 학생 별 점수 정보들을 받아옴
 export const getScore = ({ subId }) =>
-  client.post(serverPath + "/getScore", { subId });
+  client.post(serverPath + "/getTranscript", { subId });
 
 // 점수 평가 페이지에서 입력된 정보들을 서버로 보냄
 export const SendScore = ({ subId, studentList, perfectScore }) =>
