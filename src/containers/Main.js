@@ -10,11 +10,13 @@ import ManageStudent from "../pages/ManageStudent";
 import Attendance from "./Attendance";
 import Ratio from "./Ratio";
 import Transcript from "./Transcript";
+import ManageGrade from "./ManageGrade";
+import GradePage from "../pages/GradePage";
 
 const Main = ({ history }) => {
   const dispatch = useDispatch();
   const { user } = useSelector(({ user }) => ({
-    user: user
+    user: user,
   }));
 
   const onLogout = () => {
@@ -30,8 +32,10 @@ const Main = ({ history }) => {
         <Route path="/main/menu" component={CompMain}></Route>
         <Route path="/main/subjectChoice" component={AttendPage}></Route>
         <Route path="/main/createSubject" component={CreateSubject}></Route>
-        <Route path="/main/manageStudent" component={ManageStudent}></Route>
+        <Route path="/main/subManagePage" component={GradePage}></Route>
         {/* 2 layer */}
+        <Route path="/main/manageStudent" component={ManageStudent}></Route>
+        <Route path="/main/manageGrade" component={ManageGrade}></Route>
         <Route path="/main/attend" component={Attendance}></Route>
         <Route path="/main/ratio" component={Ratio}></Route>
         <Route path="/main/transcript" component={Transcript}></Route>

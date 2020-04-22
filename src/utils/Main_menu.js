@@ -21,9 +21,15 @@ function Main_menu() {
       {makeMultiBox("강의 시간표", "#FFE13C", "/main/menu")}
       {makeMultiBox("강의 개설", "skyblue", "/main/createSubject")}
       {makeMultiBox("학생 관리", "#3296FF", "/main/manageStudent")}
-      {makeMultiBox("점수 입력", "#90AFFF", "/main/menu")}
+      {makeMultiBox("등급 수정", "#90AFFF", "/main/subManagePage")}
     </div>
   );
 }
 
 export default Main_menu;
+
+/**
+ * Component 없앤 것
+ *
+ *
+ */

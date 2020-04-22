@@ -1,7 +1,7 @@
 import { createAction, handleActions } from "redux-actions";
 import { takeLatest } from "redux-saga/effects";
 import createRequestSaga, {
-  createRequestActionTypes
+  createRequestActionTypes,
 } from "../lib/saga/createRequestSaga";
 import * as attendAPI from "../lib/api/subject";
 import produce from "immer";
@@ -13,12 +13,12 @@ const [GET_DATE, GET_DATE_SUCCESS, GET_DATE_FAILURE] = createRequestActionTypes(
 const [
   GET_STUDENTS,
   GET_STUDENTS_SUCCESS,
-  GET_STUDENTS_FAILURE
+  GET_STUDENTS_FAILURE,
 ] = createRequestActionTypes("attend/GET_ATTENDANCE");
 const [
   SUBMIT_ATTEND,
   SUBMIT_ATTEND_SUCCESS,
-  SUBMIT_ATTEND_FAILURE
+  SUBMIT_ATTEND_FAILURE,
 ] = createRequestActionTypes("attend/SUBMIT_ATTEND");
 // Add about date
 const INITIALIZATION = "attend/INITIALIZATION";
@@ -45,14 +45,14 @@ export const submit_attend = createAction(
 export const set_date = createAction(SET_DATE, ({ month, day, subName }) => ({
   month,
   day,
-  subName
+  subName,
 }));
 // set subject name
 export const set_subName = createAction(SET_SUBNAME, ({ subName }) => subName);
 // change studenList status.
 export const toggle = createAction(TOGGLE, ({ id }) => id);
 // move index
-export const moveIndex = createAction(MOVE_INDEX, curIndex => curIndex);
+export const moveIndex = createAction(MOVE_INDEX, (curIndex) => curIndex);
 
 // SAGA Generate function
 const getDateSaga = createRequestSaga(GET_DATE, attendAPI.getCheckDate);
@@ -77,7 +77,7 @@ const initialState = {
   curIndex: 0,
   stdStatus: false,
   success: null, // save
-  error: null
+  error: null,
 };
 
 function objectListToArray(studentList) {
@@ -99,7 +99,7 @@ function strDateToObject(date) {
     const [month, day] = val.split("/");
     objectDate.push({
       month: month,
-      day: day
+      day: day,
     });
   }
 
@@ -108,40 +108,40 @@ function strDateToObject(date) {
 
 const attend = handleActions(
   {
-    [INITIALIZATION]: state => initialState,
+    [INITIALIZATION]: (state) => initialState,
     [SET_DATE]: (state, { payload: { month, day } }) =>
-      produce(state, draft => {
+      produce(state, (draft) => {
         draft["month"] = month;
         draft["day"] = day;
       }),
     [SET_SUBNAME]: (state, { payload: subName }) =>
-      produce(state, draft => {
+      produce(state, (draft) => {
         draft.subName = subName;
       }),
     [TOGGLE]: (state, { payload: id }) =>
-      produce(state, draft => {
-        const student = draft.studentList.find(student => student.id === id);
+      produce(state, (draft) => {
+        const student = draft.studentList.find((student) => student.id === id);
         student.status = (student.status + 1) % 3;
       }),
     [MOVE_INDEX]: (state, { payload: curIndex }) =>
-      produce(state, draft => {
+      produce(state, (draft) => {
         draft.curIndex = curIndex;
         draft.stdStatus = true;
       }),
     [GET_DATE_SUCCESS]: (state, { payload: { date } }) =>
-      produce(state, draft => {
+      produce(state, (draft) => {
         draft.date = strDateToObject(date);
         draft.curIndex = date.length - 1;
         draft.stdStatus = true;
         draft.error = null;
       }),
     [GET_DATE_FAILURE]: (state, { payload: { error } }) =>
-      produce(state, draft => {
+      produce(state, (draft) => {
         draft.error = error;
         draft.success = null;
       }),
     [GET_STUDENTS_SUCCESS]: (state, { payload }) =>
-      produce(state, draft => {
+      produce(state, (draft) => {
         draft.studentList = objectListToArray(payload);
         draft.stdStatus = false;
         draft["error"] = null;
@@ -149,18 +149,18 @@ const attend = handleActions(
     [GET_STUDENTS_FAILURE]: (state, { payload: { error } }) => ({
       ...state,
       success: null,
-      error: error
+      error: error,
     }),
     [SUBMIT_ATTEND_SUCCESS]: (state, { payload: { success } }) =>
-      produce(state, draft => {
+      produce(state, (draft) => {
         draft.success = success;
         draft.error = null;
       }),
     [SUBMIT_ATTEND_FAILURE]: (state, { payload: { error } }) =>
-      produce(state, draft => {
+      produce(state, (draft) => {
         draft.success = null;
         draft.error = error;
-      })
+      }),
   },
   initialState
 );

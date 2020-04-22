@@ -138,7 +138,9 @@ const Transcript = ({ history }) => {
 
     for (let pIdx in perfectScore) {
       for (let sIdx in studentList) {
-        if (perfectScore[pIdx] < studentList[sIdx].label[pIdx]) {
+        if (
+          Number(perfectScore[pIdx]) < Number(studentList[sIdx].label[pIdx])
+        ) {
           alert(
             studentList[sIdx].name +
               "의 " +

@@ -8,6 +8,7 @@ import subjectInfo, { subjectSaga } from "./subject";
 import attend, { attendSaga } from "./attend";
 import ratio, { ratioSaga } from "./ratio";
 import transcript, { transcriptSaga } from "./transcript";
+import grade, { gradeSaga } from "./grade";
 
 const rootReducer = combineReducers({
   clientInfos,
@@ -17,7 +18,8 @@ const rootReducer = combineReducers({
   subjectInfo,
   attend,
   ratio,
-  transcript
+  transcript,
+  grade,
 });
 
 export function* rootSaga() {
@@ -28,7 +30,8 @@ export function* rootSaga() {
     subjectSaga(),
     attendSaga(),
     ratioSaga(),
-    transcriptSaga()
+    transcriptSaga(),
+    gradeSaga(),
   ]);
 }
 export default rootReducer;

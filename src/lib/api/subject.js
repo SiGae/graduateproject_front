@@ -36,3 +36,7 @@ export const getScore = ({ subId }) =>
 // 점수 평가 페이지에서 입력된 정보들을 서버로 보냄
 export const SendScore = ({ subId, studentList, perfectScore }) =>
   client.post(serverPath + "/sendScore", { subId, studentList, perfectScore });
+
+// 직관적인 등급 수정
+export const getGrade = ({ subId }) =>
+  client.post(serverPath + "/getGrade", { subId });
