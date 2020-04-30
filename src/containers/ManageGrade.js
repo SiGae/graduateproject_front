@@ -21,7 +21,6 @@ const ManageGrade = ({ history }) => {
   const dispatch = useDispatch();
   const { user } = useSelector(({ user }) => ({ user }));
   const { grade } = useSelector(({ grade }) => ({ grade }));
-  const { ratio } = useSelector(({ ratio }) => ({ ratio }));
   const [lecture, setLecture] = useState("");
   const [students, setStudents] = useState([]);
   const [isHundred, setIsHundred] = useState(false);
@@ -102,31 +101,25 @@ const ManageGrade = ({ history }) => {
 
   // Phase 2
   useEffect(() => {
-    if (lecture === "") {
-      return;
-    }
-
-    // 비율 들고오기 (과목 ID)
-    if (ratio.success[1] == null) {
-      dispatch(get_ratio({ subId: lecture.subId }));
-    }
-  }, [dispatch, ratio.success, lecture]);
-
-  // Phase 3
-  useEffect(() => {
     // 존재 : 강의, 비율, 학생 리스트
-    if (
-      lecture === "" ||
-      ratio.success[1] !== true ||
-      grade.success[0] !== true
-    ) {
+    if (lecture === "" || grade.success[0] !== true) {
       return;
     }
-
     // 학점 순으로 정렬
     setStudents(sortStudentList(grade.studentList));
     onModifyRatio();
-  }, [lecture, grade, ratio.success, onModifyRatio]);
+  }, [lecture, grade, onModifyRatio]);
+
+  // Phase 3
+  useEffect(() => {
+    if (lecture === "" || grade.success[0] !== true) {
+      return;
+    }
+
+    if (grade.success[1]) {
+      history.push("/main/menu");
+    }
+  }, [lecture, grade.success, history]);
 
   // Grade change
   const itemClick = useCallback(

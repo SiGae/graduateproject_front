@@ -1,17 +1,19 @@
 import React from "react";
 import { Route, withRouter } from "react-router-dom";
+import loadable from "@loadable/component";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../modules/user";
 import Header from "../components/common/Header";
-import CompMain from "../components/CompMain";
-import AttendPage from "../pages/AttendPage";
-import CreateSubject from "./CreateSubject";
-import ManageStudent from "../pages/ManageStudent";
-import Attendance from "./Attendance";
-import Ratio from "./Ratio";
-import Transcript from "./Transcript";
-import ManageGrade from "./ManageGrade";
-import GradePage from "../pages/GradePage";
+
+const CompMain = loadable(() => import("../components/CompMain"));
+const AttendPage = loadable(() => import("../pages/AttendPage"));
+const CreateSubject = loadable(() => import("./CreateSubject"));
+const ManageStudent = loadable(() => import("../pages/ManageStudent"));
+const Attendance = loadable(() => import("./Attendance"));
+const Ratio = loadable(() => import("./Ratio"));
+const Transcript = loadable(() => import("./Transcript"));
+const ManageGrade = loadable(() => import("./ManageGrade"));
+const GradePage = loadable(() => import("../pages/GradePage"));
 
 const Main = ({ history }) => {
   const dispatch = useDispatch();
@@ -48,3 +50,16 @@ export default React.memo(withRouter(Main));
 
 //<Route path="/main/attendance" componen=}{}></Route>
 //<Route path="/main/mngStudent" component={ManageList}></Route>
+/**
+ * 
+import CompMain from "../components/CompMain";
+import AttendPage from "../pages/AttendPage";
+import CreateSubject from "./CreateSubject";
+import ManageStudent from "../pages/ManageStudent";
+import Attendance from "./Attendance";
+import Ratio from "./Ratio";
+import Transcript from "./Transcript";
+import ManageGrade from "./ManageGrade";
+import GradePage from "../pages/GradePage";
+
+ */
