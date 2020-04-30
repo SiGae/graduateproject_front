@@ -4,14 +4,20 @@ import { withRouter } from "react-router-dom";
 import { get_professor } from "../modules/professor";
 import CompSubjectList from "../components/CompSubjectList";
 
-const SubjectChoice = ({ menuName, menuBtn, history, functionChild }) => {
+const SubjectChoice = ({
+  menuName,
+  menuBtn,
+  history,
+  functionChild,
+  department,
+}) => {
   // 로그인 정보와 교수 정보를 받아온다.
   const dispatch = useDispatch();
   const { user } = useSelector(({ user }) => ({
-    user: user
+    user: user,
   }));
   const { professor } = useSelector(({ professor }) => ({
-    professor: professor
+    professor: professor,
   }));
 
   useEffect(() => {
@@ -27,7 +33,7 @@ const SubjectChoice = ({ menuName, menuBtn, history, functionChild }) => {
 
   return (
     <CompSubjectList
-      department="컴퓨터공학과"
+      department={department || "컴퓨터공학과"}
       subjectList={professor.subjectList}
       onClick={menuBtn}
       menuName={menuName}

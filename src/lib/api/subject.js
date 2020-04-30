@@ -40,3 +40,11 @@ export const SendScore = ({ subId, studentList, perfectScore }) =>
 // 직관적인 등급 수정
 export const getGrade = ({ subId }) =>
   client.post(serverPath + "/getGrade", { subId });
+
+// 등급 수정된 학생 보내기
+export const sendGrade = ({ subId, studentList, gradeRatioArr }) =>
+  client.post(serverPath + "/manageGrade", {
+    subId,
+    studentList,
+    gradeRatioArr,
+  });

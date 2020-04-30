@@ -5,7 +5,7 @@ import SubjectChoice from "../containers/SubjectChoice";
 
 const AttendPage = ({ history }) => {
   const user = useSelector(({ user }) => ({
-    user: user
+    user: user,
   }));
 
   // 출석체크 버튼 클릭

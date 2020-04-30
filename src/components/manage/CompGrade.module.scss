@@ -1,0 +1,154 @@
+@import "../../lib/styles/positionCSS.module.scss";
+
+@mixin posConfirm() {
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+}
+
+@mixin head_footer() {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+@mixin head_footer_item() {
+  margin-right: 10px;
+  min-width: 100px;
+  height: 2em;
+}
+
+.head {
+  @include posConfirm();
+  @include head_footer();
+  height: 90px;
+
+  .grade {
+    @include head_footer_item();
+    display: flex;
+    width: 400px;
+
+    input {
+      flex: 1;
+      min-width: 50px;
+      text-align: center;
+      margin-right: 3px;
+      border: none;
+      border-bottom: 1px solid lightgray;
+    }
+
+    button {
+      flex: 1;
+      border: 0px;
+      padding: 0;
+      background: rgba(54, 96, 172, 100);
+      font-size: 15px;
+      font-weight: 580;
+      &:hover {
+        background: rgba(97, 136, 205, 100);
+      }
+    }
+  }
+}
+
+.body {
+  @include posConfirm();
+  @include verticalCSS();
+  min-height: 300px;
+  padding: 10px;
+
+  & > p {
+    margin: 0;
+    font-size: 13px;
+    color: gray;
+    margin-bottom: 5px;
+    cursor: pointer;
+
+    &.clicked {
+      color: blue;
+    }
+  }
+  .item {
+    @include horizontalCSS();
+    justify-content: space-around;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 0.9rem;
+    width: 100%;
+    height: 50px;
+    margin-top: 3px;
+    cursor: pointer;
+    transition: 0.5s;
+
+    &:last-child {
+      margin-bottom: 10px;
+    }
+
+    &.gray {
+      // F
+      background: lightgray;
+    }
+
+    // A
+    &.red {
+      background: rgba(255, 125, 125, 100);
+      &.plus {
+        background: rgba(255, 90, 90, 100);
+      }
+    }
+    // B
+    &.blue {
+      background: rgba(144, 171, 220, 100);
+      &.plus {
+        background: rgba(112, 147, 210, 100);
+      }
+    }
+    // C
+    &.green {
+      background: rgba(154, 205, 125, 100);
+      &.plus {
+        background: rgba(130, 193, 95, 100);
+      }
+    }
+    // D
+    &.yellow {
+      background: rgba(255, 237, 129, 100);
+      &.plus {
+        background: rgba(255, 223, 33, 100);
+      }
+    }
+
+    p {
+      margin: 5px;
+    }
+  }
+}
+
+.footer {
+  @include posConfirm();
+  @include head_footer();
+  height: 100px;
+  margin-bottom: 20px;
+
+  .save {
+    @include head_footer_item();
+    @include horizontalCSS();
+
+    button {
+      width: 100%;
+      height: 100%;
+      background: rgba(54, 96, 172, 100);
+      &:hover {
+        background: rgba(97, 136, 205, 100);
+      }
+    }
+  }
+}
+
+.alert {
+  display: flex;
+  justify-content: flex-end;
+  p {
+    font-size: 13px;
+    margin: 0px 10px 0px 0px;
+    color: red;
+  }
+}
