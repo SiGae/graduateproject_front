@@ -22,6 +22,11 @@
   justify-content: space-between;
   padding-left: 10px;
   padding-right: 10px;
+
+  p {
+    font-weight: bold;
+    cursor: pointer;
+  }
 }
 
 .Date {

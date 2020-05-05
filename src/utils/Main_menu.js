@@ -16,11 +16,9 @@ function makeMultiBox(text, color, src) {
 function Main_menu() {
   return (
     <div className={cn("utilsMultiMenu")}>
-      {makeMultiBox("정보 수정", "#FF8282", "/main/menu")}
-      {makeMultiBox("출석 체크", "#F5AF64", "/main/subjectChoice")}
-      {makeMultiBox("강의 시간표", "#FFE13C", "/main/menu")}
-      {makeMultiBox("강의 개설", "skyblue", "/main/createSubject")}
-      {makeMultiBox("학생 관리", "#3296FF", "/main/manageStudent")}
+      {makeMultiBox("출석 체크", "#FF8282", "/main/subjectChoice")}
+      {makeMultiBox("강의 개설", "#FFE13C", "/main/createSubject")}
+      {makeMultiBox("학생 관리", "skyblue", "/main/manageStudent")}
       {makeMultiBox("등급 수정", "#90AFFF", "/main/subManagePage")}
     </div>
   );

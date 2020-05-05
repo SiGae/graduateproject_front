@@ -20,8 +20,15 @@
 .head {
   @include posConfirm();
   @include head_footer();
+  justify-content: space-between;
   height: 90px;
-
+  .statistics {
+    margin-left: 30px;
+    p {
+      font-weight: bold;
+      cursor: pointer;
+    }
+  }
   .grade {
     @include head_footer_item();
     display: flex;
@@ -29,7 +36,7 @@
 
     input {
       flex: 1;
-      min-width: 50px;
+      min-width: 40px;
       text-align: center;
       margin-right: 3px;
       border: none;
@@ -47,8 +54,12 @@
         background: rgba(97, 136, 205, 100);
       }
     }
-  }
-}
+
+    @media (max-width: 590px) {
+      width: 300px;
+    }
+  } // END GRADE
+} // END HEAD
 
 .body {
   @include posConfirm();

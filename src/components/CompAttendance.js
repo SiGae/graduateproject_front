@@ -5,6 +5,7 @@ import styled from "styled-components";
 import Responsive from "./common/Responsive";
 import Button from "./common/Button";
 import { GoTriangleLeft, GoTriangleRight } from "react-icons/go";
+import AttendModal from "./popup/AttendModal";
 
 const CustomResponsive = styled(Responsive)`
   margin-top: 20px;
@@ -31,10 +32,13 @@ const CompAttendance = ({
   day,
   studentList,
   curIndex,
+  dialVisible,
+  subId,
   // action
   onToggle,
   onMoveIndex,
-  onSave
+  onSave,
+  onPopupVisible,
 }) => {
   /**
    * CSS check 여부에 따라 색깔이 바뀌어야 함.
@@ -48,6 +52,7 @@ const CompAttendance = ({
     <CustomResponsive>
       <div className={cn("SubjectHead")}>
         <h2>{subName}</h2>
+        <p onClick={() => onPopupVisible(true)}>출석현황</p>
       </div>
       <div className={cn("Date")}>
         <GoTriangleLeft
@@ -79,6 +84,11 @@ const CompAttendance = ({
           저장
         </Button>
       </div>
+      <AttendModal
+        isVisible={dialVisible}
+        subId={subId}
+        cstOnClickAway={() => onPopupVisible(false)}
+      />
     </CustomResponsive>
   );
 };

@@ -19,6 +19,10 @@ const [
   GET_TRANSCRIPT_FAILURE,
 ] = createRequestActionTypes("transcript/GET_SCORE");
 
+const [GET_LIST, GET_LIST_SUCCESS, GET_LIST_FAILURE] = createRequestActionTypes(
+  "transcript/GET_LIST"
+);
+
 const [
   SEND_TRANSCRIPT,
   SEND_TRANSCRIPT_SUCCESS,
@@ -27,6 +31,7 @@ const [
 
 /********************** ACTION **********************/
 export const initialization = createAction(INITIALIZATION);
+export const get_list = createAction(GET_LIST, ({ subId }) => ({ subId }));
 export const student_score_input = createAction(
   STUDENT_SCORE_INPUT,
   ({ stdIdx, name, value }) => ({ stdIdx, name, value })
@@ -60,6 +65,8 @@ const getTranscriptSaga = createRequestSaga(
   GET_TRANSCRIPT,
   subjectAPI.getScore
 );
+
+const getListSaga = createRequestSaga(GET_LIST, subjectAPI.getList);
 const sendTranscriptSaga = createRequestSaga(
   SEND_TRANSCRIPT,
   subjectAPI.SendScore
@@ -67,13 +74,15 @@ const sendTranscriptSaga = createRequestSaga(
 export function* transcriptSaga() {
   yield takeLatest(GET_TRANSCRIPT, getTranscriptSaga);
   yield takeLatest(SEND_TRANSCRIPT, sendTranscriptSaga);
+  yield takeLatest(GET_LIST, getListSaga);
 }
 
 /************************* INIT **********************/
 const initialState = {
   studentList: [],
   perfectScore: [],
-  success: [null, null], // 0 = getStudentList, 1 = submit
+  // 0 getTrans 1 submit 2 getList, 3 setStd
+  success: [null, null, null, null],
   error: null,
 };
 
@@ -98,6 +107,7 @@ function newLabel(studentList, stringArr) {
     });
   }
 
+  console.log("newSTUDNETLIST : ", newStudentList);
   return newStudentList;
 }
 
@@ -113,11 +123,19 @@ const transcript = handleActions(
       produce(state, (draft) => {
         draft.perfectScore[name] = value;
       }),
-
+    [GET_LIST_SUCCESS]: (state, { payload: { data, success } }) =>
+      produce(state, (draft) => {
+        draft.studentList = data;
+        draft.success[2] = success;
+      }),
+    [GET_LIST_FAILURE]: (state, { payload: { error } }) =>
+      produce(state, (draft) => {
+        draft.error = error;
+      }),
     [GET_TRANSCRIPT_SUCCESS]: (state, { payload: { data, score } }) =>
       produce(state, (draft) => {
-        draft.studentList = data.studentList;
-        draft.perfectScore = data.perfectScore;
+        draft.studentList = data ? data.studentList : [];
+        draft.perfectScore = data ? data.perfectScore : [];
         draft.success[0] = score;
       }),
     [GET_TRANSCRIPT_FAILURE]: (state, { payload: { error } }) =>
@@ -137,6 +155,7 @@ const transcript = handleActions(
       produce(state, (draft) => {
         const newArr = inputArr(maxLabelLength);
         draft.studentList = newLabel(studentList, newArr);
+        draft.success[3] = studentList ? true : false;
         // draft.perfectScore = newArr;
       }),
     [SET_PERFECT_SCORE]: (state, { payload: { length } }) =>
@@ -148,10 +167,3 @@ const transcript = handleActions(
 );
 
 export default transcript;
-
-/**
- *    [GET_TRANSCRIPT]: (state) =>
-      produce(state, (draft) => {
-        draft.success[0] = false;
-      }),
- */

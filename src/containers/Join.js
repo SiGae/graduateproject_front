@@ -1,6 +1,11 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { onChangeInput, initialization, register } from "../modules/login";
+import {
+  onChangeInput,
+  initialization,
+  register,
+  auth_init,
+} from "../modules/login";
 import CompJoin from "../components/CompJoin";
 import { email_check, phoneNum_check } from "../lib/utils/util";
 import { withRouter } from "react-router-dom";
@@ -17,18 +22,19 @@ const Join = ({
   onChangeInput,
   initialization,
   register,
-  check
+  check,
+  auth_init,
 }) => {
-  const onChange = e => {
+  const onChange = (e) => {
     const { name, value } = e.target;
     onChangeInput({
       form: "register",
       key: name,
-      value
+      value,
     });
   };
 
-  const onSubmit = e => {
+  const onSubmit = (e) => {
     console.log("작동확인");
     e.preventDefault();
     const { username, password, passwordConfirm, e_mail, phone } = form;
@@ -70,8 +76,9 @@ const Join = ({
 
     if (auth === "false") {
       alert("아이디가 중복");
+      auth_init();
     }
-  }, [auth, authError, history, initialization]);
+  }, [auth, authError, history, initialization, auth_init]);
 
   return <CompJoin form={form} onChange={onChange} onSubmit={onSubmit} />;
 };
@@ -81,11 +88,12 @@ export default connect(
     form: clientInfos["register"],
     auth: clientInfos["auth"],
     authError: clientInfos["authError"],
-    user: user["user"]
+    user: user["user"],
   }),
   {
     onChangeInput,
     initialization,
-    register
+    register,
+    auth_init,
   }
 )(withRouter(Join));

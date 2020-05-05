@@ -1,13 +1,22 @@
 import React from "react";
 import classNames from "classnames/bind";
 import styles from "./CompGrade.module.scss";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import Responsive from "../common/Responsive";
 import Button from "../../components/common/Button";
+import AttendModal from "../popup/AttendModal";
 
 const cn = classNames.bind(styles);
 const Template = styled(Responsive)`
   padding: 0px;
+
+  ${(props) =>
+    props.dialVisible &&
+    css`
+      html {
+        overflow: hidden;
+      }
+    `}
 `;
 
 // inputRatioList
@@ -62,18 +71,25 @@ const ItemList = ({ itemClick, itemDoubleClick, student }) => {
 };
 
 const CompGrade = ({
-  itemClick,
-  switchForNot,
   studentList,
   gradeRatioArr,
+  dialVisible,
+  subId,
+  // ACTION
+  itemClick,
+  switchForNot,
   onChange,
   onSubmit,
   fMode,
   isHundred,
+  onPopupStat,
 }) => {
   return (
-    <Template>
+    <Template dialVisible={dialVisible}>
       <div className={cn("head")}>
+        <div className={cn("statistics")}>
+          <p onClick={() => onPopupStat(true)}>출석 통계</p>
+        </div>
         <div className={cn("grade")}>
           {gradeRatioArr.map((value, index) => (
             <CompGradeRatio
@@ -105,6 +121,11 @@ const CompGrade = ({
           <Button onClick={onSubmit}>저장</Button>
         </div>
       </div>
+      <AttendModal
+        isVisible={dialVisible}
+        cstOnClickAway={() => onPopupStat(false)}
+        subId={subId}
+      />
     </Template>
   );
 };

@@ -1,10 +1,11 @@
 import { createAction, handleActions } from "redux-actions";
-import CreateRequestSaga, {
+import createRequestSaga, {
   createRequestActionTypes,
 } from "../lib/saga/createRequestSaga";
 import { takeLatest } from "redux-saga/effects";
 import * as subApi from "../lib/api/subject";
 import produce from "immer";
+import { useCallback } from "react";
 
 /********************** Action Type *******************/
 const INITIALIZATION = "grade/INITIALIZATION";
@@ -30,6 +31,7 @@ export const change_input = createAction(CHANGE_INPUT, ({ name, value }) => ({
 export const get_studentList = createAction(GET_STUDENTLIST, ({ subId }) => ({
   subId,
 }));
+
 export const send_studentList = createAction(
   SEND_STUDENTLIST,
   ({ subId, studentList, gradeRatioArr }) => ({
@@ -48,8 +50,9 @@ export const grade_modify = createAction(
   })
 );
 /********************** Action Saga *******************/
-const getStudentListSaga = CreateRequestSaga(GET_STUDENTLIST, subApi.getGrade);
-const sendStudentListSaga = CreateRequestSaga(
+const getStudentListSaga = createRequestSaga(GET_STUDENTLIST, subApi.getGrade);
+
+const sendStudentListSaga = createRequestSaga(
   SEND_STUDENTLIST,
   subApi.sendGrade
 );
@@ -63,7 +66,7 @@ const initialState = {
   studentList: [],
   gradeRatioArr: ["", "", "", ""],
   fNumber: 0,
-  success: [0, 0], // [0] = students [1] = 저장.
+  success: [null, null], // [0] = get students [1] = 저장.
   error: null,
 };
 
@@ -85,17 +88,19 @@ const grade = handleActions(
       produce(state, (draft) => {
         draft.gradeRatioArr[name] = value;
       }),
-    [GET_STUDENTLIST_SUCCESS]: (state, { payload: { data, success } }) =>
-      produce(state, (draft) => {
-        draft.studentList = data.studentList;
-        draft.gradeRatioArr = data.gradeRatioArr;
-        draft.fNumber = data.Fcount;
+    [GET_STUDENTLIST_SUCCESS]: (state, { payload: { data, success } }) => {
+      return produce(state, (draft) => {
         draft.success[0] = success;
-      }),
+        draft.studentList = data ? data.studentList : [];
+        draft.gradeRatioArr = data ? data.gradeRatioArr : [];
+        draft.fNumber = data ? data.Fcount : 0;
+      });
+    },
     [GET_STUDENTLIST_FAILURE]: (state, { payload: { error } }) =>
       produce(state, (draft) => {
         draft.error = error;
       }),
+
     [SEND_STUDENTLIST_SUCCESS]: (state, { payload: { success } }) =>
       produce(state, (draft) => {
         draft.success[1] = success;
@@ -117,3 +122,6 @@ const grade = handleActions(
 );
 
 export default grade;
+/*
+
+      */

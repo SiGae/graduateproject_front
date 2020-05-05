@@ -1,6 +1,11 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { onChangeInput, initialization, login } from "../modules/login";
+import {
+  onChangeInput,
+  initialization,
+  login,
+  auth_init,
+} from "../modules/login";
 import CompLogin from "../components/CompLogin";
 import { withRouter } from "react-router-dom";
 import { tempSetUser } from "../modules/user";
@@ -16,18 +21,19 @@ const Login = ({
   onChangeInput,
   initialization,
   login,
-  tempSetUser
+  tempSetUser,
+  auth_init,
 }) => {
-  const onChange = e => {
+  const onChange = (e) => {
     const { name, value } = e.target;
     onChangeInput({
       form: "login",
       key: name,
-      value
+      value,
     });
   };
 
-  const onSubmit = e => {
+  const onSubmit = (e) => {
     e.preventDefault();
     console.log("로그인 submit호출");
     const { username, password } = form;
@@ -42,8 +48,13 @@ const Login = ({
   // 로그인 시 성공, 실패 처리
   useEffect(() => {
     if (authError) {
-      console.log("오류발생");
-      console.log(authError);
+      console.log("ERROR", authError);
+      return;
+    }
+
+    if (auth === "ERROR") {
+      alert("로그인 실패");
+      auth_init();
       return;
     }
 
@@ -66,7 +77,7 @@ const Login = ({
     if (userOnline === "TRUE") {
       history.push("/main/menu");
     }
-  });
+  }, [userOnline, history]);
   return <CompLogin form={form} onChange={onChange} onSubmit={onSubmit} />;
 };
 
@@ -75,25 +86,13 @@ export default connect(
     form: clientInfos["login"],
     auth: clientInfos["auth"],
     authError: clientInfos["authError"],
-    userOnline: user.userOnline
+    userOnline: user.userOnline,
   }),
   {
     onChangeInput,
     initialization,
     login,
-    tempSetUser
+    tempSetUser,
+    auth_init,
   }
 )(withRouter(Login));
-
-/**
- * useEffect(() => {
-    if (userOnline) {
-      console.log(userOnline);
-    }
-    if (auth && userOnline && id && call) {
-    
-    }
-  }, [userOnline, history, id, call]);
- */
-
-//check({ id, userOnline });

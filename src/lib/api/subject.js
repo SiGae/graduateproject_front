@@ -48,3 +48,11 @@ export const sendGrade = ({ subId, studentList, gradeRatioArr }) =>
     studentList,
     gradeRatioArr,
   });
+
+// 출석 통계 가져오기
+export const getStatistics = ({ subId }) =>
+  client.post(serverPath + "/getAttendScore", { subId });
+
+// studentList만 가져오기
+export const getList = ({ subId }) =>
+  client.post(serverPath + "/getlist", { subId });

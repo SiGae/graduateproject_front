@@ -20,6 +20,7 @@ const [
   SUBMIT_ATTEND_SUCCESS,
   SUBMIT_ATTEND_FAILURE,
 ] = createRequestActionTypes("attend/SUBMIT_ATTEND");
+
 // Add about date
 const INITIALIZATION = "attend/INITIALIZATION";
 const SET_DATE = "attend/SET_DATE";
@@ -35,6 +36,7 @@ export const get_students = createAction(
   GET_STUDENTS,
   ({ subId, month, day }) => ({ subId, month, day })
 );
+
 // Send studentList status to server
 export const submit_attend = createAction(
   SUBMIT_ATTEND,
@@ -60,10 +62,12 @@ const getStudentSaga = createRequestSaga(
   GET_STUDENTS,
   attendAPI.getStudentList
 );
+
 const submitAttendSaga = createRequestSaga(
   SUBMIT_ATTEND,
   attendAPI.submitAttend
 );
+
 export function* attendSaga() {
   yield takeLatest(GET_DATE, getDateSaga);
   yield takeLatest(GET_STUDENTS, getStudentSaga);
@@ -76,7 +80,7 @@ const initialState = {
   date: [{ month: "", day: "" }],
   curIndex: 0,
   stdStatus: false,
-  success: null, // save
+  success: [null, null, null], // save, getStudent
   error: null,
 };
 
@@ -144,6 +148,7 @@ const attend = handleActions(
       produce(state, (draft) => {
         draft.studentList = objectListToArray(payload);
         draft.stdStatus = false;
+        draft.success[1] = true;
         draft["error"] = null;
       }),
     [GET_STUDENTS_FAILURE]: (state, { payload: { error } }) => ({

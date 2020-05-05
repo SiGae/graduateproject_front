@@ -39,13 +39,12 @@ const Ratio = ({ name, perfectScore, index, onChange }) => {
   );
 };
 
-const StyledInput = ({ index, label, onChange }) => {
+const StyledInput = ({ index, label, onChange, ratioArr }) => {
   return <input name={index} value={label} onChange={onChange}></input>;
 };
 
 const Student = ({ student, stdScoreChange }) => {
   const labelList = student.label;
-
   return (
     <div className={cn("studentBox")}>
       <div className={cn("stdInfo")}>

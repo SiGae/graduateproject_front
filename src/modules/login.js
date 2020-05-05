@@ -1,7 +1,7 @@
 import { createAction, handleActions } from "redux-actions";
 import produce from "immer";
 import createRequestSaga, {
-  createRequestActionTypes
+  createRequestActionTypes,
 } from "../lib/saga/createRequestSaga";
 import { takeLatest } from "redux-saga/effects";
 import * as authAPI from "../lib/api/auth";
@@ -9,6 +9,7 @@ import * as authAPI from "../lib/api/auth";
 // Action Type 정의
 const CHANGE_INPUT = "login/CHANGE_INPUT";
 const INITIALIZATION = "login/INITIALIZATION";
+const AUTH_INIT = "login/AUTH_INIT";
 const [REGISTER, REGISTER_SUCCESS, REGISTER_FAILURE] = createRequestActionTypes(
   "login/REGISTER"
 );
@@ -25,12 +26,12 @@ export const onChangeInput = createAction(
   ({ form, key, value }) => ({
     form,
     key,
-    value
+    value,
   })
 );
-
+export const auth_init = createAction(AUTH_INIT);
 // 초기 렌더링
-export const initialization = createAction(INITIALIZATION, form => form);
+export const initialization = createAction(INITIALIZATION, (form) => form);
 
 export const register = createAction(
   REGISTER,
@@ -38,12 +39,12 @@ export const register = createAction(
     username,
     password,
     e_mail,
-    phone
+    phone,
   })
 );
 export const login = createAction(LOGIN, ({ username, password }) => ({
   username,
-  password
+  password,
 }));
 export const logout = createAction(LOGOUT);
 
@@ -72,37 +73,40 @@ const initialState = {
     password: "", // Password
     passwordConfirm: "", // Password confirm
     e_mail: "", // e-mail
-    phone: "" // phone number
+    phone: "", // phone number
   },
   login: {
     username: "",
-    password: ""
+    password: "",
   },
   auth: null,
-  authError: null
+  authError: null,
 };
 
 // 리듀서
 const clientInfos = handleActions(
   {
     [CHANGE_INPUT]: (state, { payload: { form, key, value } }) =>
-      produce(state, draft => {
+      produce(state, (draft) => {
         draft[form][key] = value;
       }),
     [INITIALIZATION]: (state, { payload: form }) => ({
       ...state,
-      [form]: initialState[form]
+      [form]: initialState[form],
     }),
-
+    [AUTH_INIT]: (state) => ({
+      ...state,
+      auth: null,
+    }),
     // 회원가입
     [REGISTER_SUCCESS]: (state, { payload: { auth } }) => ({
       ...state,
       authError: null,
-      auth
+      auth,
     }),
     [REGISTER_FAILURE]: (state, { payload: { error } }) => ({
       ...state,
-      authError: error
+      authError: error,
     }),
     // 로그인
     [LOGIN_SUCCESS]: (state, { payload: { auth } }) => {
@@ -110,28 +114,16 @@ const clientInfos = handleActions(
       return {
         ...state,
         authError: null,
-        auth
+        auth,
       };
     },
     [LOGIN_FAILURE]: (state, { payload: { error } }) => ({
       ...state,
-      authError: error
-    })
+      authError: error,
+    }),
   },
 
   initialState
 );
 
 export default clientInfos;
-
-/**
- *     [LOGIN]: (state, { payload: form }) => {
-      console.log("상태", state);
-      console.log("액션", form);
-      console.log("서버로 보내는 코드 작성좀");
-      return {
-        ...state,
-        [form]: initialState[form]
-      };
-    },
- */

@@ -2,10 +2,10 @@ import React, { useEffect, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { get_ratio, initialization as ratioInit } from "../modules/ratio";
-import { get_students, initialization as atdInit } from "../modules/attend";
 import {
   initialization as transcriptInit,
   get_transcript,
+  get_list,
   set_studentList,
   student_score_input,
   perfect_score_input,
@@ -18,19 +18,16 @@ import { setScoreCheck } from "../lib/utils/util";
 const Transcript = ({ history }) => {
   const dispatch = useDispatch();
   const { user } = useSelector(({ user }) => ({ user: user }));
-  const { studentList } = useSelector(({ attend }) => ({
-    studentList: attend.studentList,
-  }));
   const { ratio } = useSelector(({ ratio }) => ({ ratio: ratio }));
-  const { transcript } = useSelector(({ transcript }) => ({
+  const { transcript, studentList } = useSelector(({ transcript }) => ({
     transcript: transcript,
+    studentList: transcript.studentList,
   }));
   const [lecture, setLecture] = useState("");
   // Phase 1
   // 초기화
   useEffect(() => {
     dispatch(ratioInit());
-    dispatch(atdInit());
     dispatch(transcriptInit());
     console.log("\n\nTranscript 초기화 완료\n");
   }, [dispatch]);
@@ -62,12 +59,16 @@ const Transcript = ({ history }) => {
       alert("비율을 먼저 입력해주세요.");
       history.push("/main/menu");
     }
-    if (ratio.success[1] === true && transcript.success[0] === null) {
+    if (
+      ratio.success[1] === true &&
+      transcript.success[0] === false &&
+      transcript.success[2] === null
+    ) {
       console.log("서버에 데이터 존재x");
       // 만점 점수를 만든다.
       dispatch(set_perfectScore({ length: ratio.ratioArr.length }));
       // studentList 불러온다
-      dispatch(get_students({ subId: lecture.subId, month: "", day: "" }));
+      dispatch(get_list({ subId: lecture.subId }));
     }
   }, [
     dispatch,
@@ -87,8 +88,10 @@ const Transcript = ({ history }) => {
       return;
     }
 
-    const maxLabelLength = ratio.ratioArr.length;
-    dispatch(set_studentList({ studentList, maxLabelLength }));
+    if (transcript.success[3] == null) {
+      const maxLabelLength = ratio.ratioArr.length;
+      dispatch(set_studentList({ studentList, maxLabelLength }));
+    }
     // Score에 셋팅 한다.
   }, [
     dispatch,

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { withRouter } from "react-router-dom";
 import {
@@ -8,7 +8,8 @@ import {
   set_subName,
   toggle,
   moveIndex,
-  submit_attend
+  submit_attend,
+  get_statistics,
 } from "../modules/attend";
 import CompAttendance from "../components/CompAttendance";
 
@@ -17,6 +18,11 @@ const Attendance = ({ history }) => {
   const { user } = useSelector(({ user }) => ({ user: user }));
   const { attend } = useSelector(({ attend }) => ({ attend: attend }));
   const [lecture, setLecture] = useState("");
+  const [dialVisible, setDialVisible] = useState(false);
+
+  const onPopupVisible = useCallback((visible) => {
+    setDialVisible(visible);
+  }, []);
 
   useEffect(() => {
     dispatch(initialization());
@@ -73,7 +79,7 @@ const Attendance = ({ history }) => {
         month: month,
         day: day,
         subId: lecture.subId,
-        studentList: attend.studentList
+        studentList: attend.studentList,
       })
     );
 
@@ -87,9 +93,12 @@ const Attendance = ({ history }) => {
       subName={attend.subName}
       studentList={attend.studentList}
       curIndex={attend.curIndex}
+      dialVisible={dialVisible}
+      subId={lecture.subId}
       onToggle={onToggle}
       onMoveIndex={onMoveIndex}
       onSave={onSave}
+      onPopupVisible={onPopupVisible}
     ></CompAttendance>
   );
 };

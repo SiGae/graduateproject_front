@@ -32,6 +32,7 @@ const CreateSubject = ({ history }) => {
   useEffect(() => {
     if (success === true) {
       history.push("/main/menu");
+      dispatch(initialization());
     }
   }, [dispatch, history, success]);
 

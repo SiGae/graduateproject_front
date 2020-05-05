@@ -1,12 +1,11 @@
-import React, { useEffect, useState, useCallback, useMemo } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { get_ratio, initialization as ratioInit } from "../modules/ratio";
 import {
   get_studentList,
   grade_modify,
   change_input,
-  initialization as gradeInit,
+  initialization,
   send_studentList,
 } from "../modules/grade";
 import CompGrade from "../components/manage/CompGrade";
@@ -24,7 +23,10 @@ const ManageGrade = ({ history }) => {
   const [lecture, setLecture] = useState("");
   const [students, setStudents] = useState([]);
   const [isHundred, setIsHundred] = useState(false);
+
+  // Data appearing decision
   const [fMode, setFMode] = useState(false);
+  const [dialVisible, setDialVisible] = useState(false);
 
   // A, B, C, D 비율 적용
   const onModifyRatio = useCallback(() => {
@@ -79,11 +81,14 @@ const ManageGrade = ({ history }) => {
       }
     }
   }, [grade, dispatch]);
+  // dialogue
+  const onPopupStat = useCallback((visible) => {
+    setDialVisible(visible);
+  }, []);
 
   // 초기화
   useEffect(() => {
-    dispatch(ratioInit());
-    dispatch(gradeInit());
+    dispatch(initialization());
   }, [dispatch]);
 
   // Login 확인
@@ -102,13 +107,24 @@ const ManageGrade = ({ history }) => {
   // Phase 2
   useEffect(() => {
     // 존재 : 강의, 비율, 학생 리스트
-    if (lecture === "" || grade.success[0] !== true) {
+    if (
+      lecture === "" ||
+      grade.success[0] == null ||
+      grade.success[0] == undefined
+    ) {
       return;
+    }
+
+    if (grade.success[0] == false) {
+      alert(
+        "1.출석부 2.학생관리 (만점점수 입력 필수)순서로 진행하시길 바랍니다."
+      );
+      history.push("/main/menu");
     }
     // 학점 순으로 정렬
     setStudents(sortStudentList(grade.studentList));
     onModifyRatio();
-  }, [lecture, grade, onModifyRatio]);
+  }, [lecture, grade, onModifyRatio, history]);
 
   // Phase 3
   useEffect(() => {
@@ -219,13 +235,16 @@ const ManageGrade = ({ history }) => {
   return (
     <div>
       <CompGrade
-        itemClick={itemClick}
-        switchForNot={switchForNot}
         studentList={students}
         gradeRatioArr={grade.gradeRatioArr}
+        subId={lecture.subId}
+        dialVisible={dialVisible}
+        switchForNot={switchForNot}
         onChange={onChange}
-        onSubmit={onSubmit}
+        onPopupStat={onPopupStat}
         fMode={fMode}
+        itemClick={itemClick}
+        onSubmit={onSubmit}
         isHundred={isHundred}
       ></CompGrade>
     </div>
