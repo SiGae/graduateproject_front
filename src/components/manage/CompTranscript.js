@@ -4,6 +4,7 @@ import classNames from "classnames/bind";
 import styles from "./CompTranscript.module.scss";
 import Responsive from "../common/Responsive";
 import Button from "../common/Button";
+import AttendModal from "../popup/AttendModal";
 
 const Body = styled(Responsive)`
   padding: 0rem;
@@ -71,15 +72,20 @@ const CompTranscript = ({
   ratioArr,
   studentList,
   perfectScore,
+  subId,
+  dialVisible,
   // Action
   stdScoreChange,
   perfScoreChange,
   onSubmit,
+  onPopupVisible,
 }) => {
   return (
     <Body>
       <div className={cn("top")}>
-        <div className={cn("whisper")}></div>
+        <div className={cn("whisper")}>
+          <p onClick={() => onPopupVisible(true)}>출석현황</p>
+        </div>
         <div className={cn("ratioList")}>
           {perfectScore.length > 0 &&
             ratioArr.map((ratio, index) => (
@@ -106,8 +112,17 @@ const CompTranscript = ({
       <div className={cn("submit")}>
         <Button onClick={onSubmit}>저장</Button>
       </div>
+      <AttendModal
+        isVisible={dialVisible}
+        subId={subId}
+        cstOnClickAway={() => onPopupVisible(false)}
+      />
     </Body>
   );
 };
 
 export default React.memo(CompTranscript);
+
+/**
+ *   <div className={cn("")}
+ */

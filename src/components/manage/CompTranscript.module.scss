@@ -47,37 +47,46 @@
   @include ContainerSize();
   @include MainContainerCSS();
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-}
 
-.ratioList {
-  @include ItemListSize();
-}
+  .ratioList {
+    @include ItemListSize();
 
-.whisper {
-  @include BoxSize();
+    .topBox {
+      @include verticalCSS();
+      @include ItemCss();
+
+      p {
+        display: flex;
+        align-items: center;
+        margin: 0px;
+        flex: 1;
+      }
+
+      input {
+        flex: 2;
+        text-align: center;
+        min-width: 40px;
+        width: 100%;
+      }
+    }
+  }
+
+  .whisper {
+    @include BoxSize();
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    p {
+      cursor: pointer;
+    }
+
+    @media (max-width: 800px) {
+    }
+  }
 
   @media (max-width: 800px) {
-    min-width: 0px;
-    max-width: 0px;
-  }
-}
-
-.topBox {
-  @include verticalCSS();
-  @include ItemCss();
-
-  p {
-    display: flex;
-    align-items: center;
-    margin: 0px;
-    flex: 1;
-  }
-
-  input {
-    flex: 2;
-    text-align: center;
-    min-width: 40px;
-    width: 100%;
+    flex-direction: column-reverse;
   }
 }
 

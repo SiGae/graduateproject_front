@@ -89,6 +89,9 @@
     cursor: pointer;
     transition: 0.5s;
 
+    .stdInfo {
+      display: flex;
+    }
     &:last-child {
       margin-bottom: 10px;
     }

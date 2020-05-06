@@ -14,6 +14,7 @@ const Ratio = loadable(() => import("./Ratio"));
 const Transcript = loadable(() => import("./Transcript"));
 const ManageGrade = loadable(() => import("./ManageGrade"));
 const GradePage = loadable(() => import("../pages/GradePage"));
+const AttendModal = loadable(() => import("../components/popup/AttendModal"));
 
 const Main = ({ history }) => {
   const dispatch = useDispatch();
@@ -41,6 +42,8 @@ const Main = ({ history }) => {
         <Route path="/main/attend" component={Attendance}></Route>
         <Route path="/main/ratio" component={Ratio}></Route>
         <Route path="/main/transcript" component={Transcript}></Route>
+        {/* Popup */}
+        <Route path="/main/:attendModal" component={AttendModal}></Route>
       </div>
     </>
   );

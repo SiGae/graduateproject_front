@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import classNames from "classnames/bind";
 import styles from "./AttendModal.module.scss";
 import { useDispatch } from "react-redux";
 import client, { serverPath } from "../../lib/api/client";
+import draggable from "draggable";
 
 const cn = classNames.bind(styles);
 const StudentList = ({ student }) => {
@@ -23,7 +24,34 @@ const AttendModal = ({ isVisible, subId, cstOnClickAway }) => {
   const dispatch = useDispatch();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [state, setState] = useState({
+    activeDrags: 0,
+    deltaPosition: {
+      x: 0,
+      y: 0,
+    },
+    controlledPosition: {
+      x: -400,
+      y: 200,
+    },
+  });
+  const handleDrag = (e, ui) => {
+    const { x, y } = state.deltaPosition;
+    setState({
+      ...state,
+      deltaPosition: {
+        x: x + ui.deltaX,
+        y: y + ui.deltaY,
+      },
+    });
+  };
 
+  const onStart = () => {
+    setState({ ...state, activeDrags: ++state.activeDrags });
+  };
+  const onStop = () => {
+    setState({ ...state, activeDrags: --state.activeDrags });
+  };
   useEffect(() => {
     if (!isVisible) {
       return;
@@ -34,6 +62,7 @@ const AttendModal = ({ isVisible, subId, cstOnClickAway }) => {
         const response = await client.post(serverPath + "/getAttendScore", {
           subId,
         });
+        console.log("call : ", response.data.data);
         setData(response.data.data);
       } catch (e) {
         console.log(e);
@@ -47,7 +76,6 @@ const AttendModal = ({ isVisible, subId, cstOnClickAway }) => {
     if (!isVisible) {
       return;
     }
-
     console.log("DATA : ", data);
   }, [isVisible, data]);
 
@@ -75,4 +103,16 @@ const AttendModal = ({ isVisible, subId, cstOnClickAway }) => {
   );
 };
 
-export default AttendModal;
+export default React.memo(AttendModal);
+
+/**
+ * useEffect(() => {
+    if (location) {
+      const query = qs.parse(location.search, {
+        ignoreQueryPrefix: true,
+      });
+      subId = query.subId;
+      isVisible = true;
+    }
+  }, []);
+ */

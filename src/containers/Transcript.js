@@ -24,6 +24,11 @@ const Transcript = ({ history }) => {
     studentList: transcript.studentList,
   }));
   const [lecture, setLecture] = useState("");
+  const [dialVisible, setDialVisible] = useState(false);
+
+  const onPopupVisible = useCallback((val) => {
+    setDialVisible(val);
+  }, []);
   // Phase 1
   // 초기화
   useEffect(() => {
@@ -167,6 +172,9 @@ const Transcript = ({ history }) => {
       ratioArr={ratio.ratioArr}
       studentList={transcript.studentList}
       perfectScore={transcript.perfectScore}
+      subId={lecture.subId}
+      dialVisible={dialVisible}
+      onPopupVisible={onPopupVisible}
     ></CompTranscript>
   );
 };

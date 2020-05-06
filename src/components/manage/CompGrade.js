@@ -64,8 +64,11 @@ const ItemList = ({ itemClick, itemDoubleClick, student }) => {
       onClick={itemClick}
       onDoubleClick={itemDoubleClick}
     >
-      <p>{student.id}</p>
-      <p>{student.name}</p>
+      <div className={cn("stdInfo")}>
+        <p>{student.id}</p>
+        <p>{student.name}</p>
+      </div>
+      <p>{student.grade}</p>
     </div>
   );
 };
