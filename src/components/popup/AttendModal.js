@@ -3,7 +3,7 @@ import classNames from "classnames/bind";
 import styles from "./AttendModal.module.scss";
 import { useDispatch } from "react-redux";
 import client, { serverPath } from "../../lib/api/client";
-import draggable from "draggable";
+import Draggable from "react-draggable";
 
 const cn = classNames.bind(styles);
 const StudentList = ({ student }) => {
@@ -52,6 +52,7 @@ const AttendModal = ({ isVisible, subId, cstOnClickAway }) => {
   const onStop = () => {
     setState({ ...state, activeDrags: --state.activeDrags });
   };
+
   useEffect(() => {
     if (!isVisible) {
       return;
@@ -82,7 +83,46 @@ const AttendModal = ({ isVisible, subId, cstOnClickAway }) => {
   return (
     <React.Fragment>
       {isVisible && (
-        <React.Fragment>
+        <Draggable
+          defaultPosition={{ x: 0, y: 0 }}
+          handle="strong"
+          onStart={onStart}
+          onStop={onStop}
+        >
+          <div className={cn("body")}>
+            <div className={cn("title")}>
+              <p onClick={() => cstOnClickAway(false)}>X</p>
+              <strong className={cn("cursor")}>
+                <h1> 출석 통계 </h1>
+              </strong>
+            </div>
+            <div className={cn("content")}>
+              {data.map((student, index) => (
+                <StudentList key={index} student={student}></StudentList>
+              ))}
+            </div>
+          </div>
+        </Draggable>
+      )}
+    </React.Fragment>
+  );
+};
+
+export default React.memo(AttendModal);
+
+/**
+  * <Draggable handle="strong" {...dragHandlers}>
+            <div className="box no-cursor">
+              <strong className="cursor">
+                <div>Drag here</div>
+              </strong>
+              <div>You must click my handle to drag me</div>
+            </div>
+          </Draggable>
+  */
+
+/**
+   * <React.Fragment>
           <div
             className={cn("over-lay")}
             onClick={() => cstOnClickAway(false)}
@@ -98,21 +138,4 @@ const AttendModal = ({ isVisible, subId, cstOnClickAway }) => {
             </div>
           </div>
         </React.Fragment>
-      )}
-    </React.Fragment>
-  );
-};
-
-export default React.memo(AttendModal);
-
-/**
- * useEffect(() => {
-    if (location) {
-      const query = qs.parse(location.search, {
-        ignoreQueryPrefix: true,
-      });
-      subId = query.subId;
-      isVisible = true;
-    }
-  }, []);
- */
+   */
