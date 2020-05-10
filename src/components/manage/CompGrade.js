@@ -68,7 +68,13 @@ const ItemList = ({ itemClick, itemDoubleClick, student }) => {
         <p>{student.id}</p>
         <p>{student.name}</p>
       </div>
-      <p>{student.grade}</p>
+      <div className={cn("score")}>
+        {student &&
+          student.component.map((list, index) => (
+            <p key={index}>{list.score}</p>
+          ))}
+        <p>{student.grade}</p>
+      </div>
     </div>
   );
 };
@@ -111,6 +117,16 @@ const CompGrade = ({
         <p className={cn({ clicked: fMode })} onClick={switchForNot}>
           F선택 모드
         </p>
+        <div className={cn("COBACKGROUND")}>
+          <div className={cn("COEMPTY")}></div>
+          <div className={cn("CONAME")}>
+            {studentList[0] &&
+              studentList[0].component.map((list, index) => (
+                <p key={index}>{list.coname}</p>
+              ))}
+            <p>등급</p>
+          </div>
+        </div>
         {studentList.map((student, index) => (
           <ItemList
             key={index}

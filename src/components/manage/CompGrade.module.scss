@@ -17,6 +17,33 @@
   height: 2em;
 }
 
+// COEMPTY and StdInfo
+@mixin emptyWithStdInfo() {
+  display: flex;
+  width: 200px;
+
+  @media (max-width: 768px) {
+    width: 160px;
+  }
+}
+
+@mixin conameWithScore() {
+  display: flex;
+  p {
+    @include horizontalCSS();
+    margin: 0;
+    width: 80px;
+  }
+}
+
+@mixin ItemCobackaround() {
+  @include horizontalCSS();
+  justify-content: space-around;
+  width: 100%;
+  height: 50px;
+  margin-top: 3px;
+}
+
 .head {
   @include posConfirm();
   @include head_footer();
@@ -78,19 +105,30 @@
       color: blue;
     }
   }
+  .COBACKGROUND {
+    @include ItemCobackaround();
+
+    .COEMPTY {
+      @include emptyWithStdInfo();
+    }
+
+    .CONAME {
+      @include conameWithScore();
+    }
+  }
   .item {
-    @include horizontalCSS();
-    justify-content: space-around;
+    @include ItemCobackaround();
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     border-radius: 0.9rem;
-    width: 100%;
-    height: 50px;
-    margin-top: 3px;
     cursor: pointer;
     transition: 0.5s;
 
     .stdInfo {
-      display: flex;
+      @include emptyWithStdInfo();
+    }
+
+    .score {
+      @include conameWithScore();
     }
     &:last-child {
       margin-bottom: 10px;
