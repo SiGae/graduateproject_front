@@ -14,6 +14,7 @@ import {
 } from "../modules/transcript";
 import CompTranscript from "../components/manage/CompTranscript";
 import { setScoreCheck } from "../lib/utils/util";
+import { produce } from "immer";
 
 const Transcript = ({ history }) => {
   const dispatch = useDispatch();
@@ -69,7 +70,7 @@ const Transcript = ({ history }) => {
       transcript.success[0] === false &&
       transcript.success[2] === null
     ) {
-      console.log("서버에 데이터 존재x");
+      //console.log("서버에 데이터 존재x");
       // 만점 점수를 만든다.
       dispatch(set_perfectScore({ length: ratio.ratioArr.length }));
       // studentList 불러온다
@@ -139,12 +140,24 @@ const Transcript = ({ history }) => {
 
   // Sever 저장
   const submitToServer = useCallback(() => {
-    const { studentList, perfectScore } = transcript;
+    const { perfectScore } = transcript;
     const { ratioArr } = ratio;
 
+    /**
+     * 만점 점수를 입력하고 학생 점수 입력한 뒤
+     * 만점 점수 수정 했을 때 만점 점수가 학생 점수보다 
+       낮아지는 경우가 생길 수가 있음.
+     */
+    let studentList = transcript.studentList;
     for (let pIdx in perfectScore) {
       for (let sIdx in studentList) {
+        if (studentList[sIdx].label[pIdx] === "") {
+          studentList = produce(studentList, (draft) => {
+            draft[sIdx].label[pIdx] = "0";
+          });
+        }
         if (
+          // 만점 점수보다 학생 점수 입력이 더 큰 것이 있다면...
           Number(perfectScore[pIdx]) < Number(studentList[sIdx].label[pIdx])
         ) {
           alert(
@@ -158,7 +171,13 @@ const Transcript = ({ history }) => {
       }
     }
 
-    dispatch(send_transcript({ subId: lecture.subId, transcript }));
+    dispatch(
+      send_transcript({
+        subId: lecture.subId,
+        studentList: studentList,
+        perfectScore: perfectScore,
+      })
+    );
     history.push("/main/menu");
   }, [dispatch, lecture.subId, transcript, ratio, history]);
 

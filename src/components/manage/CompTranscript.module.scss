@@ -85,7 +85,7 @@
     }
   }
 
-  @media (max-width: 800px) {
+  @media (max-width: 650px) {
     flex-direction: column-reverse;
   }
 }
@@ -109,70 +109,76 @@
   & {
     align-content: space-around;
   }
-
+  // studentBox내의 전 인풋 스타일에 적용
   input {
     text-align: center;
   }
 
-  @media (max-width: 800px) {
+  @media (max-width: 650px) {
     @include verticalCSS();
-    height: 300px;
-    margin-top: 40px;
-  }
-}
-
-.label {
-  @include ItemListSize();
-
-  input {
-    @include ItemCss();
-    border: 0;
-    border-radius: 0.5rem;
-    background: rgba(236, 236, 236, 0.931);
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-  }
-
-  @media (max-width: 800px) {
-    @include verticalCSS();
-    width: 100%;
-  }
-}
-
-.stdInfo {
-  @include BoxSize();
-  display: flex;
-
-  p {
-    // position
-    @include horizontalCSS();
-    margin: 0px;
-    // size
-    width: 100%;
     height: 100%;
-    // status
-    border-radius: 0.5rem;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    color: white;
-
-    &:nth-child(1) {
-      background: rgba(117, 180, 74, 100);
-    }
-    &:nth-child(2) {
-      margin-left: 5px;
-      background: rgba(156, 201, 125, 100);
-    }
+    margin-top: 30px;
   }
 
-  @media (max-width: 800px) {
-    @include verticalCSS();
-    width: 100%;
+  .label {
+    @include ItemListSize();
+    justify-content: flex-start;
 
-    p {
-      &:nth-child(2) {
-        margin: 0px;
+    input {
+      @include ItemCss();
+      border: 0px;
+      border-radius: 0.5rem;
+      background: rgba(236, 236, 236, 0.931);
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    @media (max-width: 650px) {
+      @include verticalCSS();
+      width: 100%;
+
+      input {
+        height: 50px;
       }
     }
-  }
+  } // label
+
+  .stdInfo {
+    @include BoxSize();
+    display: flex;
+
+    p {
+      // position
+      @include horizontalCSS();
+      margin: 0px;
+      // size
+      width: 100%;
+      height: 100%;
+      // status
+      border-radius: 0.5rem;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      color: white;
+
+      &:nth-child(1) {
+        background: rgba(117, 180, 74, 100);
+      }
+      &:nth-child(2) {
+        margin-left: 5px;
+        background: rgba(156, 201, 125, 100);
+      }
+    }
+
+    @media (max-width: 650px) {
+      @include verticalCSS();
+      width: 100%;
+      height: 70px;
+
+      p {
+        &:nth-child(2) {
+          margin: 0px;
+        }
+      }
+    }
+  } // stdInfo
 }
 
 .submit {

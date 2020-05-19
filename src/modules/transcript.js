@@ -49,10 +49,10 @@ export const get_transcript = createAction(GET_TRANSCRIPT, ({ subId }) => ({
 }));
 export const send_transcript = createAction(
   SEND_TRANSCRIPT,
-  ({ subId, transcript }) => ({
+  ({ subId, studentList, perfectScore }) => ({
     subId,
-    studentList: transcript.studentList,
-    perfectScore: transcript.perfectScore,
+    studentList,
+    perfectScore,
   })
 );
 export const set_perfectScore = createAction(
@@ -107,7 +107,6 @@ function newLabel(studentList, stringArr) {
     });
   }
 
-  console.log("newSTUDNETLIST : ", newStudentList);
   return newStudentList;
 }
 
