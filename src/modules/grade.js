@@ -118,16 +118,14 @@ const grade = handleActions(
       }),
     [GRADE_MODIFY]: (state, { payload: { id, value, prevVal } }) =>
       produce(state, (draft) => {
-        console.log("GRADE_MODIFY", value);
+        //console.log("GRADE_MODIFY", value);
         const student = draft.studentList.find((student) => student.id === id);
         student.grade = value;
 
         draft.fNumber += checkForNot(value, prevVal);
       }),
-    [STUDENT_REPLACE]: (state, { payload: { sourceId, destinationId } }) => {
-      console.log("확인?");
-      return produce(state, (draft) => {
-        console.log("여기실행?");
+    [STUDENT_REPLACE]: (state, { payload: { sourceId, destinationId } }) =>
+      produce(state, (draft) => {
         const sourceIndex = draft.studentList.findIndex(
           (student) => student.id === sourceId
         );
@@ -137,8 +135,7 @@ const grade = handleActions(
         const temp = draft.studentList[sourceIndex];
         draft.studentList[sourceIndex] = draft.studentList[destinationIndex];
         draft.studentList[destinationIndex] = temp;
-      });
-    },
+      }),
   },
   initialState
 );
