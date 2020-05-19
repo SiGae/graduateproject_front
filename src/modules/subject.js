@@ -78,6 +78,7 @@ const subjectInfo = handleActions(
       }),
     [SUBMIT_SUCCESS]: (state, { payload: { success } }) => {
       return produce(state, (draft) => {
+        // eslint-disable-next-line eqeqeq
         if (success == "clear") draft["success"] = true;
         draft["error"] = null;
       });

@@ -132,8 +132,6 @@ const Transcript = ({ history }) => {
         return;
       }
 
-      console.log("stdScoreChange : ", stdIdx);
-      console.log("NAME : ", name, "VALUE : ", value);
       dispatch(student_score_input({ stdIdx, name, value }));
     },
     [dispatch, transcript.perfectScore]

@@ -72,7 +72,7 @@ const Login = ({
         console.log("local Storage is not working");
       }
     }
-  }, [auth, authError, form, history, tempSetUser, initialization]);
+  }, [auth, authError, form, history, tempSetUser, initialization, auth_init]);
   useEffect(() => {
     if (userOnline === "TRUE") {
       history.push("/main/menu");

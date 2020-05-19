@@ -99,6 +99,16 @@
   min-height: 300px;
   padding: 10px;
 
+  .droppable {
+    width: 100%;
+    margin-bottom: 20px;
+
+    .draggable {
+      margin-bottom: 2px;
+      transition-duration: 0.3s;
+    }
+  }
+
   & > p {
     margin: 0;
     font-size: 13px;
@@ -109,7 +119,8 @@
     &.clicked {
       color: blue;
     }
-  }
+  } // End
+
   .COBACKGROUND {
     @include ItemCobackaround();
 
@@ -120,7 +131,8 @@
     .CONAME {
       @include conameWithScore();
     }
-  }
+  } // End
+
   .item {
     @include ItemCobackaround();
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
@@ -135,15 +147,11 @@
     .score {
       @include conameWithScore();
     }
-    &:last-child {
-      margin-bottom: 10px;
-    }
 
     &.gray {
       // F
       background: lightgray;
     }
-
     // A
     &.red {
       background: rgba(255, 125, 125, 100);
@@ -176,7 +184,7 @@
     p {
       margin: 5px;
     }
-  }
+  } // End
 }
 
 .footer {

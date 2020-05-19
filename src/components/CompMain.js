@@ -1,6 +1,4 @@
 import React from "react";
-import classNames from "classnames/bind";
-import styles from "./compMain.module.scss";
 import Main_menu from "../utils/Main_menu";
 import Responsive from "./common/Responsive";
 import styled from "styled-components";
@@ -16,7 +14,7 @@ const CustomResponsive = styled(Responsive)`
   display: flex;
   justify-content: center;
 `;
-const cn = classNames.bind(styles);
+//const cn = classNames.bind(styles);
 const CompMain = () => {
   return (
     <CustomResponsive>

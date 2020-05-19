@@ -9,7 +9,6 @@ import {
   toggle,
   moveIndex,
   submit_attend,
-  get_statistics,
 } from "../modules/attend";
 import CompAttendance from "../components/CompAttendance";
 

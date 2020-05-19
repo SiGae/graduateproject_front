@@ -5,6 +5,7 @@ import styled, { css } from "styled-components";
 import Responsive from "../common/Responsive";
 import Button from "../../components/common/Button";
 import AttendModal from "../popup/AttendModal";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 const cn = classNames.bind(styles);
 const Template = styled(Responsive)`
@@ -86,9 +87,10 @@ const CompGrade = ({
   subId,
   // ACTION
   itemClick,
-  switchForNot,
   onChange,
   onSubmit,
+  onDragEnd,
+  switchForNot,
   fMode,
   isHundred,
   onPopupStat,
@@ -127,13 +129,37 @@ const CompGrade = ({
             <p>등급</p>
           </div>
         </div>
-        {studentList.map((student, index) => (
-          <ItemList
-            key={index}
-            itemClick={() => itemClick(student.id, student.grade)}
-            student={student}
-          ></ItemList>
-        ))}
+        <DragDropContext onDragEnd={onDragEnd}>
+          <Droppable droppableId="droppable" type="STUDENTS">
+            {(provided, snapshot) => (
+              <div ref={provided.innerRef} className={cn("droppable")}>
+                {studentList.map((student, index) => (
+                  <Draggable
+                    key={student.id}
+                    draggableId={student.id}
+                    index={index}
+                  >
+                    {(provided, snapshot) => (
+                      <div
+                        className={cn("draggable")}
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                      >
+                        <ItemList
+                          key={index}
+                          itemClick={() => itemClick(student.id, student.grade)}
+                          student={student}
+                        ></ItemList>
+                      </div>
+                    )}
+                  </Draggable>
+                ))}
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
       </div>
       <div className={cn("footer")}>
         <div className={cn("save")}>

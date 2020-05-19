@@ -5,12 +5,12 @@ import createRequestSaga, {
 import { takeLatest } from "redux-saga/effects";
 import * as subApi from "../lib/api/subject";
 import produce from "immer";
-import { useCallback } from "react";
 
 /********************** Action Type *******************/
 const INITIALIZATION = "grade/INITIALIZATION";
 const CHANGE_INPUT = "grade/CHANGE_INPUT";
 const GRADE_MODIFY = "grade/GRADE_MODIFY";
+const STUDENT_REPLACE = "grade/STUDENT_REPLACE";
 const [
   GET_STUDENTLIST,
   GET_STUDENTLIST_SUCCESS,
@@ -49,6 +49,11 @@ export const grade_modify = createAction(
     prevVal,
   })
 );
+
+export const student_replace = createAction(
+  STUDENT_REPLACE,
+  ({ sourceId, destinationId }) => ({ sourceId, destinationId })
+);
 /********************** Action Saga *******************/
 const getStudentListSaga = createRequestSaga(GET_STUDENTLIST, subApi.getGrade);
 
@@ -72,8 +77,10 @@ const initialState = {
 
 // f받은 학생 구하기 더할 것인지 뺄 것인지 여부 정함
 function checkForNot(value, prevVal) {
+  // eslint-disable-next-line eqeqeq
   if (value == "F") {
     return 1;
+    // eslint-disable-next-line eqeqeq
   } else if (prevVal == "F") {
     return -1;
   } else {
@@ -117,6 +124,21 @@ const grade = handleActions(
 
         draft.fNumber += checkForNot(value, prevVal);
       }),
+    [STUDENT_REPLACE]: (state, { payload: { sourceId, destinationId } }) => {
+      console.log("확인?");
+      return produce(state, (draft) => {
+        console.log("여기실행?");
+        const sourceIndex = draft.studentList.findIndex(
+          (student) => student.id === sourceId
+        );
+        const destinationIndex = draft.studentList.findIndex(
+          (student) => student.id === destinationId
+        );
+        const temp = draft.studentList[sourceIndex];
+        draft.studentList[sourceIndex] = draft.studentList[destinationIndex];
+        draft.studentList[destinationIndex] = temp;
+      });
+    },
   },
   initialState
 );
