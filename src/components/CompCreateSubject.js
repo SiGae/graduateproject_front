@@ -258,32 +258,4 @@ const CompCreateSubject = ({
   );
 };
 
-export default CompCreateSubject;
-/**
- * 
- * <form
-          action="/makeclass_text"
-          method="post"
-          enctype="multipart/form-data"
-        >
- * <input
-            type="text"
-            name="subName"
-            value={subject.subName}
-            onChange={onChange}
-          />
-          <input
-            type="text"
-            name="type"
-            value={subject.type}
-            onChange={onChange}
-          />
- */
-/**
- * 
-
-          
- form action = "upload2.jsp" "
-
- 
-        */
+export default React.memo(CompCreateSubject);

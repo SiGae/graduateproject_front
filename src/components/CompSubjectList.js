@@ -8,12 +8,12 @@ const CompSubjectList = ({
   subjectList,
   onClick,
   menuName,
-  functionChild
+  functionChild,
 }) => {
   return (
     <MenuTemplate department={department} menuName={menuName}>
       <div className="SubListBox">
-        {subjectList.map(subject => (
+        {subjectList.map((subject) => (
           <SubjectList
             key={subject.id}
             subName={subject.name}
@@ -27,8 +27,4 @@ const CompSubjectList = ({
   );
 };
 
-export default CompSubjectList;
-
-/**
- *
- */
+export default React.memo(CompSubjectList);

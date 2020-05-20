@@ -34,5 +34,4 @@ const CompLogin = ({ form, onChange, onSubmit }) => {
   );
 };
 
-export default CompLogin;
-//<FormTag onChangeInput={onChangeInput} clientInfos={clientInfos} />
+export default React.memo(CompLogin);

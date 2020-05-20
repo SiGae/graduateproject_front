@@ -20,4 +20,4 @@ const CompJoin = ({ form, onChange, onSubmit }) => {
   );
 };
 
-export default CompJoin;
+export default React.memo(CompJoin);

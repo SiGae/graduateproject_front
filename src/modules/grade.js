@@ -126,15 +126,18 @@ const grade = handleActions(
       }),
     [STUDENT_REPLACE]: (state, { payload: { sourceId, destinationId } }) =>
       produce(state, (draft) => {
-        const sourceIndex = draft.studentList.findIndex(
+        const sIdx = draft.studentList.findIndex(
           (student) => student.id === sourceId
         );
-        const destinationIndex = draft.studentList.findIndex(
+        const dIdx = draft.studentList.findIndex(
           (student) => student.id === destinationId
         );
-        const temp = draft.studentList[sourceIndex];
-        draft.studentList[sourceIndex] = draft.studentList[destinationIndex];
-        draft.studentList[destinationIndex] = temp;
+        const temp = draft.studentList[sIdx];
+        const tGrade = draft.studentList[sIdx].grade;
+        draft.studentList[sIdx].grade = draft.studentList[dIdx].grade;
+        draft.studentList[dIdx].grade = tGrade;
+        draft.studentList[sIdx] = draft.studentList[dIdx];
+        draft.studentList[dIdx] = temp;
       }),
   },
   initialState

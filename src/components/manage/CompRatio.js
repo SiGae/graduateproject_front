@@ -48,7 +48,7 @@ const CompRatio = ({
   onChange,
   onAddData,
   onSendData,
-  onDoubleClick
+  onDoubleClick,
 }) => {
   return (
     <DivTemplate>
@@ -58,7 +58,7 @@ const CompRatio = ({
             <DataList
               key={index}
               ratio={ratio}
-              onChange={e => onChange(e, index)}
+              onChange={(e) => onChange(e, index)}
               onDoubleClick={() => onDoubleClick(index)}
             />
           ))}
@@ -74,7 +74,3 @@ const CompRatio = ({
 };
 
 export default React.memo(CompRatio);
-
-/**
- *
- */

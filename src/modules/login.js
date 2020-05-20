@@ -109,14 +109,11 @@ const clientInfos = handleActions(
       authError: error,
     }),
     // 로그인
-    [LOGIN_SUCCESS]: (state, { payload: { auth } }) => {
-      console.log("LOGIN_SUCCESS", auth);
-      return {
-        ...state,
-        authError: null,
-        auth,
-      };
-    },
+    [LOGIN_SUCCESS]: (state, { payload: { auth } }) => ({
+      ...state,
+      authError: null,
+      auth,
+    }),
     [LOGIN_FAILURE]: (state, { payload: { error } }) => ({
       ...state,
       authError: error,

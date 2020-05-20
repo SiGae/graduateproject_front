@@ -122,7 +122,3 @@ const CompTranscript = ({
 };
 
 export default React.memo(CompTranscript);
-
-/**
- *   <div className={cn("")}
- */

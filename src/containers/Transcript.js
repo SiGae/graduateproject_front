@@ -35,7 +35,7 @@ const Transcript = ({ history }) => {
   useEffect(() => {
     dispatch(ratioInit());
     dispatch(transcriptInit());
-    console.log("\n\nTranscript 초기화 완료\n");
+    //console.log("\n\nTranscript 초기화 완료\n");
   }, [dispatch]);
 
   // 로그인 여부

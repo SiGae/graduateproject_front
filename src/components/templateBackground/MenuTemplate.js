@@ -34,10 +34,3 @@ const MenuTemplate = ({ department, menuName, children }) => {
   );
 };
 export default MenuTemplate;
-
-/**
- * const MenuName = styled.h3`
-  margin-left: 10px;
-`;
-
- */

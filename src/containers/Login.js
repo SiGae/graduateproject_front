@@ -35,7 +35,7 @@ const Login = ({
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log("로그인 submit호출");
+    //console.log("로그인 submit호출");
     const { username, password } = form;
     login({ username, password });
   };
@@ -59,7 +59,7 @@ const Login = ({
     }
 
     if (auth === "TRUE") {
-      console.log("로그인성공");
+      //console.log("로그인성공");
       const id = form.username;
       const userOnline = auth;
 

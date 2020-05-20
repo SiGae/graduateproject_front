@@ -11,7 +11,7 @@ const AttendPage = ({ history }) => {
   // 출석체크 버튼 클릭
   const goToAttend = (subId, subName) => {
     const { id } = user;
-    console.log("강의선택", subName);
+    //console.log("강의선택", subName);
     // 로컬 데이터에 값 저장
     try {
       localStorage.setItem("lecture", JSON.stringify({ id, subId, subName }));

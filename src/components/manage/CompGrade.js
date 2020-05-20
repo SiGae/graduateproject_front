@@ -175,23 +175,4 @@ const CompGrade = ({
   );
 };
 
-export default CompGrade;
-
-/**
- *  <input
-            placeholder="A비율(%)"
-            name={0}
-            value={gradeRatioArr[0]}
-            onChange={onChange}
-          ></input>
-          <input
-            placeholder="B비율(%)"
-            name={1}
-            value={gradeRatioArr[1]}
-            onChange={onChange}
-          ></input>
-          <input placeholder="C비율(%)"></input>
-          <input placeholder="D비율(%)"></input>
-
-          <Button onClick={onModifyRatio}>비율적용</Button>
- */
+export default React.memo(CompGrade);

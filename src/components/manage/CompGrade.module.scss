@@ -105,7 +105,6 @@
 
     .draggable {
       margin-bottom: 2px;
-      transition-duration: 0.3s;
     }
   }
 
@@ -148,6 +147,9 @@
       @include conameWithScore();
     }
 
+    &:hover {
+      transform: scaleX(1.05) scaleY(1.2);
+    }
     &.gray {
       // F
       background: lightgray;

@@ -34,7 +34,7 @@ const ManageGrade = ({ history }) => {
     const { studentList, gradeRatioArr, fNumber } = grade;
     const totalNumber = studentList.length - fNumber; // F를 제외한 총 학생 수
 
-    console.log("총 인원 수(F제외) : ", totalNumber);
+    //console.log("총 인원 수(F제외) : ", totalNumber);
     let sum = 0;
     for (let i in gradeRatioArr) {
       sum += Number(gradeRatioArr[i]);
