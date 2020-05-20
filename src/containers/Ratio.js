@@ -89,7 +89,7 @@ const Ratio = ({ history }) => {
       sum += Number(ratioVal);
     }
 
-    console.log("합계 : ", sum);
+    //console.log("합계 : ", sum);
     if (sum !== 100 || sum > 100) {
       alert("비율을 100%으로 맞춰주십시오.");
       return;

@@ -74,7 +74,7 @@ const ratio = handleActions(
       }),
     [REMOVE_RATIO]: (state, { payload: { idx } }) =>
       produce(state, (draft) => {
-        console.log("REMOVE_RATIO", idx);
+        //console.log("REMOVE_RATIO", idx);
         draft.ratioArr.splice(idx, 1);
       }),
     [SEND_RATIO_SUCCESS]: (state, { payload: { success } }) =>
@@ -105,10 +105,3 @@ const ratio = handleActions(
 );
 
 export default ratio;
-
-/**
- *    [GET_RATIO]: state =>
-      produce(state, draft => {
-        draft.success[1] = false;
-      }),
- */
