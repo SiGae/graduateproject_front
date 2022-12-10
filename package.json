@@ -14,7 +14,7 @@
     "draggable": "^4.2.0",
     "immer": "^6.0.3",
     "node-sass": "^4.13.1",
-    "qs": "^6.9.4",
+    "qs": "^6.9.7",
     "react": "^16.13.0",
     "react-beautiful-dnd": "^13.0.0",
     "react-dom": "^16.13.0",
